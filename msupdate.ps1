@@ -93,7 +93,7 @@ DismRoot      =dism.exe
 
 Net35         =1
 Net35Source   =
-Cleanup       =1
+Cleanup       =0
 ResetBase     =0
 LCUwinre      =1
 WinRE         =1
@@ -134,21 +134,21 @@ echo ============================================================
 
 echo current dir: %cd%
 
-%_dism2%:`"!_cabdir!`" %dismtarget% /Add-Package /PackagePath:`"fod\Miracast\update.mum`"
-%_dism2%:`"!_cabdir!`" %dismtarget% /Add-Package /PackagePath:`"fod\MiracastLP\update.mum`"
+%_dism2%:`"!_cabdir!`" %dismtarget% /Add-Package /PackagePath:`"%~dp0fod\Miracast\update.mum`"
+%_dism2%:`"!_cabdir!`" %dismtarget% /Add-Package /PackagePath:`"%~dp0fod\MiracastLP\update.mum`"
 
 echo.
 echo ============================================================
 echo Updating Microsoft Store...
 echo ============================================================
 
-@rem for %%a in (msstore\Microsoft.UI.Xaml.2.*_8wekyb3d8bbwe.Appx) do call :Add-ProvisionedAppxPackage `"%%a`"
-@rem ffor %%a in (msstore\Microsoft.VCLibs.140.00.UWPDesktop_14.0.*_8wekyb3d8bbwe.Appx) do call :Add-ProvisionedAppxPackage `"%%a`"
-@rem ffor %%a in (msstore\Microsoft.VCLibs.140.00_14.0.*_8wekyb3d8bbwe.Appx) do call :Add-ProvisionedAppxPackage `"%%a`"
-@rem ffor %%a in (msstore\Microsoft.NET.Native.Runtime.2.*_8wekyb3d8bbwe.Appx) do call :Add-ProvisionedAppxPackage `"%%a`"
-@rem ffor %%a in (msstore\Microsoft.NET.Native.Framework.2.*_8wekyb3d8bbwe.Appx) do call :Add-ProvisionedAppxPackage `"%%a`"
-@rem ffor %%a in (msstore\Microsoft.WindowsStore_*_8wekyb3d8bbwe.Msixbundle) do call :Add-ProvisionedAppxPackage `"%%a`"
-@rem ffor %%a in (msstore\Microsoft.DesktopAppInstaller_*_8wekyb3d8bbwe.Msixbundle) do call :Add-ProvisionedAppxPackage `"%%a`"
+@rem for %%a in (%~dp0msstore\Microsoft.UI.Xaml.2.*_8wekyb3d8bbwe.Appx) do call :Add-ProvisionedAppxPackage `"%%a`"
+@rem ffor %%a in (%~dp0msstore\Microsoft.VCLibs.140.00.UWPDesktop_14.0.*_8wekyb3d8bbwe.Appx) do call :Add-ProvisionedAppxPackage `"%%a`"
+@rem ffor %%a in (%~dp0msstore\Microsoft.VCLibs.140.00_14.0.*_8wekyb3d8bbwe.Appx) do call :Add-ProvisionedAppxPackage `"%%a`"
+@rem ffor %%a in (%~dp0msstore\Microsoft.NET.Native.Runtime.2.*_8wekyb3d8bbwe.Appx) do call :Add-ProvisionedAppxPackage `"%%a`"
+@rem ffor %%a in (%~dp0msstore\Microsoft.NET.Native.Framework.2.*_8wekyb3d8bbwe.Appx) do call :Add-ProvisionedAppxPackage `"%%a`"
+@rem ffor %%a in (%~dp0msstore\Microsoft.WindowsStore_*_8wekyb3d8bbwe.Msixbundle) do call :Add-ProvisionedAppxPackage `"%%a`"
+@rem ffor %%a in (%~dp0msstore\Microsoft.DesktopAppInstaller_*_8wekyb3d8bbwe.Msixbundle) do call :Add-ProvisionedAppxPackage `"%%a`"
 
 exit /b
 
