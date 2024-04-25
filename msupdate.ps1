@@ -1,4 +1,4 @@
-$ErrorActionPreference = 'Stop'
+﻿$ErrorActionPreference = 'Stop'
 
 # remove temporaty files
 Remove-Item -Path ".\temp\" -Recurse -ErrorAction Ignore
