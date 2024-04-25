@@ -60,7 +60,7 @@ $isomount = (Mount-DiskImage -ImagePath $isopath -PassThru | Get-Volume).DriveLe
 
 # write W10UI conf
 "[W10UI-Configuration]
-Target        =$isomount
+Target        =${isomount}:
 Repo          =%cd%\patch
 DismRoot      =dism.exe
 
