@@ -21,15 +21,15 @@ $NETScript = "https://mirror.ghproxy.com/https://raw.githubusercontent.com/adava
 # get wupatch
 Invoke-WebRequest -Uri "$WUScript" -OutFile ".\WUScript.meta4"
 Invoke-WebRequest -Uri "$NETScript" -OutFile ".\NETScript.meta4"
-.\bin\aria2c.exe --no-conf --check-certificate=false -x16 -s16 -j5 -c -R -d ".\patch" -M ".\WUScript.meta4"
-.\bin\aria2c.exe --no-conf --check-certificate=false -x16 -s16 -j5 -c -R -d ".\patch" -M ".\NETScript.meta4"
+.\bin\aria2c.exe --check-certificate=false -x16 -s16 -j5 -c -R -d ".\patch" -M ".\WUScript.meta4"
+.\bin\aria2c.exe --check-certificate=false -x16 -s16 -j5 -c -R -d ".\patch" -M ".\NETScript.meta4"
 
 # get fod
 # Microsoft-Windows-WirelessDisplay-FOD-Package~31bf3856ad364e35~amd64~~.cab
-.\bin\aria2c.exe --no-conf --check-certificate=false -x16 -s16 -d ".\fod\Miracast\" -o "update.cab" "https://file.uhsea.com/2404/fa949c449de5880ea5e0648e16aa802a43.cab"
+.\bin\aria2c.exe --check-certificate=false -x16 -s16 -d ".\fod\Miracast\" -o "update.cab" "https://file.uhsea.com/2404/fa949c449de5880ea5e0648e16aa802a43.cab"
 expand -f:* ".\fod\Miracast\update.cab" ".\fod\Miracast\"
 # Microsoft-Windows-WirelessDisplay-FOD-Package~31bf3856ad364e35~amd64~zh-CN~.cab
-.\bin\aria2c.exe --no-conf --check-certificate=false -x16 -s16 -d ".\fod\MiracastLP\" -o "update.cab" "https://file.uhsea.com/2404/907cdd078f41d9b8ca0615b5c1557790S1.cab"
+.\bin\aria2c.exe --check-certificate=false -x16 -s16 -d ".\fod\MiracastLP\" -o "update.cab" "https://file.uhsea.com/2404/907cdd078f41d9b8ca0615b5c1557790S1.cab"
 expand -f:* ".\fod\Miracast\update.cab" ".\fod\MiracastLP\"
 
 # abbodi1406/W10UI auto inject hook after resetbase
