@@ -20,6 +20,18 @@ if (-not (Test-Path -Path ".\bin\aria2c.exe")) {
     Expand-Archive -Path .\temp\aria2.zip -DestinationPath .\temp -Force
     Move-Item -Path .\temp\aria2-1.37.0-win-64bit-build1\aria2c.exe -Destination .\bin\aria2c.exe -Force
 }
+if (-not (Test-Path -Path ".\bin\wimlib-imagex.exe")) {
+    Write-Host "wimlib-imagex not found, downloading..."
+    Invoke-WebRequest -Uri 'https://wimlib.net/downloads/wimlib-1.14.4-windows-x86_64-bin.zip' -outfile .\temp\wimlib.zip
+    Expand-Archive -Path .\temp\wimlib.zip -DestinationPath .\temp\wimlib -Force
+    Copy-Item -Path .\temp\wimlib\wimlib-imagex.exe -Destination .\bin\wimlib-imagex.exe
+    Copy-Item -Path .\temp\wimlib\libwim-15.dll -Destination .\bin\libwim-15.dll
+}
+if (-not (Test-Path -Path ".\bin\PSFExtractor.exe")) {
+    Write-Host "wimlib-imagex not found, downloading..."
+    Invoke-WebRequest -Uri 'https://github.com/Secant1006/PSFExtractor/releases/download/v3.07/PSFExtractor-v3.07-x64.zip' -outfile .\temp\PSFExtractor.zip
+    Expand-Archive -Path .\temp\PSFExtractor.zip -DestinationPath .\bin -Force
+}
 
 $WUScript = "https://mirror.ghproxy.com/https://raw.githubusercontent.com/adavak/Win_ISO_Patching_Scripts/master/Scripts/netfx4.8.1/script_netfx4.8.1_19041_x64.meta4"
 $NETScript = "https://mirror.ghproxy.com/https://raw.githubusercontent.com/adavak/Win_ISO_Patching_Scripts/master/Scripts/script_19041_x64.meta4"
@@ -58,7 +70,7 @@ if ($?) {Write-Host "System Image Download Successfully!"} else {Write-Error "Sy
 # $isopath = Resolve-Path -Path ".\temp\$osfile"
 # $isomount = (Mount-DiskImage -ImagePath $isopath -PassThru | Get-Volume).DriveLetter
 # Target        =${isomount}:
-.\bin\7z.exe x ".\temp\$osfile" -o".\ISO" -r
+."C:\Program Files\7-Zip\7z.exe" x ".\temp\$osfile" -o".\ISO" -r
 
 # select professional edition only
 .\bin\wimlib-imagex.exe info ".\ISO\sources\install.wim" --extract-xml ".\temp\WIMInfo.xml"
