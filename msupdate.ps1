@@ -39,7 +39,7 @@ expand -f:* ".\fod\Miracast\update.cab" ".\fod\Miracast\"
 expand -f:* ".\fod\Miracast\update.cab" ".\fod\MiracastLP\"
 
 # abbodi1406/W10UI auto inject hook after resetbase
-(Invoke-WebRequest -Uri "https://raw.githubusercontent.com/abbodi1406/BatUtil/master/W10UI/W10UI.cmd").Content.Replace("if %AddDrivers%==1 call :doDrv","call hook.cmd") | Out-File -FilePath ".\W10UI.cmd"
+(Invoke-WebRequest -Uri "https://raw.githubusercontent.com/abbodi1406/BatUtil/master/W10UI/W10UI.cmd").Content.Replace("if %AddDrivers%==1 call :doDrv","call %~dp0hook.cmd") | Out-File -FilePath ".\W10UI.cmd"
 
 # get osimage
 # get original system direct link
@@ -55,12 +55,25 @@ $osfile = $obj.data.name
 .\bin\aria2c.exe --check-certificate=false -s16 -x16 -d ".\temp" -o "$osfile" "$osurl"
 if ($?) {Write-Host "System Image Download Successfully!"} else {Write-Error "System Image Download Failed!"}
 
-$isopath = Resolve-Path -Path ".\temp\$osfile"
-$isomount = (Mount-DiskImage -ImagePath $isopath -PassThru | Get-Volume).DriveLetter
+# $isopath = Resolve-Path -Path ".\temp\$osfile"
+# $isomount = (Mount-DiskImage -ImagePath $isopath -PassThru | Get-Volume).DriveLetter
+# Target        =${isomount}:
+.\bin\7z.exe x ".\temp\$osfile" -o".\ISO" -r
+
+# select professional edition only
+.\bin\wimlib-imagex.exe info ".\ISO\sources\install.wim" --extract-xml ".\temp\WIMInfo.xml"
+$WIMInfo = [xml](Get-Content ".\temp\WIMInfo.xml")
+$WIMIndex = $WIMInfo.WIM.IMAGE | Where-Object {$_.WINDOWS.EDITIONID -EQ "Professional"} | Select-Object -ExpandProperty INDEX
+$WIMIndexs = $WIMInfo.WIM.IMAGE.Index | Measure-Object | Select-Object -ExpandProperty Count
+for ($i = 1; $i -le $WIMIndexs; $i++) {
+    if ($i -ne $WIMIndex) {
+        .\bin\wimlib-imagex.exe delete ".\ISO\sources\install.wim" $i
+    }
+}
 
 # write W10UI conf
 "[W10UI-Configuration]
-Target        =${isomount}:
+Target        =%cd%\ISO
 Repo          =%cd%\patch
 DismRoot      =dism.exe
 
@@ -78,7 +91,7 @@ _CabDir       =W10UItemp
 MountDir      =W10UImount
 WinreMount    =W10UImountre
 
-wim2esd       =1
+wim2esd       =0
 wim2swm       =0
 ISO           =1
 ISODir        =
@@ -129,9 +142,10 @@ echo installing - %~n1
 goto :EOF
 " | Out-File -FilePath ".\hook.cmd"
 
-# execute script
+# execute W10UI script
 .\W10UI.cmd
 
 # upload to cloud
-.\bin\rclone.exe copy "*.iso" "odb:/Share/Xiaoran Studio/System/Nightly" --progress
-if ($?) {Write-Host "Upload Successfully!"} else {Write-Error "Upload Failed!"}
+Get-ChildItem -Path "./*.iso" -File | ForEach-Object {
+    .\bin\rclone.exe copy $_.FullName "odb:/Share/Xiaoran Studio/System/Nightly" --progress
+}
