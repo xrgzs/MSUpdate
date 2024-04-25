@@ -1,0 +1,32 @@
+on:
+  workflow_dispatch:
+
+jobs:
+  make1064:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Get rclone Config
+        uses: actions/checkout@v4
+        with:
+          repository: xrgzs/rclone-action
+          token: ${{ secrets.RCLONE_TOKEN }}
+          path: bin
+
+      - name: Change DNS Server
+        shell: pwsh
+        run: |
+          $newDnsServers = @('1.1.1.1', '8.8.8.8')
+          $networkAdapters = Get-NetAdapter | Where-Object { $_.Status -eq 'Up' }
+          foreach ($adapter in $networkAdapters) {
+              Set-DnsClientServerAddress -InterfaceIndex $adapter.ifIndex -ResetServerAddresses
+              Set-DnsClientServerAddress -InterfaceIndex $adapter.ifIndex -ServerAddresses $newDnsServers
+          }
+          ipconfig /flushdns
+
+      - name: Big Task
+        shell: pwsh
+        run: |
+          .\msupdate.ps1
