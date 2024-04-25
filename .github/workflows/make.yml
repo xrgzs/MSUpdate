@@ -2,7 +2,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  make1064:
+  msupdate:
     runs-on: windows-latest
     steps:
       - name: Checkout repository
