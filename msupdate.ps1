@@ -13,7 +13,6 @@ Invoke-WebRequest -Uri "$NETScript" -OutFile ".\NETScript.meta4"
 .\bin\aria2c.exe --no-conf --check-certificate=false -x16 -s16 -j5 -c -R -d ".\patch" -M ".\WUScript.meta4"
 .\bin\aria2c.exe --no-conf --check-certificate=false -x16 -s16 -j5 -c -R -d ".\patch" -M ".\NETScript.meta4"
 
-
 # get fod
 # Microsoft-Windows-WirelessDisplay-FOD-Package~31bf3856ad364e35~amd64~~.cab
 .\bin\aria2c.exe --no-conf --check-certificate=false -x16 -s16 -d ".\fod\Miracast\" -o "update.cab" "https://file.uhsea.com/2404/fa949c449de5880ea5e0648e16aa802a43.cab"
@@ -25,14 +24,31 @@ expand -f:* ".\fod\Miracast\update.cab" ".\fod\MiracastLP\"
 # abbodi1406/W10UI auto inject hook after resetbase
 (Invoke-WebRequest -Uri "https://raw.githubusercontent.com/abbodi1406/BatUtil/master/W10UI/W10UI.cmd").Content.Replace("if %AddDrivers%==1 call :doDrv","call hook.cmd") | Out-File -FilePath ".\W10UI.cmd"
 
+# get osimage
+# get original system direct link
+$obj = (Invoke-WebRequest -UseBasicParsing -Uri "$server/api/fs/get" `
+-Method "POST" `
+-ContentType "application/json;charset=UTF-8" `
+-Body (@{
+    path = "/系统/MSDN/NT10.0_Win10/19045_22H2/2006_RTM/zh-cn_windows_10_business_editions_version_22h2_x64_dvd_037e269d.iso"
+    password = ""
+} | Convertto-Json)).Content | ConvertFrom-Json
+$osurl = $obj.data.raw_url
+$osfile = $obj.data.name
+.\bin\aria2c.exe --check-certificate=false -s16 -x16 -d ".\temp" -o "$osfile" "$osurl"
+if ($?) {Write-Host "System Image Download Successfully!"} else {Write-Error "System Image Download Failed!"}
+
+$isopath = Resolve-Path -Path ".\temp\$osfile"
+$isomount = (Mount-DiskImage -ImagePath $isopath -PassThru | Get-Volume).DriveLetter
+
 # write W10UI conf
 "[W10UI-Configuration]
-Target        =%cd%\ISO
+Target        =$isomount
 Repo          =%cd%\patch
 DismRoot      =dism.exe
 
 Net35         =1
-Net35Source   =%cd%\ISO\sources\sxs
+Net35Source   =
 Cleanup       =1
 ResetBase     =1
 LCUwinre      =1
@@ -100,8 +116,5 @@ goto :EOF
 .\W10UI.cmd
 
 # upload to cloud
-.\bin\rclone.exe 
-
-# Publish image
 .\bin\rclone.exe copy "*.iso" "odb:/Share/Xiaoran Studio/System/Nightly" --progress
 if ($?) {Write-Host "Upload Successfully!"} else {Write-Error "Upload Failed!"}
