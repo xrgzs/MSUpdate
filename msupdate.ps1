@@ -4,6 +4,17 @@ $ErrorActionPreference = 'Stop'
 Remove-Item -Path ".\temp\" -Recurse -ErrorAction Ignore
 New-Item -Path ".\temp\" -ItemType "directory" -ErrorAction Ignore
 
+# Installing dependencies
+if (-not (Test-Path -Path ".\bin\rclone.conf")) {
+    Write-Error "rclone conf not found"
+}
+if (-not (Test-Path -Path ".\bin\wimlib\rclone.exe")) {
+    Write-Host "rclone not found, downloading..."
+    Invoke-WebRequest -Uri 'https://downloads.rclone.org/rclone-current-windows-amd64.zip' -outfile .\temp\rclone.zip
+    Expand-Archive -Path .\temp\rclone.zip -DestinationPath .\temp\ -Force
+    Copy-Item -Path .\temp\rclone-*-windows-amd64\rclone.exe -Destination .\bin\rclone.exe
+}
+
 $WUScript = "https://mirror.ghproxy.com/https://raw.githubusercontent.com/adavak/Win_ISO_Patching_Scripts/master/Scripts/netfx4.8.1/script_netfx4.8.1_19041_x64.meta4"
 $NETScript = "https://mirror.ghproxy.com/https://raw.githubusercontent.com/adavak/Win_ISO_Patching_Scripts/master/Scripts/script_19041_x64.meta4"
 
