@@ -33,8 +33,8 @@ if (-not (Test-Path -Path ".\bin\PSFExtractor.exe")) {
     Expand-Archive -Path .\temp\PSFExtractor.zip -DestinationPath .\bin -Force
 }
 
-$WUScript = "https://mirror.ghproxy.com/https://raw.githubusercontent.com/adavak/Win_ISO_Patching_Scripts/master/Scripts/netfx4.8.1/script_netfx4.8.1_19041_x64.meta4"
-$NETScript = "https://mirror.ghproxy.com/https://raw.githubusercontent.com/adavak/Win_ISO_Patching_Scripts/master/Scripts/script_19041_x64.meta4"
+$WUScript = "https://raw.githubusercontent.com/adavak/Win_ISO_Patching_Scripts/master/Scripts/netfx4.8.1/script_netfx4.8.1_19041_x64.meta4"
+$NETScript = "https://raw.githubusercontent.com/adavak/Win_ISO_Patching_Scripts/master/Scripts/script_19041_x64.meta4"
 
 # get wupatch
 Invoke-WebRequest -Uri "$WUScript" -OutFile ".\WUScript.meta4"
@@ -50,7 +50,7 @@ expand -f:* ".\fod\Miracast\update.cab" ".\fod\Miracast\"
 .\bin\aria2c.exe --check-certificate=false -x16 -s16 -d ".\fod\MiracastLP\" -o "update.cab" "https://file.uhsea.com/2404/907cdd078f41d9b8ca0615b5c1557790S1.cab"
 expand -f:* ".\fod\Miracast\update.cab" ".\fod\MiracastLP\"
 
-# abbodi1406/W10UI auto inject hook after resetbase
+# abbodi1406/W10UI, auto inject hook after resetbase
 (Invoke-WebRequest -Uri "https://raw.githubusercontent.com/abbodi1406/BatUtil/master/W10UI/W10UI.cmd").Content.Replace("if %AddDrivers%==1 call :doDrv","call %~dp0hook.cmd") | Out-File -FilePath ".\W10UI.cmd"
 
 # get osimage
@@ -73,13 +73,15 @@ if ($?) {Write-Host "System Image Download Successfully!"} else {Write-Error "Sy
 ."C:\Program Files\7-Zip\7z.exe" x ".\temp\$osfile" -o".\ISO" -r
 
 # select professional edition only
+$WIMEditionID = "Professional"
 .\bin\wimlib-imagex.exe info ".\ISO\sources\install.wim" --extract-xml ".\temp\WIMInfo.xml"
 $WIMInfo = [xml](Get-Content ".\temp\WIMInfo.xml")
-$WIMIndex = $WIMInfo.WIM.IMAGE | Where-Object {$_.WINDOWS.EDITIONID -EQ "Professional"} | Select-Object -ExpandProperty INDEX
+$WIMIndex = $WIMInfo.WIM.IMAGE | Where-Object {$_.WINDOWS.EDITIONID -eq $WIMEditionID} | Select-Object -ExpandProperty INDEX
 $WIMIndexs = $WIMInfo.WIM.IMAGE.Index | Measure-Object | Select-Object -ExpandProperty Count
 for ($i = 1; $i -le $WIMIndexs; $i++) {
     if ($i -ne $WIMIndex) {
-        .\bin\wimlib-imagex.exe delete ".\ISO\sources\install.wim" $i
+        .\bin\wimlib-imagex.exe delete ".\ISO\sources\install.wim" $i --soft
+        # Remove-WindowsImage -ImagePath ".\ISO\sources\install.wim" -Index $i
     }
 }
 
@@ -92,7 +94,7 @@ DismRoot      =dism.exe
 Net35         =1
 Net35Source   =
 Cleanup       =1
-ResetBase     =1
+ResetBase     =0
 LCUwinre      =1
 WinRE         =1
 UpdtBootFiles =0
@@ -121,17 +123,19 @@ echo ============================================================
 echo Enable Features...
 echo ============================================================
 
-%_dism2%:`"!_cabdir!`" %dismtarget% /Enable-Feature LegacyComponents
-%_dism2%:`"!_cabdir!`" %dismtarget% /Enable-Feature SMB1Protocol
-%_dism2%:`"!_cabdir!`" %dismtarget% /Enable-Feature TFTP
-%_dism2%:`"!_cabdir!`" %dismtarget% /Enable-Feature TelnetClient
+%_dism2%:`"!_cabdir!`" %dismtarget% /Enable-Feature:LegacyComponents /All
+%_dism2%:`"!_cabdir!`" %dismtarget% /Enable-Feature:SMB1Protocol
+%_dism2%:`"!_cabdir!`" %dismtarget% /Enable-Feature:TFTP
+%_dism2%:`"!_cabdir!`" %dismtarget% /Enable-Feature:TelnetClient
 
 echo ============================================================
 echo Adding Features on Demands...
 echo ============================================================
 
-%_dism2%:`"!_cabdir!`" /Add-Package /PackagePath:`"fod\Miracast\update.mum`"
-%_dism2%:`"!_cabdir!`" /Add-Package /PackagePath:`"fod\MiracastLP\update.mum`"
+echo current dir: %cd%
+
+%_dism2%:`"!_cabdir!`" %dismtarget% /Add-Package /PackagePath:`"fod\Miracast\update.mum`"
+%_dism2%:`"!_cabdir!`" %dismtarget% /Add-Package /PackagePath:`"fod\MiracastLP\update.mum`"
 
 echo.
 echo ============================================================
