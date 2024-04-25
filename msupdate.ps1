@@ -14,6 +14,12 @@ if (-not (Test-Path -Path ".\bin\wimlib\rclone.exe")) {
     Expand-Archive -Path .\temp\rclone.zip -DestinationPath .\temp\ -Force
     Copy-Item -Path .\temp\rclone-*-windows-amd64\rclone.exe -Destination .\bin\rclone.exe
 }
+if (-not (Test-Path -Path ".\bin\aria2c.exe")) {
+    Write-Host "aria2c not found, downloading..."
+    Invoke-WebRequest -Uri 'https://github.com/aria2/aria2/releases/download/release-1.37.0/aria2-1.37.0-win-64bit-build1.zip' -outfile .\temp\aria2.zip
+    Expand-Archive -Path .\temp\aria2.zip -DestinationPath .\temp -Force
+    Move-Item -Path .\temp\aria2-1.37.0-win-64bit-build1\aria2c.exe -Destination .\bin\aria2c.exe -Force
+}
 
 $WUScript = "https://mirror.ghproxy.com/https://raw.githubusercontent.com/adavak/Win_ISO_Patching_Scripts/master/Scripts/netfx4.8.1/script_netfx4.8.1_19041_x64.meta4"
 $NETScript = "https://mirror.ghproxy.com/https://raw.githubusercontent.com/adavak/Win_ISO_Patching_Scripts/master/Scripts/script_19041_x64.meta4"
