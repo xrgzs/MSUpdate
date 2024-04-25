@@ -8,7 +8,7 @@ New-Item -Path ".\temp\" -ItemType "directory" -ErrorAction Ignore
 if (-not (Test-Path -Path ".\bin\rclone.conf")) {
     Write-Error "rclone conf not found"
 }
-if (-not (Test-Path -Path ".\bin\wimlib\rclone.exe")) {
+if (-not (Test-Path -Path ".\bin\rclone.exe")) {
     Write-Host "rclone not found, downloading..."
     Invoke-WebRequest -Uri 'https://downloads.rclone.org/rclone-current-windows-amd64.zip' -outfile .\temp\rclone.zip
     Expand-Archive -Path .\temp\rclone.zip -DestinationPath .\temp\ -Force
@@ -43,7 +43,7 @@ expand -f:* ".\fod\Miracast\update.cab" ".\fod\MiracastLP\"
 
 # get osimage
 # get original system direct link
-$obj = (Invoke-WebRequest -UseBasicParsing -Uri "$server/api/fs/get" `
+$obj = (Invoke-WebRequest -UseBasicParsing -Uri "https://alist.xrgzs.top/api/fs/get" `
 -Method "POST" `
 -ContentType "application/json;charset=UTF-8" `
 -Body (@{
