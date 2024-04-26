@@ -88,10 +88,11 @@ if (-not (Test-Path -Path ".\bin\PSFExtractor.exe")) {
 }
 
 # get wupatch
-Invoke-WebRequest -Uri "$WUScript" -OutFile ".\WUScript.meta4"
+Invoke-WebRequest -Uri $WUScript -OutFile ".\WUScript.meta4"
 .\bin\aria2c.exe --check-certificate=false -x16 -s16 -j5 -c -R -d ".\patch" -M ".\WUScript.meta4"
+if ($?) {Write-Host "WUScript Download Successfully!"} else {Write-Error "WUScript Download Failed!"}
 if ($null -ne $NETScript) {
-    Invoke-WebRequest -Uri "$NETScript" -OutFile ".\NETScript.meta4"
+    Invoke-WebRequest -Uri $NETScript -OutFile ".\NETScript.meta4"
     .\bin\aria2c.exe --check-certificate=false -x16 -s16 -j5 -c -R -d ".\patch" -M ".\NETScript.meta4"
 }
 
@@ -161,6 +162,9 @@ if ($null -ne $SelectEdition) {
         Remove-WindowsImage -ImagePath ".\ISO\sources\install.wim" -Index 1
     }
 }
+
+.\bin\wimlib-imagex.exe info ".\ISO\sources\install.wim" --extract-xml ".\temp\WIMInfo2.xml"
+Get-Content ".\temp\WIMInfo2.xml"
 
 # write W10UI conf
 "[W10UI-Configuration]
