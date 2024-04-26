@@ -13,6 +13,7 @@ if ($makeversion -eq "w1164") {
     $ospath = "/系统/MSDN/NT10.0_Win11/22631_23H2/2428_RTM/zh-cn_windows_11_business_editions_version_23h2_x64_dvd_2a79e0f1.iso"
     $uupid = ((Invoke-WebRequest -Uri "https://uupdump.net/known.php?q=category:w11-23h2").Links.href | Where-Object {$_ -like "selectlang.php?id=*"})[0].replace("selectlang.php?id=","")
     $WUScript = "https://uupdump.net/get.php?id=$uupid&pack=0&edition=updateOnly&aria2=2"
+    $WUScript
     $Miracast = "https://file.uhsea.com/2404/9dee091435ee149c1f6207f70fb46a6a7U.cab"
     $MiracastLP = "https://file.uhsea.com/2404/9f8486cf6b5fe60d7f0fff1777715b8cW0.cab"
     $iexplorer = "https://file.uhsea.com/2404/0d0a81d87b97263a9745229c715b849bKF.cab"
