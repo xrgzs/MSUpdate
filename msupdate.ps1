@@ -12,8 +12,7 @@ if ($makeversion -eq "w1164") {
     # make 11 23h2 64 (updates from uupdump)
     $ospath = "/系统/MSDN/NT10.0_Win11/22631_23H2/2428_RTM/zh-cn_windows_11_business_editions_version_23h2_x64_dvd_2a79e0f1.iso"
     $uupid = ((Invoke-WebRequest -Uri "https://uupdump.net/known.php?q=category:w11-23h2").Links.href | Where-Object {$_ -like "selectlang.php?id=*"})[0].replace("selectlang.php?id=","")
-    $WUScript = "https://uupdump.net/get.php?id=$uupid&pack=0&edition=updateOnly&aria2=2"
-    $WUScript
+    $UUPScript = "https://uupdump.net/get.php?id=$uupid&pack=0&edition=updateOnly&aria2=2"
     $Miracast = "https://file.uhsea.com/2404/9dee091435ee149c1f6207f70fb46a6a7U.cab"
     $MiracastLP = "https://file.uhsea.com/2404/9f8486cf6b5fe60d7f0fff1777715b8cW0.cab"
     $iexplorer = "https://file.uhsea.com/2404/0d0a81d87b97263a9745229c715b849bKF.cab"
@@ -32,7 +31,7 @@ if ($makeversion -eq "w1164") {
     # make 10 22h2 64 (updates from uupdump)
     $ospath = "/系统/MSDN/NT10.0_Win10/19045_22H2/2006_RTM/zh-cn_windows_10_business_editions_version_22h2_x64_dvd_037e269d.iso"
     $uupid = ((Invoke-WebRequest -Uri "https://uupdump.net/known.php?q=category:w10-22h2").Links | Where-Object {$_.href -like "selectlang.php?id=*"} | Where-Object {$_.outerHTML -like "*amd64*"})[0].href.replace("selectlang.php?id=","")
-    $WUScript = "https://uupdump.net/get.php?id=$uupid&pack=0&edition=updateOnly&aria2=2"
+    $UUPScript = "https://uupdump.net/get.php?id=$uupid&pack=0&edition=updateOnly&aria2=2"
     $NETScript = "https://raw.githubusercontent.com/adavak/Win_ISO_Patching_Scripts/master/Scripts/netfx4.8.1/script_netfx4.8.1_19041_x64.meta4"
     $Miracast = "https://file.uhsea.com/2404/fa949c449de5880ea5e0648e16aa802a43.cab"
     $MiracastLP = "https://file.uhsea.com/2404/907cdd078f41d9b8ca0615b5c1557790S1.cab"
@@ -91,26 +90,40 @@ if (-not (Test-Path -Path ".\bin\PSFExtractor.exe")) {
 }
 
 # get wupatch
-Invoke-WebRequest -Uri $WUScript -OutFile ".\WUScript.meta4"
-.\bin\aria2c.exe --check-certificate=false -x16 -s16 -j5 -c -R -d ".\patch" -M ".\WUScript.meta4"
-if ($?) {Write-Host "WUScript Download Successfully!"} else {Write-Error "WUScript Download Failed!"}
+if ($null -ne $UUPScript) {
+    Invoke-WebRequest -Uri $UUPScript -OutFile ".\UUPScript.txt"
+    .\bin\aria2c.exe --check-certificate=false -x16 -s16 -j5 -c -R -d ".\patch" -i ".\UUPScript.txt"
+    if (!$?) {Write-Error "UUPScript Download Failed!"}
+} elseif ($null -ne $WUScript) {
+    Invoke-WebRequest -Uri $WUScript -OutFile ".\WUScript.meta4"
+    .\bin\aria2c.exe --check-certificate=false -x16 -s16 -j5 -c -R -d ".\patch" -M ".\WUScript.meta4"
+    if (!$?) {Write-Error "WUScript Download Failed!"}
+} else {
+    Write-Error "No Windows Update Scripts Found!"
+}
 if ($null -ne $NETScript) {
     Invoke-WebRequest -Uri $NETScript -OutFile ".\NETScript.meta4"
-    .\bin\aria2c.exe --check-certificate=false -x16 -s16 -j5 -c -R -d ".\patch" -M ".\NETScript.meta4"
+    .\bin\aria2c.exe --check-certificate=false -x16 -s16 -j5 -c -R -d ".\patch" -M ".\NETScript.meta4" --metalink-language="neutral"
+    if (!$?) {Write-Error "NETScript Download Failed!"}
+    .\bin\aria2c.exe --check-certificate=false -x16 -s16 -j5 -c -R -d ".\patch" -M ".\NETScript.meta4" --metalink-language="zh-CN"
+    if (!$?) {Write-Error "NETScript Download Failed!"}
 }
 
 # get fod
 if ($null -ne $Miracast) {
     # Microsoft-Windows-WirelessDisplay-FOD-Package~31bf3856ad364e35~amd64~~.cab
     .\bin\aria2c.exe --check-certificate=false -x16 -s16 -d ".\fod\Miracast\" -o "update.cab" "$Miracast"
+    if (!$?) {Write-Error "Miracast Download Failed!"}
     expand -f:* ".\fod\Miracast\update.cab" ".\fod\Miracast\"
     # Microsoft-Windows-WirelessDisplay-FOD-Package~31bf3856ad364e35~amd64~zh-CN~.cab
     .\bin\aria2c.exe --check-certificate=false -x16 -s16 -d ".\fod\MiracastLP\" -o "update.cab" "$MiracastLP"
+    if (!$?) {Write-Error "MiracastLP Download Failed!"}
     expand -f:* ".\fod\Miracast\update.cab" ".\fod\MiracastLP\"
 }
 if ($null -ne $iexplorer) {
     # microsoft-windows-internetexplorer-optional-package~31bf3856ad364e35~amd64~~.cab
     .\bin\aria2c.exe --check-certificate=false -x16 -s16 -d ".\fod\iexplorer\" -o "update.cab" "$iexplorer"
+    if (!$?) {Write-Error "iexplorer Download Failed!"}
     expand -f:* ".\fod\iexplorer\update.cab" ".\fod\iexplorer\"
 }
 
