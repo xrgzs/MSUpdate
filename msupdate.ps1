@@ -1,10 +1,22 @@
 ﻿$ErrorActionPreference = 'Stop'
 
-$WUScript = "https://raw.githubusercontent.com/adavak/Win_ISO_Patching_Scripts/master/Scripts/netfx4.8.1/script_netfx4.8.1_19041_x64.meta4"
-$NETScript = "https://raw.githubusercontent.com/adavak/Win_ISO_Patching_Scripts/master/Scripts/script_19041_x64.meta4"
-$Miracast = "https://file.uhsea.com/2404/fa949c449de5880ea5e0648e16aa802a43.cab"
-$MiracastLP = "https://file.uhsea.com/2404/907cdd078f41d9b8ca0615b5c1557790S1.cab"
-$ospath = "/系统/MSDN/NT10.0_Win10/19045_22H2/2006_RTM/zh-cn_windows_10_business_editions_version_22h2_x64_dvd_037e269d.iso"
+if ($makeversion -eq "w1064") {
+    # make1064
+    # $WUScript = "https://raw.githubusercontent.com/adavak/Win_ISO_Patching_Scripts/master/Scripts/netfx4.8.1/script_netfx4.8.1_19041_x64.meta4"
+    # $NETScript = "https://raw.githubusercontent.com/adavak/Win_ISO_Patching_Scripts/master/Scripts/script_19041_x64.meta4"
+    # $Miracast = "https://file.uhsea.com/2404/fa949c449de5880ea5e0648e16aa802a43.cab"
+    # $MiracastLP = "https://file.uhsea.com/2404/907cdd078f41d9b8ca0615b5c1557790S1.cab"
+    # $ospath = "/系统/MSDN/NT10.0_Win10/19045_22H2/2006_RTM/zh-cn_windows_10_business_editions_version_22h2_x64_dvd_037e269d.iso"
+} elseif ($makeversion -eq "w1164") {
+    # make1164
+    $NETScript = "https://raw.githubusercontent.com/adavak/Win_ISO_Patching_Scripts/master/Scripts/script_22621_x64.meta4"
+    $Miracast = "https://file.uhsea.com/2404/9dee091435ee149c1f6207f70fb46a6a7U.cab"
+    $MiracastLP = "https://file.uhsea.com/2404/9f8486cf6b5fe60d7f0fff1777715b8cW0.cab"
+    $iexplorer = "https://file.uhsea.com/2404/0d0a81d87b97263a9745229c715b849bKF.cab"
+    $ospath = "/系统/MSDN/NT10.0_Win11/22631_23H2/2428_RTM/zh-cn_windows_11_business_editions_version_23h2_x64_dvd_2a79e0f1.iso"
+} else {
+    Write-Error "Not defined or Unsupported OS version"
+}
 
 # remove temporaty files
 Remove-Item -Path ".\temp\" -Recurse -ErrorAction Ignore
@@ -41,17 +53,27 @@ if (-not (Test-Path -Path ".\bin\PSFExtractor.exe")) {
 
 # get wupatch
 Invoke-WebRequest -Uri "$WUScript" -OutFile ".\WUScript.meta4"
-Invoke-WebRequest -Uri "$NETScript" -OutFile ".\NETScript.meta4"
 .\bin\aria2c.exe --check-certificate=false -x16 -s16 -j5 -c -R -d ".\patch" -M ".\WUScript.meta4"
-.\bin\aria2c.exe --check-certificate=false -x16 -s16 -j5 -c -R -d ".\patch" -M ".\NETScript.meta4"
+if ($null -ne $NETScript) {
+    Invoke-WebRequest -Uri "$NETScript" -OutFile ".\NETScript.meta4"
+    .\bin\aria2c.exe --check-certificate=false -x16 -s16 -j5 -c -R -d ".\patch" -M ".\NETScript.meta4"
+}
 
 # get fod
-# Microsoft-Windows-WirelessDisplay-FOD-Package~31bf3856ad364e35~amd64~~.cab
-.\bin\aria2c.exe --check-certificate=false -x16 -s16 -d ".\fod\Miracast\" -o "update.cab" "$Miracast"
-expand -f:* ".\fod\Miracast\update.cab" ".\fod\Miracast\"
-# Microsoft-Windows-WirelessDisplay-FOD-Package~31bf3856ad364e35~amd64~zh-CN~.cab
-.\bin\aria2c.exe --check-certificate=false -x16 -s16 -d ".\fod\MiracastLP\" -o "update.cab" "$MiracastLP"
-expand -f:* ".\fod\Miracast\update.cab" ".\fod\MiracastLP\"
+
+if ($null -ne $Miracast) {
+    # Microsoft-Windows-WirelessDisplay-FOD-Package~31bf3856ad364e35~amd64~~.cab
+    .\bin\aria2c.exe --check-certificate=false -x16 -s16 -d ".\fod\Miracast\" -o "update.cab" "$Miracast"
+    expand -f:* ".\fod\Miracast\update.cab" ".\fod\Miracast\"
+    # Microsoft-Windows-WirelessDisplay-FOD-Package~31bf3856ad364e35~amd64~zh-CN~.cab
+    .\bin\aria2c.exe --check-certificate=false -x16 -s16 -d ".\fod\MiracastLP\" -o "update.cab" "$MiracastLP"
+    expand -f:* ".\fod\Miracast\update.cab" ".\fod\MiracastLP\"
+}
+if ($null -ne $iexplorer) {
+    # microsoft-windows-internetexplorer-optional-package~31bf3856ad364e35~amd64~~.cab
+    .\bin\aria2c.exe --check-certificate=false -x16 -s16 -d ".\fod\iexplorer\" -o "update.cab" "$iexplorer"
+    expand -f:* ".\fod\iexplorer\update.cab" ".\fod\iexplorer\"
+}
 
 # get msstore
 .\getappx.ps1
@@ -140,8 +162,13 @@ echo ============================================================
 
 echo current dir: %cd%
 
-%_dism2%:`"!_cabdir!`" %dismtarget% /Add-Package /PackagePath:`"%~dp0fod\Miracast\update.mum`"
-%_dism2%:`"!_cabdir!`" %dismtarget% /Add-Package /PackagePath:`"%~dp0fod\MiracastLP\update.mum`"
+if exist `"%~dp0fod\Miracast\update.mum`" (
+    %_dism2%:`"!_cabdir!`" %dismtarget% /Add-Package /PackagePath:`"%~dp0fod\Miracast\update.mum`" 
+    %_dism2%:`"!_cabdir!`" %dismtarget% /Add-Package /PackagePath:`"%~dp0fod\MiracastLP\update.mum`"
+)
+if exist `"%~dp0fod\iexplorer\update.mum`" (
+    %_dism2%:`"!_cabdir!`" %dismtarget% /Add-Package /PackagePath:`"%~dp0fod\iexplorer\update.mum`" 
+)
 
 echo.
 echo ============================================================

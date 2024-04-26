@@ -30,4 +30,5 @@ jobs:
       - name: Big Task
         shell: pwsh
         run: |
+          $makeversion = "w1164"
           .\msupdate.ps1
