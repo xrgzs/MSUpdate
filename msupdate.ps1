@@ -39,9 +39,8 @@ if ($makeversion -eq "w1164") {
 } elseif ($makeversion -eq "w10lt2164") {
     # make 10 ltsc2021 64
     $ospath = "/系统/MSDN/NT10.0_Win10/19044_LTSC2021/zh-cn_windows_10_enterprise_ltsc_2021_x64_dvd_033b7312.iso"
-    $WUScript = "https://raw.githubusercontent.com/adavak/Win_ISO_Patching_Scripts/master/Scripts/netfx4.8.1/script_netfx4.8.1_19041_x64.meta4"
-    $NETScript = "https://raw.githubusercontent.com/adavak/Win_ISO_Patching_Scripts/master/Scripts/script_19041_x64.meta4"
-    $WUScript = "https://raw.githubusercontent.com/adavak/Win_ISO_Patching_Scripts/master/Scripts/script_17763_x64.meta4"
+    $NETScript = "https://raw.githubusercontent.com/adavak/Win_ISO_Patching_Scripts/master/Scripts/netfx4.8.1/script_netfx4.8.1_19041_x64.meta4"
+    $WUScript = "https://raw.githubusercontent.com/adavak/Win_ISO_Patching_Scripts/master/Scripts/script_19041_x64.meta4"
 } elseif ($makeversion -eq "w10lt1964") {
     # make 10 ltsc2019 64
     $ospath = "/系统/MSDN/NT10.0_Win10/17763_LTSC2019/cn_windows_10_enterprise_ltsc_2019_x64_dvd_9c09ff24.iso"
