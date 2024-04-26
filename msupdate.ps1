@@ -196,7 +196,10 @@ Drv_Source    =\Drivers
 " | Out-File -FilePath ".\W10UI.ini"
 
 # write hook script
-"echo.
+"
+if exist `"!mountdir!\Windows\Servicing\Packages\*WinPE-LanguagePack*.mum`" exit /b
+
+echo.
 echo ============================================================
 echo Enable Features...
 echo ============================================================
@@ -206,6 +209,7 @@ echo ============================================================
 %_dism2%:`"!_cabdir!`" %dismtarget% /Enable-Feature:TFTP
 %_dism2%:`"!_cabdir!`" %dismtarget% /Enable-Feature:TelnetClient
 
+echo.
 echo ============================================================
 echo Adding Features on Demands...
 echo ============================================================
