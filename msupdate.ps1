@@ -1,19 +1,56 @@
 ﻿$ErrorActionPreference = 'Stop'
-$SelectEdition = "Professional"
-if ($makeversion -eq "w1064") {
-    # make1064
-    # $WUScript = "https://raw.githubusercontent.com/adavak/Win_ISO_Patching_Scripts/master/Scripts/netfx4.8.1/script_netfx4.8.1_19041_x64.meta4"
-    # $NETScript = "https://raw.githubusercontent.com/adavak/Win_ISO_Patching_Scripts/master/Scripts/script_19041_x64.meta4"
-    # $Miracast = "https://file.uhsea.com/2404/fa949c449de5880ea5e0648e16aa802a43.cab"
-    # $MiracastLP = "https://file.uhsea.com/2404/907cdd078f41d9b8ca0615b5c1557790S1.cab"
-    # $ospath = "/系统/MSDN/NT10.0_Win10/19045_22H2/2006_RTM/zh-cn_windows_10_business_editions_version_22h2_x64_dvd_037e269d.iso"
-} elseif ($makeversion -eq "w1164") {
-    # make1164
+if ($makeversion -eq "w1164") {
+    # make 11 23h2 64
+    $ospath = "/系统/MSDN/NT10.0_Win11/22631_23H2/2428_RTM/zh-cn_windows_11_business_editions_version_23h2_x64_dvd_2a79e0f1.iso"
     $WUScript = "https://raw.githubusercontent.com/adavak/Win_ISO_Patching_Scripts/master/Scripts/script_22621_x64.meta4"
     $Miracast = "https://file.uhsea.com/2404/9dee091435ee149c1f6207f70fb46a6a7U.cab"
     $MiracastLP = "https://file.uhsea.com/2404/9f8486cf6b5fe60d7f0fff1777715b8cW0.cab"
     $iexplorer = "https://file.uhsea.com/2404/0d0a81d87b97263a9745229c715b849bKF.cab"
+    $msstore = $true
+    $SelectEdition = "Professional"
+} if ($makeversion -eq "w1164uup") {
+    # make 11 23h2 64 (updates from uupdump)
     $ospath = "/系统/MSDN/NT10.0_Win11/22631_23H2/2428_RTM/zh-cn_windows_11_business_editions_version_23h2_x64_dvd_2a79e0f1.iso"
+    $uupid = ((Invoke-WebRequest -Uri "https://uupdump.net/known.php?q=category:w11-23h2").Links.href | Where-Object {$_ -like "selectlang.php?id=*"})[0].replace("selectlang.php?id=","")
+    $WUScript = "https://uupdump.net/get.php?id=$uupid&pack=0&edition=updateOnly&aria2=2"
+    $Miracast = "https://file.uhsea.com/2404/9dee091435ee149c1f6207f70fb46a6a7U.cab"
+    $MiracastLP = "https://file.uhsea.com/2404/9f8486cf6b5fe60d7f0fff1777715b8cW0.cab"
+    $iexplorer = "https://file.uhsea.com/2404/0d0a81d87b97263a9745229c715b849bKF.cab"
+    $msstore = $true
+    $SelectEdition = "Professional"
+} elseif ($makeversion -eq "w1064") {
+    # make 10 22h2 64
+    $ospath = "/系统/MSDN/NT10.0_Win10/19045_22H2/2006_RTM/zh-cn_windows_10_business_editions_version_22h2_x64_dvd_037e269d.iso"
+    $WUScript = "https://raw.githubusercontent.com/adavak/Win_ISO_Patching_Scripts/master/Scripts/netfx4.8.1/script_netfx4.8.1_19041_x64.meta4"
+    $NETScript = "https://raw.githubusercontent.com/adavak/Win_ISO_Patching_Scripts/master/Scripts/script_19041_x64.meta4"
+    $Miracast = "https://file.uhsea.com/2404/fa949c449de5880ea5e0648e16aa802a43.cab"
+    $MiracastLP = "https://file.uhsea.com/2404/907cdd078f41d9b8ca0615b5c1557790S1.cab"
+    $msstore = $true
+    $SelectEdition = "Professional"
+} elseif ($makeversion -eq "w1064uup") {
+    # make 10 22h2 64 (updates from uupdump)
+    $ospath = "/系统/MSDN/NT10.0_Win10/19045_22H2/2006_RTM/zh-cn_windows_10_business_editions_version_22h2_x64_dvd_037e269d.iso"
+    $WUScript = "https://raw.githubusercontent.com/adavak/Win_ISO_Patching_Scripts/master/Scripts/netfx4.8.1/script_netfx4.8.1_19041_x64.meta4"
+    $uupid = ((Invoke-WebRequest -Uri "https://uupdump.net/known.php?q=category:w10-22h2").Links | Where-Object {$_.href -like "selectlang.php?id=*"} | Where-Object {$_.outerHTML -like "*amd64*"})[0].href.replace("selectlang.php?id=","")
+    $WUScript = "https://uupdump.net/get.php?id=$uupid&pack=0&edition=updateOnly&aria2=2"
+    $Miracast = "https://file.uhsea.com/2404/fa949c449de5880ea5e0648e16aa802a43.cab"
+    $MiracastLP = "https://file.uhsea.com/2404/907cdd078f41d9b8ca0615b5c1557790S1.cab"
+    $msstore = $true
+    $SelectEdition = "Professional"
+} elseif ($makeversion -eq "w10lt2164") {
+    # make 10 ltsc2021 64
+    $ospath = "/系统/MSDN/NT10.0_Win10/19044_LTSC2021/zh-cn_windows_10_enterprise_ltsc_2021_x64_dvd_033b7312.iso"
+    $WUScript = "https://raw.githubusercontent.com/adavak/Win_ISO_Patching_Scripts/master/Scripts/netfx4.8.1/script_netfx4.8.1_19041_x64.meta4"
+    $NETScript = "https://raw.githubusercontent.com/adavak/Win_ISO_Patching_Scripts/master/Scripts/script_19041_x64.meta4"
+    $WUScript = "https://raw.githubusercontent.com/adavak/Win_ISO_Patching_Scripts/master/Scripts/script_17763_x64.meta4"
+} elseif ($makeversion -eq "w10lt1964") {
+    # make 10 ltsc2019 64
+    $ospath = "/系统/MSDN/NT10.0_Win10/17763_LTSC2019/cn_windows_10_enterprise_ltsc_2019_x64_dvd_9c09ff24.iso"
+    $WUScript = "https://raw.githubusercontent.com/adavak/Win_ISO_Patching_Scripts/master/Scripts/script_17763_x64.meta4"
+} elseif ($makeversion -eq "w10lt1664") {
+    # make 10 ltsb2016 64
+    $ospath = "/系统/MSDN/NT10.0_Win10/14393_LTSB2016/cn_windows_10_enterprise_2016_ltsb_x64_dvd_9060409.iso"
+    $WUScript = "https://raw.githubusercontent.com/adavak/Win_ISO_Patching_Scripts/master/Scripts/script_14393_x64.meta4"
 } else {
     Write-Error "Not defined or Unsupported OS version"
 }
@@ -60,7 +97,6 @@ if ($null -ne $NETScript) {
 }
 
 # get fod
-
 if ($null -ne $Miracast) {
     # Microsoft-Windows-WirelessDisplay-FOD-Package~31bf3856ad364e35~amd64~~.cab
     .\bin\aria2c.exe --check-certificate=false -x16 -s16 -d ".\fod\Miracast\" -o "update.cab" "$Miracast"
@@ -75,8 +111,20 @@ if ($null -ne $iexplorer) {
     expand -f:* ".\fod\iexplorer\update.cab" ".\fod\iexplorer\"
 }
 
-# get msstore
-.\getappx.ps1
+if ($true -eq $msstore) {
+    # get msstore
+    .\getappx.ps1
+    $MSStoreScript = "
+    for %%a in (%~dp0msstore\Microsoft.UI.Xaml.2.*_8wekyb3d8bbwe.Appx) do call :Add-ProvisionedAppxPackage `"%%a`"
+    for %%a in (%~dp0msstore\Microsoft.VCLibs.140.00.UWPDesktop_14.0.*_8wekyb3d8bbwe.Appx) do call :Add-ProvisionedAppxPackage `"%%a`"
+    for %%a in (%~dp0msstore\Microsoft.VCLibs.140.00_14.0.*_8wekyb3d8bbwe.Appx) do call :Add-ProvisionedAppxPackage `"%%a`"
+    for %%a in (%~dp0msstore\Microsoft.NET.Native.Runtime.2.*_8wekyb3d8bbwe.Appx) do call :Add-ProvisionedAppxPackage `"%%a`"
+    for %%a in (%~dp0msstore\Microsoft.NET.Native.Framework.2.*_8wekyb3d8bbwe.Appx) do call :Add-ProvisionedAppxPackage `"%%a`"
+    for %%a in (%~dp0msstore\Microsoft.WindowsStore_*_8wekyb3d8bbwe.Msixbundle) do call :Add-ProvisionedAppxPackage `"%%a`"
+    for %%a in (%~dp0msstore\Microsoft.DesktopAppInstaller_*_8wekyb3d8bbwe.Msixbundle) do call :Add-ProvisionedAppxPackage `"%%a`"
+    "
+}
+
 
 # abbodi1406/W10UI, auto inject hook after resetbase
 (Invoke-WebRequest -Uri "https://raw.githubusercontent.com/abbodi1406/BatUtil/master/W10UI/W10UI.cmd").Content.Replace("if %AddDrivers%==1 call :doDrv","call %~dp0hook.cmd") | Out-File -FilePath ".\W10UI.cmd"
@@ -101,16 +149,18 @@ if ($?) {Write-Host "System Image Download Successfully!"} else {Write-Error "Sy
 ."C:\Program Files\7-Zip\7z.exe" x ".\temp\$osfile" -o".\ISO" -r
 
 # select 1 edition only
-.\bin\wimlib-imagex.exe info ".\ISO\sources\install.wim" --extract-xml ".\temp\WIMInfo.xml"
-$WIMInfo = [xml](Get-Content ".\temp\WIMInfo.xml")
-$WIMIndex = $WIMInfo.WIM.IMAGE | Where-Object {$_.WINDOWS.EDITIONID -eq "$SelectEdition"} | Select-Object -ExpandProperty INDEX
-$WIMIndexs = $WIMInfo.WIM.IMAGE.Index | Measure-Object | Select-Object -ExpandProperty Count
-for ($i = $WIMIndexs; $i -gt $WIMIndex; $i--) {
-    # .\bin\wimlib-imagex.exe delete ".\ISO\sources\install.wim" $i --soft
-    Remove-WindowsImage -ImagePath ".\ISO\sources\install.wim" -Index $i
-}
-for ($i = 1; $i -lt $WIMIndex; $i++) {
-    Remove-WindowsImage -ImagePath ".\ISO\sources\install.wim" -Index 1
+if ($null -ne $SelectEdition) {
+    .\bin\wimlib-imagex.exe info ".\ISO\sources\install.wim" --extract-xml ".\temp\WIMInfo.xml"
+    $WIMInfo = [xml](Get-Content ".\temp\WIMInfo.xml")
+    $WIMIndex = $WIMInfo.WIM.IMAGE | Where-Object {$_.WINDOWS.EDITIONID -eq "$SelectEdition"} | Select-Object -ExpandProperty INDEX
+    $WIMIndexs = $WIMInfo.WIM.IMAGE.Index | Measure-Object | Select-Object -ExpandProperty Count
+    for ($i = $WIMIndexs; $i -gt $WIMIndex; $i--) {
+        # .\bin\wimlib-imagex.exe delete ".\ISO\sources\install.wim" $i --soft
+        Remove-WindowsImage -ImagePath ".\ISO\sources\install.wim" -Index $i
+    }
+    for ($i = 1; $i -lt $WIMIndex; $i++) {
+        Remove-WindowsImage -ImagePath ".\ISO\sources\install.wim" -Index 1
+    }
 }
 
 # write W10UI conf
@@ -175,13 +225,7 @@ echo ============================================================
 echo Updating Microsoft Store...
 echo ============================================================
 
-for %%a in (%~dp0msstore\Microsoft.UI.Xaml.2.*_8wekyb3d8bbwe.Appx) do call :Add-ProvisionedAppxPackage `"%%a`"
-for %%a in (%~dp0msstore\Microsoft.VCLibs.140.00.UWPDesktop_14.0.*_8wekyb3d8bbwe.Appx) do call :Add-ProvisionedAppxPackage `"%%a`"
-for %%a in (%~dp0msstore\Microsoft.VCLibs.140.00_14.0.*_8wekyb3d8bbwe.Appx) do call :Add-ProvisionedAppxPackage `"%%a`"
-for %%a in (%~dp0msstore\Microsoft.NET.Native.Runtime.2.*_8wekyb3d8bbwe.Appx) do call :Add-ProvisionedAppxPackage `"%%a`"
-for %%a in (%~dp0msstore\Microsoft.NET.Native.Framework.2.*_8wekyb3d8bbwe.Appx) do call :Add-ProvisionedAppxPackage `"%%a`"
-for %%a in (%~dp0msstore\Microsoft.WindowsStore_*_8wekyb3d8bbwe.Msixbundle) do call :Add-ProvisionedAppxPackage `"%%a`"
-for %%a in (%~dp0msstore\Microsoft.DesktopAppInstaller_*_8wekyb3d8bbwe.Msixbundle) do call :Add-ProvisionedAppxPackage `"%%a`"
+$MSStoreScript
 
 exit /b
 

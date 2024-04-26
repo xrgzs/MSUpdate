@@ -1,6 +1,18 @@
 on:
-  push:
   workflow_dispatch:
+    inputs:
+      logLevel:
+        description: 'targetOSVersion'
+        required: true
+        type: choice
+        options:
+        - w1164
+        - w1164uup
+        - w1064
+        - w1064uup
+        - w10lt2164
+        - w10lt1964
+        - w10lt1664
 
 jobs:
   msupdate:
@@ -30,5 +42,4 @@ jobs:
       - name: Big Task
         shell: pwsh
         run: |
-          $makeversion = "w1164"
           .\msupdate.ps1
