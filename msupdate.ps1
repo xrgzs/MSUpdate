@@ -80,10 +80,12 @@ if ($?) {Write-Host "System Image Download Successfully!"} else {Write-Error "Sy
 $WIMInfo = [xml](Get-Content ".\temp\WIMInfo.xml")
 $WIMIndex = $WIMInfo.WIM.IMAGE | Where-Object {$_.WINDOWS.EDITIONID -eq "Professional"} | Select-Object -ExpandProperty INDEX
 $WIMIndexs = $WIMInfo.WIM.IMAGE.Index | Measure-Object | Select-Object -ExpandProperty Count
-for ($i = 1; $i -le $WIMIndexs; $i++) {
+$remainingImages = $WIMIndexs
+for ($i = 1; $i -le $remainingImages; $i++) {
     if ($i -ne $WIMIndex) {
-        .\bin\wimlib-imagex.exe delete ".\ISO\sources\install.wim" $i --soft
-        # Remove-WindowsImage -ImagePath ".\ISO\sources\install.wim" -Index $i
+        # .\bin\wimlib-imagex.exe delete ".\ISO\sources\install.wim" $i --soft
+        Remove-WindowsImage -ImagePath ".\ISO\sources\install.wim" -Index $i
+        $remainingImages--
     }
 }
 
