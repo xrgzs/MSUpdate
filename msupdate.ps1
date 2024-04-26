@@ -1,5 +1,11 @@
 ﻿$ErrorActionPreference = 'Stop'
 
+$WUScript = "https://raw.githubusercontent.com/adavak/Win_ISO_Patching_Scripts/master/Scripts/netfx4.8.1/script_netfx4.8.1_19041_x64.meta4"
+$NETScript = "https://raw.githubusercontent.com/adavak/Win_ISO_Patching_Scripts/master/Scripts/script_19041_x64.meta4"
+$Miracast = "https://file.uhsea.com/2404/fa949c449de5880ea5e0648e16aa802a43.cab"
+$MiracastLP = "https://file.uhsea.com/2404/907cdd078f41d9b8ca0615b5c1557790S1.cab"
+$ospath = "/系统/MSDN/NT10.0_Win10/19045_22H2/2006_RTM/zh-cn_windows_10_business_editions_version_22h2_x64_dvd_037e269d.iso"
+
 # remove temporaty files
 Remove-Item -Path ".\temp\" -Recurse -ErrorAction Ignore
 New-Item -Path ".\temp\" -ItemType "directory" -ErrorAction Ignore
@@ -33,9 +39,6 @@ if (-not (Test-Path -Path ".\bin\PSFExtractor.exe")) {
     Expand-Archive -Path .\temp\PSFExtractor.zip -DestinationPath .\bin -Force
 }
 
-$WUScript = "https://raw.githubusercontent.com/adavak/Win_ISO_Patching_Scripts/master/Scripts/netfx4.8.1/script_netfx4.8.1_19041_x64.meta4"
-$NETScript = "https://raw.githubusercontent.com/adavak/Win_ISO_Patching_Scripts/master/Scripts/script_19041_x64.meta4"
-
 # get wupatch
 Invoke-WebRequest -Uri "$WUScript" -OutFile ".\WUScript.meta4"
 Invoke-WebRequest -Uri "$NETScript" -OutFile ".\NETScript.meta4"
@@ -44,10 +47,10 @@ Invoke-WebRequest -Uri "$NETScript" -OutFile ".\NETScript.meta4"
 
 # get fod
 # Microsoft-Windows-WirelessDisplay-FOD-Package~31bf3856ad364e35~amd64~~.cab
-.\bin\aria2c.exe --check-certificate=false -x16 -s16 -d ".\fod\Miracast\" -o "update.cab" "https://file.uhsea.com/2404/fa949c449de5880ea5e0648e16aa802a43.cab"
+.\bin\aria2c.exe --check-certificate=false -x16 -s16 -d ".\fod\Miracast\" -o "update.cab" "$Miracast"
 expand -f:* ".\fod\Miracast\update.cab" ".\fod\Miracast\"
 # Microsoft-Windows-WirelessDisplay-FOD-Package~31bf3856ad364e35~amd64~zh-CN~.cab
-.\bin\aria2c.exe --check-certificate=false -x16 -s16 -d ".\fod\MiracastLP\" -o "update.cab" "https://file.uhsea.com/2404/907cdd078f41d9b8ca0615b5c1557790S1.cab"
+.\bin\aria2c.exe --check-certificate=false -x16 -s16 -d ".\fod\MiracastLP\" -o "update.cab" "$MiracastLP"
 expand -f:* ".\fod\Miracast\update.cab" ".\fod\MiracastLP\"
 
 # get msstore
@@ -62,7 +65,7 @@ $obj = (Invoke-WebRequest -UseBasicParsing -Uri "https://alist.xrgzs.top/api/fs/
 -Method "POST" `
 -ContentType "application/json;charset=UTF-8" `
 -Body (@{
-    path = "/系统/MSDN/NT10.0_Win10/19045_22H2/2006_RTM/zh-cn_windows_10_business_editions_version_22h2_x64_dvd_037e269d.iso"
+    path = $ospath
     password = ""
 } | Convertto-Json)).Content | ConvertFrom-Json
 $osurl = $obj.data.raw_url
@@ -96,11 +99,11 @@ DismRoot      =dism.exe
 
 Net35         =1
 Net35Source   =
-Cleanup       =0
-ResetBase     =0
+Cleanup       =1
+ResetBase     =1
 LCUwinre      =1
 WinRE         =1
-UpdtBootFiles =0
+UpdtBootFiles =1
 SkipEdge      =0
 UseWimlib     =1
 
@@ -108,7 +111,7 @@ _CabDir       =W10UItemp
 MountDir      =W10UImount
 WinreMount    =W10UImountre
 
-wim2esd       =0
+wim2esd       =1
 wim2swm       =0
 ISO           =1
 ISODir        =
