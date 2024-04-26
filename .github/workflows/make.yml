@@ -1,5 +1,5 @@
 name: MSUpdate
-run-name: Make MSUpdate ${{ inputs.options }} by @${{ github.actor }}
+run-name: Make MSUpdate ${{ inputs.makeversion }} by @${{ github.actor }}
 on:
   workflow_dispatch:
     inputs:
