@@ -1,3 +1,4 @@
+name: MSUpdate
 run-name: Make MSUpdate ${{ inputs.options }} by @${{ github.actor }}
 on:
   workflow_dispatch:
