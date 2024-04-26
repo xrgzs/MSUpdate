@@ -50,6 +50,9 @@ expand -f:* ".\fod\Miracast\update.cab" ".\fod\Miracast\"
 .\bin\aria2c.exe --check-certificate=false -x16 -s16 -d ".\fod\MiracastLP\" -o "update.cab" "https://file.uhsea.com/2404/907cdd078f41d9b8ca0615b5c1557790S1.cab"
 expand -f:* ".\fod\Miracast\update.cab" ".\fod\MiracastLP\"
 
+# get msstore
+.\getappx.ps1
+
 # abbodi1406/W10UI, auto inject hook after resetbase
 (Invoke-WebRequest -Uri "https://raw.githubusercontent.com/abbodi1406/BatUtil/master/W10UI/W10UI.cmd").Content.Replace("if %AddDrivers%==1 call :doDrv","call %~dp0hook.cmd") | Out-File -FilePath ".\W10UI.cmd"
 
@@ -73,10 +76,9 @@ if ($?) {Write-Host "System Image Download Successfully!"} else {Write-Error "Sy
 ."C:\Program Files\7-Zip\7z.exe" x ".\temp\$osfile" -o".\ISO" -r
 
 # select professional edition only
-$WIMEditionID = "Professional"
 .\bin\wimlib-imagex.exe info ".\ISO\sources\install.wim" --extract-xml ".\temp\WIMInfo.xml"
 $WIMInfo = [xml](Get-Content ".\temp\WIMInfo.xml")
-$WIMIndex = $WIMInfo.WIM.IMAGE | Where-Object {$_.WINDOWS.EDITIONID -eq $WIMEditionID} | Select-Object -ExpandProperty INDEX
+$WIMIndex = $WIMInfo.WIM.IMAGE | Where-Object {$_.WINDOWS.EDITIONID -eq "Professional"} | Select-Object -ExpandProperty INDEX
 $WIMIndexs = $WIMInfo.WIM.IMAGE.Index | Measure-Object | Select-Object -ExpandProperty Count
 for ($i = 1; $i -le $WIMIndexs; $i++) {
     if ($i -ne $WIMIndex) {
@@ -142,13 +144,13 @@ echo ============================================================
 echo Updating Microsoft Store...
 echo ============================================================
 
-@rem for %%a in (%~dp0msstore\Microsoft.UI.Xaml.2.*_8wekyb3d8bbwe.Appx) do call :Add-ProvisionedAppxPackage `"%%a`"
-@rem ffor %%a in (%~dp0msstore\Microsoft.VCLibs.140.00.UWPDesktop_14.0.*_8wekyb3d8bbwe.Appx) do call :Add-ProvisionedAppxPackage `"%%a`"
-@rem ffor %%a in (%~dp0msstore\Microsoft.VCLibs.140.00_14.0.*_8wekyb3d8bbwe.Appx) do call :Add-ProvisionedAppxPackage `"%%a`"
-@rem ffor %%a in (%~dp0msstore\Microsoft.NET.Native.Runtime.2.*_8wekyb3d8bbwe.Appx) do call :Add-ProvisionedAppxPackage `"%%a`"
-@rem ffor %%a in (%~dp0msstore\Microsoft.NET.Native.Framework.2.*_8wekyb3d8bbwe.Appx) do call :Add-ProvisionedAppxPackage `"%%a`"
-@rem ffor %%a in (%~dp0msstore\Microsoft.WindowsStore_*_8wekyb3d8bbwe.Msixbundle) do call :Add-ProvisionedAppxPackage `"%%a`"
-@rem ffor %%a in (%~dp0msstore\Microsoft.DesktopAppInstaller_*_8wekyb3d8bbwe.Msixbundle) do call :Add-ProvisionedAppxPackage `"%%a`"
+for %%a in (%~dp0msstore\Microsoft.UI.Xaml.2.*_8wekyb3d8bbwe.Appx) do call :Add-ProvisionedAppxPackage `"%%a`"
+for %%a in (%~dp0msstore\Microsoft.VCLibs.140.00.UWPDesktop_14.0.*_8wekyb3d8bbwe.Appx) do call :Add-ProvisionedAppxPackage `"%%a`"
+for %%a in (%~dp0msstore\Microsoft.VCLibs.140.00_14.0.*_8wekyb3d8bbwe.Appx) do call :Add-ProvisionedAppxPackage `"%%a`"
+for %%a in (%~dp0msstore\Microsoft.NET.Native.Runtime.2.*_8wekyb3d8bbwe.Appx) do call :Add-ProvisionedAppxPackage `"%%a`"
+for %%a in (%~dp0msstore\Microsoft.NET.Native.Framework.2.*_8wekyb3d8bbwe.Appx) do call :Add-ProvisionedAppxPackage `"%%a`"
+for %%a in (%~dp0msstore\Microsoft.WindowsStore_*_8wekyb3d8bbwe.Msixbundle) do call :Add-ProvisionedAppxPackage `"%%a`"
+for %%a in (%~dp0msstore\Microsoft.DesktopAppInstaller_*_8wekyb3d8bbwe.Msixbundle) do call :Add-ProvisionedAppxPackage `"%%a`"
 
 exit /b
 
