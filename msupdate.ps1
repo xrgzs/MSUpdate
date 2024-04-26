@@ -1,5 +1,5 @@
 ﻿$ErrorActionPreference = 'Stop'
-
+$SelectEdition = "Professional"
 if ($makeversion -eq "w1064") {
     # make1064
     # $WUScript = "https://raw.githubusercontent.com/adavak/Win_ISO_Patching_Scripts/master/Scripts/netfx4.8.1/script_netfx4.8.1_19041_x64.meta4"
@@ -9,7 +9,7 @@ if ($makeversion -eq "w1064") {
     # $ospath = "/系统/MSDN/NT10.0_Win10/19045_22H2/2006_RTM/zh-cn_windows_10_business_editions_version_22h2_x64_dvd_037e269d.iso"
 } elseif ($makeversion -eq "w1164") {
     # make1164
-    $NETScript = "https://raw.githubusercontent.com/adavak/Win_ISO_Patching_Scripts/master/Scripts/script_22621_x64.meta4"
+    $WUScript = "https://raw.githubusercontent.com/adavak/Win_ISO_Patching_Scripts/master/Scripts/script_22621_x64.meta4"
     $Miracast = "https://file.uhsea.com/2404/9dee091435ee149c1f6207f70fb46a6a7U.cab"
     $MiracastLP = "https://file.uhsea.com/2404/9f8486cf6b5fe60d7f0fff1777715b8cW0.cab"
     $iexplorer = "https://file.uhsea.com/2404/0d0a81d87b97263a9745229c715b849bKF.cab"
@@ -100,10 +100,10 @@ if ($?) {Write-Host "System Image Download Successfully!"} else {Write-Error "Sy
 # Target        =${isomount}:
 ."C:\Program Files\7-Zip\7z.exe" x ".\temp\$osfile" -o".\ISO" -r
 
-# select professional edition only
+# select 1 edition only
 .\bin\wimlib-imagex.exe info ".\ISO\sources\install.wim" --extract-xml ".\temp\WIMInfo.xml"
 $WIMInfo = [xml](Get-Content ".\temp\WIMInfo.xml")
-$WIMIndex = $WIMInfo.WIM.IMAGE | Where-Object {$_.WINDOWS.EDITIONID -eq "Professional"} | Select-Object -ExpandProperty INDEX
+$WIMIndex = $WIMInfo.WIM.IMAGE | Where-Object {$_.WINDOWS.EDITIONID -eq "$SelectEdition"} | Select-Object -ExpandProperty INDEX
 $WIMIndexs = $WIMInfo.WIM.IMAGE.Index | Measure-Object | Select-Object -ExpandProperty Count
 for ($i = $WIMIndexs; $i -gt $WIMIndex; $i--) {
     # .\bin\wimlib-imagex.exe delete ".\ISO\sources\install.wim" $i --soft
