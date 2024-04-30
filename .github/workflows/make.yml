@@ -1,5 +1,5 @@
 name: MSUpdate
-run-name: Make MSUpdate ${{ inputs.makeversion }} by @${{ github.actor }}
+run-name: Make MSUpdate ${{ inputs.makeversion }} by @${{ github.actor }} ${{ inputs.UpdateFromUUP == true && '- UUP' }} ${{ inputs.MultiEdition == true && '- Multi' }}
 on:
   workflow_dispatch:
     inputs:
@@ -16,11 +16,13 @@ on:
       UpdateFromUUP:
         description: 'Update from UUP'
         required: false
+        default: false
         type: boolean
       MultiEdition:
-          description: 'Convert Multi-Editions'
-          required: false
-          type: boolean
+        description: 'Convert Multi-Editions'
+        required: false
+        default: true
+        type: boolean
 
 jobs:
   msupdate:
