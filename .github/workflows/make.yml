@@ -31,13 +31,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Get rclone Config
-        uses: actions/checkout@v4
-        with:
-          repository: ${{ vars.RCLONE_REPO }}
-          token: ${{ secrets.RCLONE_TOKEN }}
-          path: bin
-
       - name: Change DNS Server
         shell: pwsh
         run: |
@@ -56,6 +49,13 @@ jobs:
           $UpdateFromUUP = [bool]   "${{ inputs.UpdateFromUUP }}"
           $MultiEdition  = [bool]   "${{ inputs.MultiEdition }}"
           .\msupdate.ps1
+
+      - name: Get rclone Config
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ vars.RCLONE_REPO }}
+          token: ${{ secrets.RCLONE_TOKEN }}
+          path: bin
 
       - name: Upload ISO to OneDrive
         shell: pwsh
