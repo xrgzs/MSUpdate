@@ -345,6 +345,7 @@ call :makemulti Enterprise
 call :makemulti IoTEnterprise
 if exist `"%~dp0entg\update.mum`" call :makeEntG
 if exist `"%~dp0entg\update.mum`" call :makemulti EnterpriseG
+call :editMultiSKU
 
 set discard=1
 EXIT /B
