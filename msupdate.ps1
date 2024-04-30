@@ -98,6 +98,7 @@ switch ($MakeVersion) {
 # remove temporaty files
 Remove-Item -Path ".\temp\" -Recurse -ErrorAction Ignore
 New-Item -Path ".\temp\" -ItemType "directory" -ErrorAction Ignore
+New-Item -Path ".\bin\" -ItemType "directory" -ErrorAction Ignore
 
 # Installing dependencies
 if (-not (Test-Path -Path ".\bin\aria2c.exe")) {
