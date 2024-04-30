@@ -9,12 +9,18 @@ on:
         type: choice
         options:
           - w1164
-          - w1164uup
           - w1064
-          - w1064uup
           - w10lt2164
           - w10lt1964
           - w10lt1664
+      UpdateFromUUP:
+        description: 'Get Updates from UUPDUMP'
+        required: false
+        type: boolean
+      MultiEdition:
+          description: 'Make Multi Edition'
+          required: true
+          type: boolean
 
 jobs:
   msupdate:
@@ -44,5 +50,7 @@ jobs:
       - name: Big Task
         shell: pwsh
         run: |
-          $makeversion = "${{ inputs.makeversion }}"
+          $MakeVersion   = [string] "${{ inputs.MakeVersion }}"
+          $UpdateFromUUP = [bool]   "${{ inputs.UpdateFromUUP }}"
+          $MultiEdition  = [bool]   "${{ inputs.MultiEdition }}"
           .\msupdate.ps1
