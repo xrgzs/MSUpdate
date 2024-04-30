@@ -211,19 +211,19 @@ if ($?) {Write-Host "System Image Download Successfully!"} else {Write-Error "Sy
 ."C:\Program Files\7-Zip\7z.exe" x ".\temp\$osfile" -o".\ISO" -r
 
 # select 1 edition only
-if ($null -ne $SelectEdition) {
-    .\bin\wimlib-imagex.exe info ".\ISO\sources\install.wim" --extract-xml ".\temp\WIMInfo.xml"
-    $WIMInfo = [xml](Get-Content ".\temp\WIMInfo.xml")
-    $WIMIndex = $WIMInfo.WIM.IMAGE | Where-Object {$_.WINDOWS.EDITIONID -eq "$SelectEdition"} | Select-Object -ExpandProperty INDEX
-    $WIMIndexs = $WIMInfo.WIM.IMAGE.Index | Measure-Object | Select-Object -ExpandProperty Count
-    for ($i = $WIMIndexs; $i -gt $WIMIndex; $i--) {
-        # .\bin\wimlib-imagex.exe delete ".\ISO\sources\install.wim" $i --soft
-        Remove-WindowsImage -ImagePath ".\ISO\sources\install.wim" -Index $i
-    }
-    for ($i = 1; $i -lt $WIMIndex; $i++) {
-        Remove-WindowsImage -ImagePath ".\ISO\sources\install.wim" -Index 1
-    }
-}
+# if ($null -ne $SelectEdition) {
+#     .\bin\wimlib-imagex.exe info ".\ISO\sources\install.wim" --extract-xml ".\temp\WIMInfo.xml"
+#     $WIMInfo = [xml](Get-Content ".\temp\WIMInfo.xml")
+#     $WIMIndex = $WIMInfo.WIM.IMAGE | Where-Object {$_.WINDOWS.EDITIONID -eq "$SelectEdition"} | Select-Object -ExpandProperty INDEX
+#     $WIMIndexs = $WIMInfo.WIM.IMAGE.Index | Measure-Object | Select-Object -ExpandProperty Count
+#     for ($i = $WIMIndexs; $i -gt $WIMIndex; $i--) {
+#         # .\bin\wimlib-imagex.exe delete ".\ISO\sources\install.wim" $i --soft
+#         Remove-WindowsImage -ImagePath ".\ISO\sources\install.wim" -Index $i
+#     }
+#     for ($i = 1; $i -lt $WIMIndex; $i++) {
+#         Remove-WindowsImage -ImagePath ".\ISO\sources\install.wim" -Index 1
+#     }
+# }
 
 .\bin\wimlib-imagex.exe info ".\ISO\sources\install.wim" --extract-xml ".\temp\WIMInfo2.xml"
 Get-Content ".\temp\WIMInfo2.xml"
