@@ -186,7 +186,7 @@ if ($true -eq $msstore) {
 
 # abbodi1406/W10UI, auto inject hook after resetbase
 (Invoke-WebRequest -Uri "https://raw.githubusercontent.com/abbodi1406/BatUtil/master/W10UI/W10UI.cmd").Content.
-Replace("if %AddDrivers%==1 call :doDrv","call %~dp0hook.cmd"). | Out-File -FilePath ".\W10UI.cmd"
+Replace("if %AddDrivers%==1 call :doDrv","call %~dp0hook.cmd") | Out-File -FilePath ".\W10UI.cmd"
 
 # get osimage
 # get original system direct link
