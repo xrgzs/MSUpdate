@@ -31,7 +31,7 @@ switch ($MakeVersion) {
     "w1064" {
         # make 10 22h2 64
         try {
-            $oslink = (Invoke-WebRequest -Uri "https://api.gravesoft.dev/msdl/proxy?product_id=2378&sku_id=15004").Links | Where-Object {$_.outerHTML -like "*Isox64 Download*"} | Select-Object -ExpandProperty href
+            $oslink = ((Invoke-WebRequest -Uri "https://api.gravesoft.dev/msdl/proxy?product_id=2378&sku_id=15004").Links | Where-Object {$_.outerHTML -like "*Isox64 Download*"})[0].href
             $osfile = "Win10_22H2_China_GGK_Chinese_Simplified_x64.iso"
         }
         catch {
