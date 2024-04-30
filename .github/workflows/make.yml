@@ -34,7 +34,7 @@ jobs:
       - name: Get rclone Config
         uses: actions/checkout@v4
         with:
-          repository: xrgzs/rclone-action
+          repository: ${{ vars.RCLONE_REPO }}
           token: ${{ secrets.RCLONE_TOKEN }}
           path: bin
 
@@ -56,3 +56,21 @@ jobs:
           $UpdateFromUUP = [bool]   "${{ inputs.UpdateFromUUP }}"
           $MultiEdition  = [bool]   "${{ inputs.MultiEdition }}"
           .\msupdate.ps1
+
+      - name: Upload ISO to OneDrive
+        shell: pwsh
+        run: |
+          # Installing dependencies
+          if (-not (Test-Path -Path ".\bin\rclone.conf")) {
+              Write-Error "rclone conf not found"
+          }
+          if (-not (Test-Path -Path ".\bin\rclone.exe")) {
+            Write-Host "rclone not found, downloading..."
+            Invoke-WebRequest -Uri 'https://downloads.rclone.org/rclone-current-windows-amd64.zip' -outfile .\temp\rclone.zip
+            Expand-Archive -Path .\temp\rclone.zip -DestinationPath .\temp\ -Force
+            Copy-Item -Path .\temp\rclone-*-windows-amd64\rclone.exe -Destination .\bin\rclone.exe
+          }
+          # upload to cloud
+          Get-ChildItem -Path "./*.iso" -File | ForEach-Object {
+            .\bin\rclone.exe copy $_.FullName "${{ vars.RCLONE_PATH }}" --progress
+          }

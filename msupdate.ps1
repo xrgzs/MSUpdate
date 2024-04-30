@@ -100,15 +100,6 @@ Remove-Item -Path ".\temp\" -Recurse -ErrorAction Ignore
 New-Item -Path ".\temp\" -ItemType "directory" -ErrorAction Ignore
 
 # Installing dependencies
-if (-not (Test-Path -Path ".\bin\rclone.conf")) {
-    Write-Error "rclone conf not found"
-}
-if (-not (Test-Path -Path ".\bin\rclone.exe")) {
-    Write-Host "rclone not found, downloading..."
-    Invoke-WebRequest -Uri 'https://downloads.rclone.org/rclone-current-windows-amd64.zip' -outfile .\temp\rclone.zip
-    Expand-Archive -Path .\temp\rclone.zip -DestinationPath .\temp\ -Force
-    Copy-Item -Path .\temp\rclone-*-windows-amd64\rclone.exe -Destination .\bin\rclone.exe
-}
 if (-not (Test-Path -Path ".\bin\aria2c.exe")) {
     Write-Host "aria2c not found, downloading..."
     Invoke-WebRequest -Uri 'https://github.com/aria2/aria2/releases/download/release-1.37.0/aria2-1.37.0-win-64bit-build1.zip' -outfile .\temp\aria2.zip
@@ -453,14 +444,14 @@ COPY /Y `"!mountdir!\Windows\System32\Licenses\neutral\Volume\Professional\*.*`"
 goto :EOF
 
 :editMultiSKU
-for /F `"tokens=3`" %%a in ('!_wimlib! info %_wimfile% ^| findstr /C:`"Image Count:`"') do set `"ImageCount=%%a`"
+for /F `"tokens=3`" %%a in ('%_wimlib% info %_wimfile% ^| findstr /C:`"Image Count:`"') do set `"ImageCount=%%a`"
 echo Image Count is: %ImageCount%
 for /L %%a in (1,1,%ImageCount%) do call :editwiminfo %%a
 
 goto :EOF
 
 :readwiminfo
-for /f `"tokens=1,2 delims=:`" %%a in ('!_wimlib! info %_wimfile% %1 ^| find /i %2') do (for /f `"tokens=*`" %%c in (`"%%b`") do (set `"%%a=%%c`"))
+for /f `"tokens=1,2 delims=:`" %%a in ('%_wimlib% info %_wimfile% %1 ^| find /i %2') do (for /f `"tokens=*`" %%c in (`"%%b`") do (set `"%%a=%%c`"))
 goto :EOF
 
 :editwiminfo
@@ -488,15 +479,10 @@ echo DISPLAYNAME: Windows %Major Version% %CNEDITION%
 echo DISPLAYDESCRIPTION: Windows %Major Version% %CNEDITION%
 echo FLAGS: %Edition ID%
 echo ============================================================
-!_wimlib! info %_wimfile% %1 `"Windows %Major Version% %Edition ID%`" `"Windows %Major Version% %Edition ID%`" --image-property `"DISPLAYNAME`"=`"Windows %Major Version% %CNEDITION%`" --image-property `"DISPLAYDESCRIPTION`"=`"Windows %Major Version% %CNEDITION%`" --image-property `"FLAGS`"=`"%Edition ID%`" >nul
+%_wimlib% info %_wimfile% %1 `"Windows %Major Version% %Edition ID%`" `"Windows %Major Version% %Edition ID%`" --image-property `"DISPLAYNAME`"=`"Windows %Major Version% %CNEDITION%`" --image-property `"DISPLAYDESCRIPTION`"=`"Windows %Major Version% %CNEDITION%`" --image-property `"FLAGS`"=`"%Edition ID%`" >nul
 goto :EOF
 
 " | Out-File -FilePath ".\hook.cmd"
 
 # execute W10UI script
 .\bin\NSudoLC.exe -Wait -U:T -P:E -CurrentDirectory:. -UseCurrentConsole .\W10UI.cmd
-
-# upload to cloud
-Get-ChildItem -Path "./*.iso" -File | ForEach-Object {
-    .\bin\rclone.exe copy $_.FullName "odb:/Share/Xiaoran Studio/System/Nightly" --progress
-}
