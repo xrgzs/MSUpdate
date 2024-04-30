@@ -492,7 +492,7 @@ goto :EOF
 " | Out-File -FilePath ".\hook.cmd"
 
 # execute W10UI script
-.\bin\NSudoLC.exe -Wait -U:T -P:E -UseCurrentConsole .\W10UI.cmd
+.\bin\NSudoLC.exe -Wait -U:T -P:E -CurrentDirectory:. -UseCurrentConsole .\W10UI.cmd
 
 # upload to cloud
 Get-ChildItem -Path "./*.iso" -File | ForEach-Object {
