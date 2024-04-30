@@ -14,12 +14,12 @@ on:
           - w10lt1964
           - w10lt1664
       UpdateFromUUP:
-        description: 'Get Updates from UUPDUMP'
+        description: 'Update from UUP'
         required: false
         type: boolean
       MultiEdition:
-          description: 'Make Multi Edition'
-          required: true
+          description: 'Convert Multi-Editions'
+          required: false
           type: boolean
 
 jobs:
