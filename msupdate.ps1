@@ -113,7 +113,7 @@ if (-not (Test-Path -Path ".\bin\wimlib-imagex.exe")) {
     Copy-Item -Path .\temp\wimlib\libwim-15.dll -Destination .\bin\libwim-15.dll
 }
 if (-not (Test-Path -Path ".\bin\PSFExtractor.exe")) {
-    Write-Host "wimlib-imagex not found, downloading..."
+    Write-Host "PSFExtractor not found, downloading..."
     Invoke-WebRequest -Uri 'https://github.com/Secant1006/PSFExtractor/releases/download/v3.07/PSFExtractor-v3.07-x64.zip' -outfile .\temp\PSFExtractor.zip
     Expand-Archive -Path .\temp\PSFExtractor.zip -DestinationPath .\bin -Force
 }
@@ -170,6 +170,7 @@ if (($null -ne $entgpack) -and ($true -eq $MultiEdition)) {
     ."C:\Program Files\7-Zip\7z.exe" x ".\temp\entg.esd" -o".\entg" -r
 }
 
+$MSStoreScript = "echo nostore"
 if ($true -eq $msstore) {
     # get msstore
     .\getappx.ps1
@@ -201,7 +202,9 @@ if ($null -ne $ospath) {
     $osurl = $obj.data.raw_url
     $osfile = $obj.data.name
 }
-
+Write-Host "Original system file: $osfile
+Original system download link: $osurl
+"
 .\bin\aria2c.exe --check-certificate=false -s16 -x16 -d ".\temp" -o "$osfile" "$osurl"
 if ($?) {Write-Host "System Image Download Successfully!"} else {Write-Error "System Image Download Failed!"}
 
