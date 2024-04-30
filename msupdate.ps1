@@ -444,13 +444,25 @@ COPY /Y `"!mountdir!\Windows\System32\Licenses\neutral\Volume\Professional\*.*`"
 goto :EOF
 
 :editMultiSKU
+echo.
+echo ============================================================
+echo Editing Multi-SKU - %Edition ID%...
+echo.
+echo _wimlibgth: !_wimlib!
+echo _wimlib: %_wimlib%
+echo _wimfilegth: !_wimfile!
+echo _wimfile: %_wimfile%
+echo ============================================================
+%_wimlib% info %_wimfile%
 for /F `"tokens=3`" %%a in ('%_wimlib% info %_wimfile% ^| findstr /C:`"Image Count:`"') do set `"ImageCount=%%a`"
 echo Image Count is: %ImageCount%
+set ImageCount=9
 for /L %%a in (1,1,%ImageCount%) do call :editwiminfo %%a
 
 goto :EOF
 
 :readwiminfo
+%_wimlib% info %_wimfile% %1
 for /f `"tokens=1,2 delims=:`" %%a in ('%_wimlib% info %_wimfile% %1 ^| find /i %2') do (for /f `"tokens=*`" %%c in (`"%%b`") do (set `"%%a=%%c`"))
 goto :EOF
 
