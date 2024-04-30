@@ -406,7 +406,7 @@ echo ============================================================
 echo Getting informartion from registry...
 echo ============================================================
 REG.exe LOAD HKLM\EntGSOFTWARE `"!mountdir!\Windows\System32\config\SOFTWARE`"
-for /f `"tokens=6,7 delims=~.`" %%a in ('dir /b edition') do set EntGEditionVersion=%%a.%%b
+for /f `"tokens=6,7 delims=~.`" %%a in ('dir /b `"!mountdir!\Windows\servicing\Packages\Microsoft-Windows-EnterpriseGEdition~31bf3856ad364e35~amd64~~10.0.*`"') do set EntGEditionVersion=%%a.%%b
 
 FOR /F `"tokens=*`" %%i IN ('REG QUERY `"HKLM\EntGSOFTWARE\Microsoft\Windows\CurrentVersion\Component Based Servicing\Packages`"^|find /i `"Microsoft-Windows-Editions-EnterpriseG-Package~31bf3856ad364e35~`"') DO (
     FOR /F `"tokens=3* skip=2`" %%j IN ('REG QUERY `"%%i`" /v InstallTimeHigh') DO SET `"InstallTimeHigh=%%j`"
