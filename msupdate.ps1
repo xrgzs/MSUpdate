@@ -359,7 +359,8 @@ echo.
 echo ============================================================
 echo Coverting Edition - %1...
 echo ============================================================
-%_dism2%:`"!_cabdir!`" %dismtarget% /Set-Edition:%1 && (
+%_dism2%:`"!_cabdir!`" %dismtarget% /Set-Edition:%1
+if !errorlevel! equ 0 (
     echo.
     echo ============================================================
     echo Commiting Edition - %1...
