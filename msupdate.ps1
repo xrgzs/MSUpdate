@@ -91,16 +91,30 @@ switch ($MakeVersion) {
         $MultiEdition = $false
     }
     default {
-        Write-Error "Not defined or Unsupported OS version!"
+        Write-Error "Not defined or Unsupported OS version!
+        Example:
+            `$MakeVersion   = [string] `"w1064`"
+            `$UpdateFromUUP = [bool]   `$False
+            `$MultiEdition  = [bool]   `$True
+            .\msupdate.ps1
+        "
     }
 }
 
 # remove temporaty files
 Remove-Item -Path ".\temp\" -Recurse -ErrorAction Ignore
+Remove-Item -Path ".\entg\" -Recurse -ErrorAction Ignore
+Remove-Item -Path ".\patch\" -Recurse -ErrorAction Ignore
+Remove-Item -Path ".\fod\" -Recurse -ErrorAction Ignore
+Remove-Item -Path ".\W10UI.cmd" -Recurse -ErrorAction Ignore
 New-Item -Path ".\temp\" -ItemType "directory" -ErrorAction Ignore
 New-Item -Path ".\bin\" -ItemType "directory" -ErrorAction Ignore
 
 # Installing dependencies
+
+if (-not (Test-Path -Path "C:\Program Files\7-Zip\7z.exe")) {
+    Write-Error "7-zip not found, please install it manually!"
+}
 if (-not (Test-Path -Path ".\bin\aria2c.exe")) {
     Write-Host "aria2c not found, downloading..."
     Invoke-WebRequest -Uri 'https://github.com/aria2/aria2/releases/download/release-1.37.0/aria2-1.37.0-win-64bit-build1.zip' -outfile .\temp\aria2.zip
@@ -128,21 +142,21 @@ if (-not (Test-Path -Path ".\bin\NSudoLC.exe")) {
 
 # get wupatch
 if ($null -ne $UUPScript) {
-    Invoke-WebRequest -Uri $UUPScript -OutFile ".\UUPScript.txt"
-    .\bin\aria2c.exe --check-certificate=false -x16 -s16 -j5 -c -R -d ".\patch" -i ".\UUPScript.txt"
+    Invoke-WebRequest -Uri $UUPScript -OutFile ".\temp\UUPScript.txt"
+    .\bin\aria2c.exe --check-certificate=false -x16 -s16 -j5 -c -R -d ".\patch" -i ".\temp\UUPScript.txt"
     if (!$?) {Write-Error "UUPScript Download Failed!"}
 } elseif ($null -ne $WUScript) {
-    Invoke-WebRequest -Uri $WUScript -OutFile ".\WUScript.meta4"
-    .\bin\aria2c.exe --check-certificate=false -x16 -s16 -j5 -c -R -d ".\patch" -M ".\WUScript.meta4"
+    Invoke-WebRequest -Uri $WUScript -OutFile ".\temp\WUScript.meta4"
+    .\bin\aria2c.exe --check-certificate=false -x16 -s16 -j5 -c -R -d ".\patch" -M ".\temp\WUScript.meta4"
     if (!$?) {Write-Error "WUScript Download Failed!"}
 } else {
     Write-Error "No Windows Update Scripts Found!"
 }
 if ($null -ne $NETScript) {
-    Invoke-WebRequest -Uri $NETScript -OutFile ".\NETScript.meta4"
-    .\bin\aria2c.exe --check-certificate=false -x16 -s16 -j5 -c -R -d ".\patch" -M ".\NETScript.meta4" --metalink-language="neutral"
+    Invoke-WebRequest -Uri $NETScript -OutFile ".\temp\NETScript.meta4"
+    .\bin\aria2c.exe --check-certificate=false -x16 -s16 -j5 -c -R -d ".\patch" -M ".\temp\NETScript.meta4" --metalink-language="neutral"
     if (!$?) {Write-Error "NETScript Download Failed!"}
-    .\bin\aria2c.exe --check-certificate=false -x16 -s16 -j5 -c -R -d ".\patch" -M ".\NETScript.meta4" --metalink-language="zh-CN"
+    .\bin\aria2c.exe --check-certificate=false -x16 -s16 -j5 -c -R -d ".\patch" -M ".\temp\NETScript.meta4" --metalink-language="zh-CN"
     if (!$?) {Write-Error "NETScript Download Failed!"}
 }
 

@@ -46,8 +46,8 @@ jobs:
         shell: pwsh
         run: |
           $MakeVersion   = [string] "${{ inputs.MakeVersion }}"
-          $UpdateFromUUP = [bool]   "${{ inputs.UpdateFromUUP }}"
-          $MultiEdition  = [bool]   "${{ inputs.MultiEdition }}"
+          $UpdateFromUUP = [bool]   $${{ inputs.UpdateFromUUP }}
+          $MultiEdition  = [bool]   $${{ inputs.MultiEdition }}
           .\msupdate.ps1
 
       - name: Get rclone Config

@@ -1,6 +1,4 @@
-# MSUpdate
-
-制作原版集成更新的系统镜像
+# makeMSUpdate：制作原版集成更新的系统镜像
 
 基于原版镜像，集成系统更新，创建多版本的系统镜像。
 
@@ -44,13 +42,33 @@ https://sys.xrgzs.top/get/msupdate.html
 
 MSUpdate 现在使用 GitHub Actions 的 Windows Runner 进行自动构建，能持续获取到最新的Windows系统映像。
 
+手动构建方法：
+
+```powershell
+$MakeVersion   = [string] "w1164"
+$UpdateFromUUP = [bool]   $False
+$MultiEdition  = [bool]   $True
+.\msupdate.ps1
+```
+
 ## 构建依赖
 
 本项目需要使用到大量工具进行构建，包括但不限于：
 
-- PowerShell 7：执行脚本
-- 7-Zip：解压 ISO 等文件
-- Windows ADK：DISM、OSCDIMG
+- [PowerShell 7](https://github.com/PowerShell/powershell)：执行脚本
+  - Windows PowerShell 5.1（Windows 10 以上已具备）
+
+- [7-Zip](https://www.7-zip.org)：解压 ISO 等文件
+- [Windows ADK](https://learn.microsoft.com/zh-cn/windows-hardware/get-started/adk-install)：
+  - DISM：镜像处理
+  - Oscdimg：ISO打包
+  - 如果您不想安装 ADK，请确保您使用的是最新大版本的 Windows 操作系统，并将 `oscdimg.exe` 放入 bin 文件夹，支持调用系统 DISM
+
+
+如果您在国内使用，还得再加一个依赖：
+
+- [Watt Toolkit](https://github.com/BeyondDimension/SteamTools)：使用Hosts加速模式，配置好「加速 GitHub」（免费）
+- 不推荐使用系统代理，程序可能无法正常调用
 
 上述依赖必须提前手动安装到默认路径，其它依赖会自动下载到 bin 文件夹内。因此，请确保有稳定的互联网连接，毕竟如果没有网络无法下载所需的更新包。
 
