@@ -59,11 +59,9 @@ $MultiEdition  = [bool]   $True
   - Windows PowerShell 5.1（Windows 10 以上已具备）
 
 - [7-Zip](https://www.7-zip.org)：解压 ISO 等文件
-- [Windows ADK](https://learn.microsoft.com/zh-cn/windows-hardware/get-started/adk-install)：
+- [Windows ADK](https://learn.microsoft.com/zh-cn/windows-hardware/get-started/adk-install)：可选安装，建议安装
   - DISM：镜像处理
   - Oscdimg：ISO打包
-  - 如果您不想安装 ADK，请确保您使用的是最新大版本的 Windows 操作系统，并将 `oscdimg.exe` 放入 bin 文件夹，支持调用系统 DISM
-
 
 如果您在国内使用，还得再加一个依赖：
 
