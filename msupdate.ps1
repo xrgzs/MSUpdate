@@ -202,88 +202,13 @@ if ($true -eq $msstore) {
 }
 
 # abbodi1406/W10UI, auto inject hook after resetbase
-(Invoke-WebRequest -Uri "https://raw.githubusercontent.com/abbodi1406/BatUtil/master/W10UI/W10UI.cmd").Content.
-Replace("if %AddDrivers%==1 call :doDrv","call %~dp0hook.cmd") | Out-File -FilePath ".\W10UI.cmd"
-
-# get osimage
-# get original system direct link
-if ($null -ne $ospath) {
-    $obj = (Invoke-WebRequest -UseBasicParsing -Uri "https://alist.xrgzs.top/api/fs/get" `
-    -Method "POST" `
-    -ContentType "application/json;charset=UTF-8" `
-    -Body (@{
-        path = $ospath
-        password = ""
-    } | Convertto-Json)).Content | ConvertFrom-Json
-    $osurl = $obj.data.raw_url
-    $osfile = $obj.data.name
-}
-Write-Host "Original system file: $osfile
-Original system download link: $osurl
-"
-.\bin\aria2c.exe --check-certificate=false -s16 -x16 -d ".\temp" -o "$osfile" "$osurl"
-if ($?) {Write-Host "System Image Download Successfully!"} else {Write-Error "System Image Download Failed!"}
-
-# $isopath = Resolve-Path -Path ".\temp\$osfile"
-# $isomount = (Mount-DiskImage -ImagePath $isopath -PassThru | Get-Volume).DriveLetter
-# Target        =${isomount}:
-."C:\Program Files\7-Zip\7z.exe" x ".\temp\$osfile" -o".\ISO" -r
-
-# select 1 edition only
-# if ($null -ne $SelectEdition) {
-#     .\bin\wimlib-imagex.exe info ".\ISO\sources\install.wim" --extract-xml ".\temp\WIMInfo.xml"
-#     $WIMInfo = [xml](Get-Content ".\temp\WIMInfo.xml")
-#     $WIMIndex = $WIMInfo.WIM.IMAGE | Where-Object {$_.WINDOWS.EDITIONID -eq "$SelectEdition"} | Select-Object -ExpandProperty INDEX
-#     $WIMIndexs = $WIMInfo.WIM.IMAGE.Index | Measure-Object | Select-Object -ExpandProperty Count
-#     for ($i = $WIMIndexs; $i -gt $WIMIndex; $i--) {
-#         # .\bin\wimlib-imagex.exe delete ".\ISO\sources\install.wim" $i --soft
-#         Remove-WindowsImage -ImagePath ".\ISO\sources\install.wim" -Index $i
-#     }
-#     for ($i = 1; $i -lt $WIMIndex; $i++) {
-#         Remove-WindowsImage -ImagePath ".\ISO\sources\install.wim" -Index 1
-#     }
-# }
-
-.\bin\wimlib-imagex.exe info ".\ISO\sources\install.wim" --extract-xml ".\temp\WIMInfo2.xml"
-Get-Content ".\temp\WIMInfo2.xml"
-
-# write W10UI conf
-"[W10UI-Configuration]
-Target        =%cd%\ISO
-Repo          =%cd%\patch
-DismRoot      =dism.exe
-
-Net35         =1
-Net35Source   =
-Cleanup       =1
-ResetBase     =0
-LCUwinre      =1
-WinRE         =1
-UpdtBootFiles =1
-SkipEdge      =0
-UseWimlib     =1
-
-_CabDir       =W10UItemp
-MountDir      =W10UImount
-WinreMount    =W10UImountre
-
-wim2esd       =1
-wim2swm       =0
-ISO           =1
-ISODir        =
-Delete_Source =0
-
-AutoStart     =1
-
-AddDrivers    =0
-Drv_Source    =\Drivers
-" | Out-File -FilePath ".\W10UI.ini"
-
+$W10UI = (Invoke-WebRequest -Uri "https://raw.githubusercontent.com/abbodi1406/BatUtil/master/W10UI/W10UI.cmd").Content
+$W10UI = $W10UI.Replace("if %AddDrivers%==1 call :doDrv","call %~dp0hook_beforewim.cmd")
 # write hook script
 "
 echo.
 echo ============================================================
-echo Hook W10UI Successfully!
+echo Hook W10UI beforewim Successfully!
 echo Current Dir: %cd%
 echo ============================================================
 
@@ -351,7 +276,6 @@ call :makemulti Enterprise
 call :makemulti IoTEnterprise
 if exist `"%~dp0entg\update.mum`" call :makeEntG
 if exist `"%~dp0entg\update.mum`" call :makemulti EnterpriseG
-call :editMultiSKU
 
 set discard=1
 EXIT /B
@@ -457,11 +381,21 @@ MKDIR `"!mountdir!\Windows\System32\Licenses\neutral\_Default\EnterpriseG`"
 COPY /Y `"!mountdir!\Windows\System32\Licenses\neutral\Volume\Professional\*.*`" `"!mountdir!\Windows\System32\Licenses\neutral\_Default\EnterpriseG`"
 
 goto :EOF
+" | Out-File -FilePath ".\hook_beforewim.cmd"
 
-:editMultiSKU
+if ($true -eq $MultiEdition) {
+$W10UI = $W10UI.Replace(":dvdproceed",":dvdproceed
+call %~dp0hook_beforedvd.cmd")
+"
 echo.
 echo ============================================================
-echo Editing Multi-SKU - %Edition ID%...
+echo Hook W10UI beforedvd Successfully!
+echo Current Dir: %cd%
+echo ============================================================
+
+echo.
+echo ============================================================
+echo Start Edit Multi-SKU - %Edition ID%...
 echo.
 echo _wimlibgth: !_wimlib!
 echo _wimlib: %_wimlib%
@@ -471,10 +405,8 @@ echo ============================================================
 %_wimlib% info %_wimfile%
 for /F `"tokens=3`" %%a in ('%_wimlib% info %_wimfile% ^| findstr /C:`"Image Count:`"') do set `"ImageCount=%%a`"
 echo Image Count is: %ImageCount%
-set ImageCount=9
 for /L %%a in (1,1,%ImageCount%) do call :editwiminfo %%a
-
-goto :EOF
+EXIT /B
 
 :readwiminfo
 %_wimlib% info %_wimfile% %1
@@ -508,8 +440,83 @@ echo FLAGS: %Edition ID%
 echo ============================================================
 %_wimlib% info %_wimfile% %1 `"Windows %Major Version% %Edition ID%`" `"Windows %Major Version% %Edition ID%`" --image-property `"DISPLAYNAME`"=`"Windows %Major Version% %CNEDITION%`" --image-property `"DISPLAYDESCRIPTION`"=`"Windows %Major Version% %CNEDITION%`" --image-property `"FLAGS`"=`"%Edition ID%`" >nul
 goto :EOF
+" | Out-File -FilePath ".\hook_beforedvd.cmd"
+}
+$W10UI | Out-File -FilePath ".\W10UI.cmd"
 
-" | Out-File -FilePath ".\hook.cmd"
+# get osimage
+# get original system direct link
+if ($null -ne $ospath) {
+    $obj = (Invoke-WebRequest -UseBasicParsing -Uri "https://alist.xrgzs.top/api/fs/get" `
+    -Method "POST" `
+    -ContentType "application/json;charset=UTF-8" `
+    -Body (@{
+        path = $ospath
+        password = ""
+    } | Convertto-Json)).Content | ConvertFrom-Json
+    $osurl = $obj.data.raw_url
+    $osfile = $obj.data.name
+}
+Write-Host "Original system file: $osfile
+Original system download link: $osurl
+"
+.\bin\aria2c.exe --check-certificate=false -s16 -x16 -d ".\temp" -o "$osfile" "$osurl"
+if ($?) {Write-Host "System Image Download Successfully!"} else {Write-Error "System Image Download Failed!"}
+
+# $isopath = Resolve-Path -Path ".\temp\$osfile"
+# $isomount = (Mount-DiskImage -ImagePath $isopath -PassThru | Get-Volume).DriveLetter
+# Target        =${isomount}:
+."C:\Program Files\7-Zip\7z.exe" x ".\temp\$osfile" -o".\ISO" -r
+
+# select 1 edition only
+# if ($null -ne $SelectEdition) {
+#     .\bin\wimlib-imagex.exe info ".\ISO\sources\install.wim" --extract-xml ".\temp\WIMInfo.xml"
+#     $WIMInfo = [xml](Get-Content ".\temp\WIMInfo.xml")
+#     $WIMIndex = $WIMInfo.WIM.IMAGE | Where-Object {$_.WINDOWS.EDITIONID -eq "$SelectEdition"} | Select-Object -ExpandProperty INDEX
+#     $WIMIndexs = $WIMInfo.WIM.IMAGE.Index | Measure-Object | Select-Object -ExpandProperty Count
+#     for ($i = $WIMIndexs; $i -gt $WIMIndex; $i--) {
+#         # .\bin\wimlib-imagex.exe delete ".\ISO\sources\install.wim" $i --soft
+#         Remove-WindowsImage -ImagePath ".\ISO\sources\install.wim" -Index $i
+#     }
+#     for ($i = 1; $i -lt $WIMIndex; $i++) {
+#         Remove-WindowsImage -ImagePath ".\ISO\sources\install.wim" -Index 1
+#     }
+# }
+
+.\bin\wimlib-imagex.exe info ".\ISO\sources\install.wim" --extract-xml ".\temp\WIMInfo2.xml"
+Get-Content ".\temp\WIMInfo2.xml"
+
+# write W10UI conf
+"[W10UI-Configuration]
+Target        =%cd%\ISO
+Repo          =%cd%\patch
+DismRoot      =dism.exe
+
+Net35         =1
+Net35Source   =
+Cleanup       =1
+ResetBase     =0
+LCUwinre      =1
+WinRE         =1
+UpdtBootFiles =1
+SkipEdge      =0
+UseWimlib     =1
+
+_CabDir       =W10UItemp
+MountDir      =W10UImount
+WinreMount    =W10UImountre
+
+wim2esd       =1
+wim2swm       =0
+ISO           =1
+ISODir        =
+Delete_Source =0
+
+AutoStart     =1
+
+AddDrivers    =0
+Drv_Source    =\Drivers
+" | Out-File -FilePath ".\W10UI.ini"
 
 # execute W10UI script
 .\bin\NSudoLC.exe -Wait -U:T -P:E -CurrentDirectory:. -UseCurrentConsole .\W10UI.cmd

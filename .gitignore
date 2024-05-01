@@ -1,3 +1,5 @@
 temp
 patch
 W10UI.cmd
+hook_beforewim.cmd
+hook_beforedvd.cmd
