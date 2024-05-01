@@ -190,15 +190,15 @@ $MSStoreScript = "echo nostore"
 if ($true -eq $msstore) {
     # get msstore
     .\getappx.ps1
-    $MSStoreScript = "
-    for %%a in (%~dp0msstore\Microsoft.UI.Xaml.2.*_8wekyb3d8bbwe.Appx) do call :Add-ProvisionedAppxPackage `"%%a`"
-    for %%a in (%~dp0msstore\Microsoft.VCLibs.140.00.UWPDesktop_14.0.*_8wekyb3d8bbwe.Appx) do call :Add-ProvisionedAppxPackage `"%%a`"
-    for %%a in (%~dp0msstore\Microsoft.VCLibs.140.00_14.0.*_8wekyb3d8bbwe.Appx) do call :Add-ProvisionedAppxPackage `"%%a`"
-    for %%a in (%~dp0msstore\Microsoft.NET.Native.Runtime.2.*_8wekyb3d8bbwe.Appx) do call :Add-ProvisionedAppxPackage `"%%a`"
-    for %%a in (%~dp0msstore\Microsoft.NET.Native.Framework.2.*_8wekyb3d8bbwe.Appx) do call :Add-ProvisionedAppxPackage `"%%a`"
-    for %%a in (%~dp0msstore\Microsoft.WindowsStore_*_8wekyb3d8bbwe.Msixbundle) do call :Add-ProvisionedAppxPackage `"%%a`"
-    for %%a in (%~dp0msstore\Microsoft.DesktopAppInstaller_*_8wekyb3d8bbwe.Msixbundle) do call :Add-ProvisionedAppxPackage `"%%a`"
-    "
+    $MSStoreScript = @"
+for %%a in (%~dp0msstore\Microsoft.UI.Xaml.2.*_8wekyb3d8bbwe.Appx) do call :Add-ProvisionedAppxPackage "%%a"
+for %%a in (%~dp0msstore\Microsoft.VCLibs.140.00.UWPDesktop_14.0.*_8wekyb3d8bbwe.Appx) do call :Add-ProvisionedAppxPackage "%%a"
+for %%a in (%~dp0msstore\Microsoft.VCLibs.140.00_14.0.*_8wekyb3d8bbwe.Appx) do call :Add-ProvisionedAppxPackage "%%a"
+for %%a in (%~dp0msstore\Microsoft.NET.Native.Runtime.2.*_8wekyb3d8bbwe.Appx) do call :Add-ProvisionedAppxPackage "%%a"
+for %%a in (%~dp0msstore\Microsoft.NET.Native.Framework.2.*_8wekyb3d8bbwe.Appx) do call :Add-ProvisionedAppxPackage "%%a"
+for %%a in (%~dp0msstore\Microsoft.WindowsStore_*_8wekyb3d8bbwe.Msixbundle) do call :Add-ProvisionedAppxPackage "%%a"
+for %%a in (%~dp0msstore\Microsoft.DesktopAppInstaller_*_8wekyb3d8bbwe.Msixbundle) do call :Add-ProvisionedAppxPackage "%%a"
+"@
 }
 
 # abbodi1406/W10UI, auto inject hook
@@ -207,14 +207,14 @@ $W10UI += (Invoke-WebRequest -Uri "https://raw.githubusercontent.com/abbodi1406/
 $W10UI = $W10UI.Replace("if %AddDrivers%==1 call :doDrv","call %~dp0hook_beforewim.cmd`nif %AddDrivers%==1 call :doDrv")
 
 # write hook script
-"
+@"
 echo.
 echo ============================================================
 echo Hook W10UI beforewim Successfully!
 echo Current Dir: %cd%
 echo ============================================================
 
-if exist `"!mountdir!\Windows\Servicing\Packages\*WinPE-LanguagePack*.mum`" (
+if exist "!mountdir!\Windows\Servicing\Packages\*WinPE-LanguagePack*.mum" (
     echo.
     echo ============================================================
     echo Hook does not operate for WinPE, exiting...
@@ -227,10 +227,10 @@ echo ============================================================
 echo Enable Features...
 echo ============================================================
 
-%_dism2%:`"!_cabdir!`" %dismtarget% /Enable-Feature:LegacyComponents /All
-%_dism2%:`"!_cabdir!`" %dismtarget% /Enable-Feature:SMB1Protocol
-%_dism2%:`"!_cabdir!`" %dismtarget% /Enable-Feature:TFTP
-%_dism2%:`"!_cabdir!`" %dismtarget% /Enable-Feature:TelnetClient
+%_dism2%:"!_cabdir!" %dismtarget% /Enable-Feature:LegacyComponents /All
+%_dism2%:"!_cabdir!" %dismtarget% /Enable-Feature:SMB1Protocol
+%_dism2%:"!_cabdir!" %dismtarget% /Enable-Feature:TFTP
+%_dism2%:"!_cabdir!" %dismtarget% /Enable-Feature:TelnetClient
 
 echo.
 echo ============================================================
@@ -239,12 +239,12 @@ echo ============================================================
 
 echo current dir: %cd%
 
-if exist `"%~dp0fod\Miracast\update.mum`" (
-    %_dism2%:`"!_cabdir!`" %dismtarget% /Add-Package /PackagePath:`"%~dp0fod\Miracast\update.mum`" 
-    %_dism2%:`"!_cabdir!`" %dismtarget% /Add-Package /PackagePath:`"%~dp0fod\MiracastLP\update.mum`"
+if exist "%~dp0fod\Miracast\update.mum" (
+    %_dism2%:"!_cabdir!" %dismtarget% /Add-Package /PackagePath:"%~dp0fod\Miracast\update.mum" 
+    %_dism2%:"!_cabdir!" %dismtarget% /Add-Package /PackagePath:"%~dp0fod\MiracastLP\update.mum"
 )
-if exist `"%~dp0fod\iexplorer\update.mum`" (
-    %_dism2%:`"!_cabdir!`" %dismtarget% /Add-Package /PackagePath:`"%~dp0fod\iexplorer\update.mum`" 
+if exist "%~dp0fod\iexplorer\update.mum" (
+    %_dism2%:"!_cabdir!" %dismtarget% /Add-Package /PackagePath:"%~dp0fod\iexplorer\update.mum" 
 )
 
 echo.
@@ -254,7 +254,7 @@ echo ============================================================
 
 $MSStoreScript
 
-if /i not `"$MultiEdition`"==`"true`" EXIT /B
+if /i not "$MultiEdition"=="true" EXIT /B
 
 echo.
 echo ============================================================
@@ -262,7 +262,7 @@ echo Commiting Base-Edition...
 echo ============================================================
 
 rem call :makemulti CoreCountrySpecific
-%_dism2%:`"!_cabdir!`" /Commit-Image /MountDir:`"!mountdir!`"
+%_dism2%:"!_cabdir!" /Commit-Image /MountDir:"!mountdir!"
 
 echo.
 echo ============================================================
@@ -276,15 +276,15 @@ call :makemulti ProfessionalWorkstation
 call :makemulti Education
 call :makemulti Enterprise
 call :makemulti IoTEnterprise
-if exist `"%~dp0entg\update.mum`" call :makeEntG
-if exist `"%~dp0entg\update.mum`" call :makemulti EnterpriseG
+if exist "%~dp0entg\update.mum" call :makeEntG
+if exist "%~dp0entg\update.mum" call :makemulti EnterpriseG
 
 set discard=1
 EXIT /B
 
 :Add-ProvisionedAppxPackage
 echo installing - %~n1
-%_dism2%:`"!_cabdir!`" %dismtarget% /Add-ProvisionedAppxPackage /PackagePath:`"%~1`" /SkipLicense /Region:all
+%_dism2%:"!_cabdir!" %dismtarget% /Add-ProvisionedAppxPackage /PackagePath:"%~1" /SkipLicense /Region:all
 goto :EOF
 
 :makemulti
@@ -292,13 +292,13 @@ echo.
 echo ============================================================
 echo Coverting Edition - %1...
 echo ============================================================
-%_dism2%:`"!_cabdir!`" %dismtarget% /Set-Edition:%1
+%_dism2%:"!_cabdir!" %dismtarget% /Set-Edition:%1
 if !errorlevel! equ 0 (
     echo.
     echo ============================================================
     echo Commiting Edition - %1...
     echo ============================================================
-    %_dism2%:`"!_cabdir!`" /Commit-Image /MountDir:`"!mountdir!`" /Append
+    %_dism2%:"!_cabdir!" /Commit-Image /MountDir:"!mountdir!" /Append
 ) else (
     echo.
     echo ============================================================
@@ -319,8 +319,8 @@ echo Installing EnterpriseG Package...
 echo.
 echo Note: If errors occur, it is normal.
 echo ============================================================
-%_dism2%:`"!_cabdir!`" %dismtarget% /Set-Edition:Enterprise
-FOR %%a IN (%~dp0entg\*.mum) DO %_dism2%:`"!_cabdir!`" %dismtarget% /Add-Package /PackagePath:`"%%a`"
+%_dism2%:"!_cabdir!" %dismtarget% /Set-Edition:Enterprise
+FOR %%a IN (%~dp0entg\*.mum) DO %_dism2%:"!_cabdir!" %dismtarget% /Add-Package /PackagePath:"%%a"
 
 echo.
 echo ============================================================
@@ -328,24 +328,24 @@ echo Copying servicing Packages...
 echo.
 echo Note: If errors occur, it must be 100% faild.
 echo ============================================================
-for /d %%a in (`"!_cabdir!\*`") do for %%b in (`"%%a\Microsoft-Windows-EnterpriseGEdition~31bf3856ad364e35~amd64~~10.0.*`") do copy /y `"%%~b`" `"!mountdir!\Windows\servicing\Packages`"
-for /d %%a in (`"!_cabdir!\*`") do for %%b in (`"%%a\Microsoft-Windows-EnterpriseGEdition-wrapper~31bf3856ad364e35~amd64~~10.0.*`") do copy /y `"%%~b`" `"!mountdir!\Windows\servicing\Packages`"
+for /d %%a in ("!_cabdir!\*") do for %%b in ("%%a\Microsoft-Windows-EnterpriseGEdition~31bf3856ad364e35~amd64~~10.0.*") do copy /y "%%~b" "!mountdir!\Windows\servicing\Packages"
+for /d %%a in ("!_cabdir!\*") do for %%b in ("%%a\Microsoft-Windows-EnterpriseGEdition-wrapper~31bf3856ad364e35~amd64~~10.0.*") do copy /y "%%~b" "!mountdir!\Windows\servicing\Packages"
 
-rem copy /y `"%~dp0edition\Microsoft-Windows-EnterpriseGEdition~31bf3856ad364e35~amd64~~10.0.*.*`" `"!mountdir!\Windows\servicing\Packages`"
-rem copy /y `"%~dp0edition\Microsoft-Windows-EnterpriseGEdition-wrapper~31bf3856ad364e35~amd64~~10.0.*.*`" `"!mountdir!\Windows\servicing\Packages`"
+rem copy /y "%~dp0edition\Microsoft-Windows-EnterpriseGEdition~31bf3856ad364e35~amd64~~10.0.*.*" "!mountdir!\Windows\servicing\Packages"
+rem copy /y "%~dp0edition\Microsoft-Windows-EnterpriseGEdition-wrapper~31bf3856ad364e35~amd64~~10.0.*.*" "!mountdir!\Windows\servicing\Packages"
 
 echo.
 echo ============================================================
 echo Getting informartion from registry...
 echo ============================================================
-REG.exe LOAD HKLM\EntGSOFTWARE `"!mountdir!\Windows\System32\config\SOFTWARE`"
-for /f `"tokens=6,7 delims=~.`" %%a in ('dir /b `"!mountdir!\Windows\servicing\Packages\Microsoft-Windows-EnterpriseGEdition~31bf3856ad364e35~amd64~~10.0.*`"') do set EntGEditionVersion=%%a.%%b
+REG.exe LOAD HKLM\EntGSOFTWARE "!mountdir!\Windows\System32\config\SOFTWARE"
+for /f "tokens=6,7 delims=~." %%a in ('dir /b "!mountdir!\Windows\servicing\Packages\Microsoft-Windows-EnterpriseGEdition~31bf3856ad364e35~amd64~~10.0.*"') do set EntGEditionVersion=%%a.%%b
 
-FOR /F `"tokens=*`" %%i IN ('REG QUERY `"HKLM\EntGSOFTWARE\Microsoft\Windows\CurrentVersion\Component Based Servicing\Packages`"^|find /i `"Microsoft-Windows-Editions-EnterpriseG-Package~31bf3856ad364e35~`"') DO (
-    FOR /F `"tokens=3* skip=2`" %%j IN ('REG QUERY `"%%i`" /v InstallTimeHigh') DO SET `"InstallTimeHigh=%%j`"
-    FOR /F `"tokens=3* skip=2`" %%k IN ('REG QUERY `"%%i`" /v InstallTimeLow') DO SET `"InstallTimeLow=%%k`"
-    FOR /F `"tokens=3* skip=2`" %%l IN ('REG QUERY `"%%i`" /v InstallUser') DO SET `"InstallUser=%%l`"
-    FOR /F `"tokens=3* skip=2`" %%m IN ('REG QUERY `"%%i`" /v InstallLocation') DO SET `"InstallLocation=%%m`"
+FOR /F "tokens=*" %%i IN ('REG QUERY "HKLM\EntGSOFTWARE\Microsoft\Windows\CurrentVersion\Component Based Servicing\Packages"^|find /i "Microsoft-Windows-Editions-EnterpriseG-Package~31bf3856ad364e35~"') DO (
+    FOR /F "tokens=3* skip=2" %%j IN ('REG QUERY "%%i" /v InstallTimeHigh') DO SET "InstallTimeHigh=%%j"
+    FOR /F "tokens=3* skip=2" %%k IN ('REG QUERY "%%i" /v InstallTimeLow') DO SET "InstallTimeLow=%%k"
+    FOR /F "tokens=3* skip=2" %%l IN ('REG QUERY "%%i" /v InstallUser') DO SET "InstallUser=%%l"
+    FOR /F "tokens=3* skip=2" %%m IN ('REG QUERY "%%i" /v InstallLocation') DO SET "InstallLocation=%%m"
 )
 
 echo.
@@ -358,18 +358,18 @@ echo InstallTimeLow: %InstallTimeLow%
 echo InstallUser: %InstallUser%
 echo InstallLocation: %InstallLocation%
 echo ============================================================
-REG.exe ADD `"HKLM\EntGSOFTWARE\Microsoft\Windows\CurrentVersion\Component Based Servicing\Packages\Microsoft-Windows-EnterpriseGEdition~31bf3856ad364e35~amd64~~10.0.%EntGEditionVersion%`" /f
-REG.exe ADD `"HKLM\EntGSOFTWARE\Microsoft\Windows\CurrentVersion\Component Based Servicing\Packages\Microsoft-Windows-EnterpriseGEdition~31bf3856ad364e35~amd64~~10.0.%EntGEditionVersion%`" /f /v `"CurrentState`" /t REG_DWORD /d 112
-REG.exe ADD `"HKLM\EntGSOFTWARE\Microsoft\Windows\CurrentVersion\Component Based Servicing\Packages\Microsoft-Windows-EnterpriseGEdition~31bf3856ad364e35~amd64~~10.0.%EntGEditionVersion%`" /f /v `"InstallClient`" /t REG_SZ /d `"DISM Package Manager Provider`"
-REG.exe ADD `"HKLM\EntGSOFTWARE\Microsoft\Windows\CurrentVersion\Component Based Servicing\Packages\Microsoft-Windows-EnterpriseGEdition~31bf3856ad364e35~amd64~~10.0.%EntGEditionVersion%`" /f /v `"InstallLocation`" /t REG_SZ /d `"\\?%WorkDisk%\%LCUName%`"
-REG.exe ADD `"HKLM\EntGSOFTWARE\Microsoft\Windows\CurrentVersion\Component Based Servicing\Packages\Microsoft-Windows-EnterpriseGEdition~31bf3856ad364e35~amd64~~10.0.%EntGEditionVersion%`" /f /v `"InstallName`" /t REG_SZ /d `"Microsoft-Windows-EnterpriseGEdition~31bf3856ad364e35~amd64~~10.0.%EntGEditionVersion%.mum`"
-REG.exe ADD `"HKLM\EntGSOFTWARE\Microsoft\Windows\CurrentVersion\Component Based Servicing\Packages\Microsoft-Windows-EnterpriseGEdition~31bf3856ad364e35~amd64~~10.0.%EntGEditionVersion%`" /f /v `"InstallTimeHigh`" /t REG_DWORD /d `"%InstallTimeHigh%`"
-REG.exe ADD `"HKLM\EntGSOFTWARE\Microsoft\Windows\CurrentVersion\Component Based Servicing\Packages\Microsoft-Windows-EnterpriseGEdition~31bf3856ad364e35~amd64~~10.0.%EntGEditionVersion%`" /f /v `"InstallTimeLow`" /t REG_DWORD /d `"%InstallTimeLow%`"
-REG.exe ADD `"HKLM\EntGSOFTWARE\Microsoft\Windows\CurrentVersion\Component Based Servicing\Packages\Microsoft-Windows-EnterpriseGEdition~31bf3856ad364e35~amd64~~10.0.%EntGEditionVersion%`" /f /v `"InstallUser`" /t REG_SZ /d `"%InstallUser%`"
-REG.exe ADD `"HKLM\EntGSOFTWARE\Microsoft\Windows\CurrentVersion\Component Based Servicing\Packages\Microsoft-Windows-EnterpriseGEdition~31bf3856ad364e35~amd64~~10.0.%EntGEditionVersion%`" /f /v `"SelfUpdate`" /t REG_DWORD /d 0
-REG.exe ADD `"HKLM\EntGSOFTWARE\Microsoft\Windows\CurrentVersion\Component Based Servicing\Packages\Microsoft-Windows-EnterpriseGEdition~31bf3856ad364e35~amd64~~10.0.%EntGEditionVersion%`" /f /v `"Visibility`" /t REG_DWORD /d 1
-REG.exe ADD `"HKLM\EntGSOFTWARE\Microsoft\Windows\CurrentVersion\Component Based Servicing\Packages\Microsoft-Windows-EnterpriseGEdition~31bf3856ad364e35~amd64~~10.0.%EntGEditionVersion%\Owners`" /f
-REG.exe ADD `"HKLM\EntGSOFTWARE\Microsoft\Windows\CurrentVersion\Component Based Servicing\Packages\Microsoft-Windows-EnterpriseGEdition~31bf3856ad364e35~amd64~~10.0.%EntGEditionVersion%\Owners`" /f /v `"Microsoft-Windows-EnterpriseGEdition~31bf3856ad364e35~amd64~~10.0.%EntGEditionVersion%`" /t REG_DWORD /d 131184
+REG.exe ADD "HKLM\EntGSOFTWARE\Microsoft\Windows\CurrentVersion\Component Based Servicing\Packages\Microsoft-Windows-EnterpriseGEdition~31bf3856ad364e35~amd64~~10.0.%EntGEditionVersion%" /f
+REG.exe ADD "HKLM\EntGSOFTWARE\Microsoft\Windows\CurrentVersion\Component Based Servicing\Packages\Microsoft-Windows-EnterpriseGEdition~31bf3856ad364e35~amd64~~10.0.%EntGEditionVersion%" /f /v "CurrentState" /t REG_DWORD /d 112
+REG.exe ADD "HKLM\EntGSOFTWARE\Microsoft\Windows\CurrentVersion\Component Based Servicing\Packages\Microsoft-Windows-EnterpriseGEdition~31bf3856ad364e35~amd64~~10.0.%EntGEditionVersion%" /f /v "InstallClient" /t REG_SZ /d "DISM Package Manager Provider"
+REG.exe ADD "HKLM\EntGSOFTWARE\Microsoft\Windows\CurrentVersion\Component Based Servicing\Packages\Microsoft-Windows-EnterpriseGEdition~31bf3856ad364e35~amd64~~10.0.%EntGEditionVersion%" /f /v "InstallLocation" /t REG_SZ /d "\\?%WorkDisk%\%LCUName%"
+REG.exe ADD "HKLM\EntGSOFTWARE\Microsoft\Windows\CurrentVersion\Component Based Servicing\Packages\Microsoft-Windows-EnterpriseGEdition~31bf3856ad364e35~amd64~~10.0.%EntGEditionVersion%" /f /v "InstallName" /t REG_SZ /d "Microsoft-Windows-EnterpriseGEdition~31bf3856ad364e35~amd64~~10.0.%EntGEditionVersion%.mum"
+REG.exe ADD "HKLM\EntGSOFTWARE\Microsoft\Windows\CurrentVersion\Component Based Servicing\Packages\Microsoft-Windows-EnterpriseGEdition~31bf3856ad364e35~amd64~~10.0.%EntGEditionVersion%" /f /v "InstallTimeHigh" /t REG_DWORD /d "%InstallTimeHigh%"
+REG.exe ADD "HKLM\EntGSOFTWARE\Microsoft\Windows\CurrentVersion\Component Based Servicing\Packages\Microsoft-Windows-EnterpriseGEdition~31bf3856ad364e35~amd64~~10.0.%EntGEditionVersion%" /f /v "InstallTimeLow" /t REG_DWORD /d "%InstallTimeLow%"
+REG.exe ADD "HKLM\EntGSOFTWARE\Microsoft\Windows\CurrentVersion\Component Based Servicing\Packages\Microsoft-Windows-EnterpriseGEdition~31bf3856ad364e35~amd64~~10.0.%EntGEditionVersion%" /f /v "InstallUser" /t REG_SZ /d "%InstallUser%"
+REG.exe ADD "HKLM\EntGSOFTWARE\Microsoft\Windows\CurrentVersion\Component Based Servicing\Packages\Microsoft-Windows-EnterpriseGEdition~31bf3856ad364e35~amd64~~10.0.%EntGEditionVersion%" /f /v "SelfUpdate" /t REG_DWORD /d 0
+REG.exe ADD "HKLM\EntGSOFTWARE\Microsoft\Windows\CurrentVersion\Component Based Servicing\Packages\Microsoft-Windows-EnterpriseGEdition~31bf3856ad364e35~amd64~~10.0.%EntGEditionVersion%" /f /v "Visibility" /t REG_DWORD /d 1
+REG.exe ADD "HKLM\EntGSOFTWARE\Microsoft\Windows\CurrentVersion\Component Based Servicing\Packages\Microsoft-Windows-EnterpriseGEdition~31bf3856ad364e35~amd64~~10.0.%EntGEditionVersion%\Owners" /f
+REG.exe ADD "HKLM\EntGSOFTWARE\Microsoft\Windows\CurrentVersion\Component Based Servicing\Packages\Microsoft-Windows-EnterpriseGEdition~31bf3856ad364e35~amd64~~10.0.%EntGEditionVersion%\Owners" /f /v "Microsoft-Windows-EnterpriseGEdition~31bf3856ad364e35~amd64~~10.0.%EntGEditionVersion%" /t REG_DWORD /d 131184
 
 REG.exe UNLOAD HKLM\EntGSOFTWARE
 
@@ -377,74 +377,51 @@ echo.
 echo ============================================================
 echo Setting key and license...
 echo ============================================================
-%_dism2%:`"!_cabdir!`" %dismtarget% /Set-ProductKey:FV469-WGNG4-YQP66-2B2HY-KD8YX
-%_dism2%:`"!_cabdir!`" %dismtarget% /Get-CurrentEdition
-MKDIR `"!mountdir!\Windows\System32\Licenses\neutral\_Default\EnterpriseG`"
-COPY /Y `"!mountdir!\Windows\System32\Licenses\neutral\Volume\Professional\*.*`" `"!mountdir!\Windows\System32\Licenses\neutral\_Default\EnterpriseG`"
+%_dism2%:"!_cabdir!" %dismtarget% /Set-ProductKey:FV469-WGNG4-YQP66-2B2HY-KD8YX
+%_dism2%:"!_cabdir!" %dismtarget% /Get-CurrentEdition
+MKDIR "!mountdir!\Windows\System32\Licenses\neutral\_Default\EnterpriseG"
+COPY /Y "!mountdir!\Windows\System32\Licenses\neutral\Volume\Professional\*.*" "!mountdir!\Windows\System32\Licenses\neutral\_Default\EnterpriseG"
 
 goto :EOF
-" | Out-File -FilePath ".\hook_beforewim.cmd"
+"@ | Out-File -FilePath ".\hook_beforewim.cmd"
 
 if ($true -eq $MultiEdition) {
 $W10UI = $W10UI.Replace("`n:dvdproceed","`n:dvdproceed`ncall %~dp0hook_beforedvd.cmd")
-"
-echo.
-echo ============================================================
-echo Hook W10UI beforedvd Successfully!
-echo Current Dir: %cd%
-echo ============================================================
-cd /d `"!target!`"
-echo.
-echo ============================================================
-echo Start Edit Multi-SKU
-echo.
-echo Current Dir: %cd%
-echo ============================================================
-!_wimlib! info sources\install.wim
-echo for /F `"tokens=3`" %%a in ('!_wimlib! info sources\install.wim ^| findstr /C:`"Image Count:`"') do set `"ImageCount=%%a`"
-for /F `"tokens=3`" %%a in ('!_wimlib! info sources\install.wim ^| findstr /C:`"Image Count:`"') do set `"ImageCount=%%a`"
-echo Image Count is: [%ImageCount%]
-echo Image Count gth is: [!ImageCount!]
-set ImageCount=9
-echo Image Count force is: [%ImageCount%]
-echo Image Count force gth is: [!ImageCount!]
-for /L %%a in (1,1,%ImageCount%) do call :editwiminfo %%a
-EXIT /B
+@"
+cd /d "%~dp0"
+set "filename=ISO\sources\install.wim"
+set "wimlib=bin\wimlib-imagex.exe"
+
+for /F "tokens=3" %%a in ('%wimlib% info "%filename%" ^| findstr /C:"Image Count:"') do set "ImageCount=%%a"
+for /L %%# in (1,1,%ImageCount%) do call :editwiminfo %%#
+exit /b
 
 :readwiminfo
-!_wimlib! info sources\install.wim %1
-echo for /f `"tokens=1,2 delims=:`" %%a in ('!_wimlib! info sources\install.wim %1 ^| find /i %2') do (for /f `"tokens=*`" %%c in (`"%%b`") do (set `"%%a=%%c`"))
-for /f `"tokens=1,2 delims=:`" %%a in ('!_wimlib! info sources\install.wim %1 ^| find /i %2') do (for /f `"tokens=*`" %%c in (`"%%b`") do (set `"%%a=%%c`"))
-goto :EOF
+for /f "tokens=1,2 delims=:" %%a in ('%wimlib% info "%filename%" %1 ^| find /i %2') do (for /f "tokens=*" %%c in ("%%b") do (set "%%a=%%c"))
+goto :eof
 
 :editwiminfo
-call :readwiminfo %1 `"Edition ID`"
-call :readwiminfo %1 `"Major Version`"
-set CNEDITION=%Edition ID%
-if /i `"%Edition ID%`"==`"Core`" set CNEDITION=家庭版
-if /i `"%Edition ID%`"==`"CoreSingleLanguage`" set CNEDITION=家庭单语言版
-if /i `"%Edition ID%`"==`"CoreCountrySpecific`" set CNEDITION=家庭中文版
-if /i `"%Edition ID%`"==`"Professional`" set CNEDITION=专业版
-if /i `"%Edition ID%`"==`"ProfessionalEducation`" set CNEDITION=专业教育版
-if /i `"%Edition ID%`"==`"ProfessionalWorkstation`" set CNEDITION=专业工作站版
-if /i `"%Edition ID%`"==`"Education`" set CNEDITION=教育版
-if /i `"%Edition ID%`"==`"Enterprise`" set CNEDITION=企业版
-if /i `"%Edition ID%`"==`"IoTEnterprise`" set CNEDITION=IoT企业版
-if /i `"%Edition ID%`"==`"EnterpriseG`" set CNEDITION=企业版G
-
-echo.
-echo ============================================================
-echo Editing Multi-SKU - %Edition ID%...
-echo.
-echo Name: Windows %Major Version% %Edition ID%
-echo Description: Windows %Major Version% %Edition ID%
-echo DISPLAYNAME: Windows %Major Version% %CNEDITION%
-echo DISPLAYDESCRIPTION: Windows %Major Version% %CNEDITION%
-echo FLAGS: %Edition ID%
-echo ============================================================
-!_wimlib! info sources\install.wim %1 `"Windows %Major Version% %Edition ID%`" `"Windows %Major Version% %Edition ID%`" --image-property `"DISPLAYNAME`"=`"Windows %Major Version% %CNEDITION%`" --image-property `"DISPLAYDESCRIPTION`"=`"Windows %Major Version% %CNEDITION%`" --image-property `"FLAGS`"=`"%Edition ID%`" >nul
-goto :EOF
-" | Out-File -FilePath ".\hook_beforedvd.cmd"
+call :readwiminfo %1 "Edition ID"
+call :readwiminfo %1 "Build"
+if %Build% GEQ 22000 (
+    set sysver=Windows 11
+) else (
+    set sysver=Windows 10
+)
+if /i "%Edition ID%"=="Core" set "CNEDITION=家庭版"
+if /i "%Edition ID%"=="CoreSingleLanguage" set "CNEDITION=家庭单语言版"
+if /i "%Edition ID%"=="CoreCountrySpecific" set "CNEDITION=家庭中文版"
+if /i "%Edition ID%"=="Professional" set "CNEDITION=专业版"
+if /i "%Edition ID%"=="ProfessionalEducation" set "CNEDITION=专业教育版"
+if /i "%Edition ID%"=="ProfessionalWorkstation" set "CNEDITION=专业工作站版"
+if /i "%Edition ID%"=="Education" set "CNEDITION=教育版"
+if /i "%Edition ID%"=="Enterprise" set "CNEDITION=企业版"
+if /i "%Edition ID%"=="IoTEnterprise" set "CNEDITION=IoT企业版"
+if /i "%Edition ID%"=="EnterpriseG" set "CNEDITION=企业版G"
+if /i "%CNEDITION%"=="" set "CNEDITION=未知版"
+%wimlib% info "%filename%" %1 "%sysver% %Edition ID%" "%sysver% %Edition ID%" --image-property "DISPLAYNAME"="%sysver% %CNEDITION%" --image-property "DISPLAYDESCRIPTION"="%sysver% %CNEDITION%" --image-property "FLAGS"="%Edition ID%"
+goto :eof
+"@ | Out-File -FilePath ".\hook_beforedvd.cmd"
 }
 
 # write W10UI
@@ -494,7 +471,8 @@ if ($?) {Write-Host "System Image Download Successfully!"} else {Write-Error "Sy
 Get-Content ".\temp\WIMInfo2.xml"
 
 # write W10UI conf
-"[W10UI-Configuration]
+@"
+[W10UI-Configuration]
 Target        =%cd%\ISO
 Repo          =%cd%\patch
 DismRoot      =dism.exe
@@ -523,7 +501,7 @@ AutoStart     =1
 
 AddDrivers    =0
 Drv_Source    =\Drivers
-" | Out-File -FilePath ".\W10UI.ini"
+"@ | Out-File -FilePath ".\W10UI.ini"
 
 # execute W10UI script
 .\bin\NSudoLC.exe -Wait -U:T -P:E -CurrentDirectory:. -UseCurrentConsole .\W10UI.cmd
