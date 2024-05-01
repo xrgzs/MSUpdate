@@ -201,9 +201,11 @@ if ($true -eq $msstore) {
     "
 }
 
-# abbodi1406/W10UI, auto inject hook after resetbase
-$W10UI = (Invoke-WebRequest -Uri "https://raw.githubusercontent.com/abbodi1406/BatUtil/master/W10UI/W10UI.cmd").Content
-$W10UI = $W10UI.Replace("if %AddDrivers%==1 call :doDrv","call %~dp0hook_beforewim.cmd")
+# abbodi1406/W10UI, auto inject hook
+$W10UI = "@chcp 65001`n"
+$W10UI += (Invoke-WebRequest -Uri "https://raw.githubusercontent.com/abbodi1406/BatUtil/master/W10UI/W10UI.cmd").Content
+$W10UI = $W10UI.Replace("if %AddDrivers%==1 call :doDrv","call %~dp0hook_beforewim.cmd`nif %AddDrivers%==1 call :doDrv")
+
 # write hook script
 "
 echo.
@@ -384,7 +386,7 @@ goto :EOF
 " | Out-File -FilePath ".\hook_beforewim.cmd"
 
 if ($true -eq $MultiEdition) {
-$W10UI = $W10UI.Replace(":dvdproceed",":dvdproceed
+$W10UI = $W10UI.Replace("`n:dvdproceed","`n:dvdproceed
 call %~dp0hook_beforedvd.cmd")
 "
 echo.
@@ -397,20 +399,17 @@ echo.
 echo ============================================================
 echo Start Edit Multi-SKU - %Edition ID%...
 echo.
-echo _wimlibgth: !_wimlib!
-echo _wimlib: %_wimlib%
-echo _wimfilegth: !_wimfile!
-echo _wimfile: %_wimfile%
+echo Current Dir: %cd%
 echo ============================================================
-%_wimlib% info %_wimfile%
-for /F `"tokens=3`" %%a in ('%_wimlib% info %_wimfile% ^| findstr /C:`"Image Count:`"') do set `"ImageCount=%%a`"
+%_wimlib% info `"!target!\sources\install.wim`"
+for /F `"tokens=3`" %%a in ('%_wimlib% info `"!target!\sources\install.wim`" ^| findstr /C:`"Image Count:`"') do set `"ImageCount=%%a`"
 echo Image Count is: %ImageCount%
 for /L %%a in (1,1,%ImageCount%) do call :editwiminfo %%a
 EXIT /B
 
 :readwiminfo
 %_wimlib% info %_wimfile% %1
-for /f `"tokens=1,2 delims=:`" %%a in ('%_wimlib% info %_wimfile% %1 ^| find /i %2') do (for /f `"tokens=*`" %%c in (`"%%b`") do (set `"%%a=%%c`"))
+for /f `"tokens=1,2 delims=:`" %%a in ('%_wimlib% info `"!target!\sources\install.wim`" %1 ^| find /i %2') do (for /f `"tokens=*`" %%c in (`"%%b`") do (set `"%%a=%%c`"))
 goto :EOF
 
 :editwiminfo
@@ -438,11 +437,14 @@ echo DISPLAYNAME: Windows %Major Version% %CNEDITION%
 echo DISPLAYDESCRIPTION: Windows %Major Version% %CNEDITION%
 echo FLAGS: %Edition ID%
 echo ============================================================
-%_wimlib% info %_wimfile% %1 `"Windows %Major Version% %Edition ID%`" `"Windows %Major Version% %Edition ID%`" --image-property `"DISPLAYNAME`"=`"Windows %Major Version% %CNEDITION%`" --image-property `"DISPLAYDESCRIPTION`"=`"Windows %Major Version% %CNEDITION%`" --image-property `"FLAGS`"=`"%Edition ID%`" >nul
+%_wimlib% info `"!target!\sources\install.wim`" %1 `"Windows %Major Version% %Edition ID%`" `"Windows %Major Version% %Edition ID%`" --image-property `"DISPLAYNAME`"=`"Windows %Major Version% %CNEDITION%`" --image-property `"DISPLAYDESCRIPTION`"=`"Windows %Major Version% %CNEDITION%`" --image-property `"FLAGS`"=`"%Edition ID%`" >nul
 goto :EOF
 " | Out-File -FilePath ".\hook_beforedvd.cmd"
 }
-$W10UI | Out-File -FilePath ".\W10UI.cmd"
+
+# write W10UI
+$W10UI | Out-File -FilePath ".\W10UI.cmd" -Encoding utf8
+$W10UI = ""
 
 # get osimage
 # get original system direct link
