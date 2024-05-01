@@ -397,13 +397,17 @@ echo ============================================================
 
 echo.
 echo ============================================================
-echo Start Edit Multi-SKU - %Edition ID%...
+echo Start Edit Multi-SKU
 echo.
 echo Current Dir: %cd%
 echo ============================================================
 %_wimlib% info `"!target!\sources\install.wim`"
 for /F `"tokens=3`" %%a in ('%_wimlib% info `"!target!\sources\install.wim`" ^| findstr /C:`"Image Count:`"') do set `"ImageCount=%%a`"
-echo Image Count is: %ImageCount%
+echo Image Count is: [%ImageCount%]
+echo Image Count gth is: [!ImageCount!]
+set ImageCount=9
+echo Image Count force is: [%ImageCount%]
+echo Image Count force gth is: [!ImageCount!]
 for /L %%a in (1,1,%ImageCount%) do call :editwiminfo %%a
 EXIT /B
 
