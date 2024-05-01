@@ -165,17 +165,17 @@ if ($null -ne $Miracast) {
     # Microsoft-Windows-WirelessDisplay-FOD-Package.cab
     .\bin\aria2c.exe --check-certificate=false -x16 -s16 -d ".\fod\Miracast\" -o "update.cab" "$Miracast"
     if (!$?) {Write-Error "Miracast Download Failed!"}
-    expand -f:* ".\fod\Miracast\update.cab" ".\fod\Miracast\"
+    expand -f:* ".\fod\Miracast\update.cab" ".\fod\Miracast\" >nul
     # Microsoft-Windows-WirelessDisplay-FOD-Package~zh-CN.cab
     .\bin\aria2c.exe --check-certificate=false -x16 -s16 -d ".\fod\MiracastLP\" -o "update.cab" "$MiracastLP"
     if (!$?) {Write-Error "MiracastLP Download Failed!"}
-    expand -f:* ".\fod\Miracast\update.cab" ".\fod\MiracastLP\"
+    expand -f:* ".\fod\Miracast\update.cab" ".\fod\MiracastLP\" >nul
 }
 if ($null -ne $iexplorer) {
     # microsoft-windows-internetexplorer-optional-package.cab
     .\bin\aria2c.exe --check-certificate=false -x16 -s16 -d ".\fod\iexplorer\" -o "update.cab" "$iexplorer"
     if (!$?) {Write-Error "iexplorer Download Failed!"}
-    expand -f:* ".\fod\iexplorer\update.cab" ".\fod\iexplorer\"
+    expand -f:* ".\fod\iexplorer\update.cab" ".\fod\iexplorer\" >nul
 }
 
 # get entg
