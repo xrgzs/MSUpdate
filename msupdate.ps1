@@ -386,23 +386,23 @@ goto :EOF
 " | Out-File -FilePath ".\hook_beforewim.cmd"
 
 if ($true -eq $MultiEdition) {
-$W10UI = $W10UI.Replace("`n:dvdproceed","`n:dvdproceed
-call %~dp0hook_beforedvd.cmd")
+$W10UI = $W10UI.Replace("`n:dvdproceed","`n:dvdproceed`ncall %~dp0hook_beforedvd.cmd")
 "
 echo.
 echo ============================================================
 echo Hook W10UI beforedvd Successfully!
 echo Current Dir: %cd%
 echo ============================================================
-
+cd /d `"!target!`"
 echo.
 echo ============================================================
 echo Start Edit Multi-SKU
 echo.
 echo Current Dir: %cd%
 echo ============================================================
-%_wimlib% info `"!target!\sources\install.wim`"
-for /F `"tokens=3`" %%a in ('%_wimlib% info `"!target!\sources\install.wim`" ^| findstr /C:`"Image Count:`"') do set `"ImageCount=%%a`"
+!_wimlib! info sources\install.wim
+echo for /F `"tokens=3`" %%a in ('!_wimlib! info sources\install.wim ^| findstr /C:`"Image Count:`"') do set `"ImageCount=%%a`"
+for /F `"tokens=3`" %%a in ('!_wimlib! info sources\install.wim ^| findstr /C:`"Image Count:`"') do set `"ImageCount=%%a`"
 echo Image Count is: [%ImageCount%]
 echo Image Count gth is: [!ImageCount!]
 set ImageCount=9
@@ -412,8 +412,9 @@ for /L %%a in (1,1,%ImageCount%) do call :editwiminfo %%a
 EXIT /B
 
 :readwiminfo
-%_wimlib% info %_wimfile% %1
-for /f `"tokens=1,2 delims=:`" %%a in ('%_wimlib% info `"!target!\sources\install.wim`" %1 ^| find /i %2') do (for /f `"tokens=*`" %%c in (`"%%b`") do (set `"%%a=%%c`"))
+!_wimlib! info sources\install.wim %1
+echo for /f `"tokens=1,2 delims=:`" %%a in ('!_wimlib! info sources\install.wim %1 ^| find /i %2') do (for /f `"tokens=*`" %%c in (`"%%b`") do (set `"%%a=%%c`"))
+for /f `"tokens=1,2 delims=:`" %%a in ('!_wimlib! info sources\install.wim %1 ^| find /i %2') do (for /f `"tokens=*`" %%c in (`"%%b`") do (set `"%%a=%%c`"))
 goto :EOF
 
 :editwiminfo
@@ -441,7 +442,7 @@ echo DISPLAYNAME: Windows %Major Version% %CNEDITION%
 echo DISPLAYDESCRIPTION: Windows %Major Version% %CNEDITION%
 echo FLAGS: %Edition ID%
 echo ============================================================
-%_wimlib% info `"!target!\sources\install.wim`" %1 `"Windows %Major Version% %Edition ID%`" `"Windows %Major Version% %Edition ID%`" --image-property `"DISPLAYNAME`"=`"Windows %Major Version% %CNEDITION%`" --image-property `"DISPLAYDESCRIPTION`"=`"Windows %Major Version% %CNEDITION%`" --image-property `"FLAGS`"=`"%Edition ID%`" >nul
+!_wimlib! info sources\install.wim %1 `"Windows %Major Version% %Edition ID%`" `"Windows %Major Version% %Edition ID%`" --image-property `"DISPLAYNAME`"=`"Windows %Major Version% %CNEDITION%`" --image-property `"DISPLAYDESCRIPTION`"=`"Windows %Major Version% %CNEDITION%`" --image-property `"FLAGS`"=`"%Edition ID%`" >nul
 goto :EOF
 " | Out-File -FilePath ".\hook_beforedvd.cmd"
 }
