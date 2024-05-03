@@ -57,6 +57,34 @@ switch ($MakeVersion) {
         $NETScript = "https://raw.githubusercontent.com/adavak/Win_ISO_Patching_Scripts/master/Scripts/netfx4.8.1/script_netfx4.8.1_19041_x64.meta4"
         $msstore = $true
     }
+    "w1032" {
+        # make 10 22h2 32
+        try {
+            $osurl = ((Invoke-WebRequest -Uri "https://api.gravesoft.dev/msdl/proxy?product_id=2378&sku_id=15004").Links | Where-Object {$_.outerHTML -like "*Isox86 Download*"})[0].href
+            $osfile = "Win10_22H2_China_GGK_Chinese_Simplified_x32.iso"
+        }
+        catch {
+            $ospath = "/系统/MSDN/NT10.0_Win10/19045_22H2/2006_RTM/Win10_22H2_China_GGK_Chinese_Simplified_x32.iso"
+        }
+        if ($true -eq $UpdateFromUUP) {
+            $uupid = ((Invoke-WebRequest -Uri "https://uupdump.net/known.php?q=category:w10-22h2").Links | Where-Object {$_.href -like "selectlang.php?id=*"} | Where-Object {$_.outerHTML -like "*x86*"})[0].href.replace("selectlang.php?id=","")
+            $UUPScript = "https://uupdump.net/get.php?id=$uupid&pack=0&edition=updateOnly&aria2=2"
+            Start-Sleep -Seconds 3
+            $Miracast = ((Invoke-WebRequest -Uri "https://uupdump.net/getfile.php?id=$uupid&file=Microsoft-Windows-WirelessDisplay-FOD-Package-x86.cab").Links | Where-Object {$_.outerHTML -like “*microsoft.com*"})[0].href
+            Start-Sleep -Seconds 3
+            $MiracastLP = ((Invoke-WebRequest -Uri "https://uupdump.net/getfile.php?id=$uupid&file=Microsoft-Windows-WirelessDisplay-FOD-Package-x86-zh-cn.cab").Links | Where-Object {$_.outerHTML -like “*microsoft.com*"})[0].href
+            Start-Sleep -Seconds 3
+            $entgpack = ((Invoke-WebRequest -Uri "https://uupdump.net/getfile.php?id=$uupid&file=Microsoft-Windows-EditionSpecific-EnterpriseG-Package.ESD").Links | Where-Object {$_.outerHTML -like “*microsoft.com*"})[0].href
+            Start-Sleep -Seconds 3
+        } else {
+            $WUScript = "https://raw.githubusercontent.com/adavak/Win_ISO_Patching_Scripts/master/Scripts/script_19041_x86.meta4"
+            $Miracast = "https://file.uhsea.com/2405/2ff40a3b9782eca5254a7dda8cb700289C.cab"
+            $MiracastLP = "https://file.uhsea.com/2405/8e3ea4a6e3fbf275640a3fa43c63502aNY.cab"
+            $entgpack = "https://file.uhsea.com/2405/4bb4e1af531d4cd8bea6d1ffdc933c048J.esd"
+        }
+        $NETScript = "https://mirror.ghproxy.com/https://raw.githubusercontent.com/adavak/Win_ISO_Patching_Scripts/master/Scripts/netfx4.8.1/script_netfx4.8.1_19041_x86.meta4"
+        $msstore = $false
+    }
     "w10lt2164" {
     # make 10 ltsc2021 64
         $ospath = "/系统/MSDN/NT10.0_Win10/19044_LTSC2021/zh-cn_windows_10_enterprise_ltsc_2021_x64_dvd_033b7312.iso"
@@ -70,9 +98,22 @@ switch ($MakeVersion) {
         $NETScript = "https://raw.githubusercontent.com/adavak/Win_ISO_Patching_Scripts/master/Scripts/netfx4.8.1/script_netfx4.8.1_19041_x64.meta4"
         $MultiEdition = $false
     }
+    "w10lt2132" {
+        # make 10 ltsc2021 64
+            $ospath = "/系统/MSDN/NT10.0_Win10/19044_LTSC2021/zh-cn_windows_10_enterprise_ltsc_2021_x86_dvd_30600d9c.iso"
+            if ($true -eq $UpdateFromUUP) {
+                $uupid = ((Invoke-WebRequest -Uri "https://uupdump.net/known.php?q=category:w10-22h2").Links | Where-Object {$_.href -like "selectlang.php?id=*"} | Where-Object {$_.outerHTML -like "*x86*"})[0].href.replace("selectlang.php?id=","")
+                $UUPScript = "https://uupdump.net/get.php?id=$uupid&pack=0&edition=updateOnly&aria2=2"
+                Start-Sleep -Seconds 3
+            } else {
+                $WUScript = "https://raw.githubusercontent.com/adavak/Win_ISO_Patching_Scripts/master/Scripts/script_19041_x86.meta4"
+            }
+            $NETScript = "https://raw.githubusercontent.com/adavak/Win_ISO_Patching_Scripts/master/Scripts/netfx4.8.1/script_netfx4.8.1_19041_x86.meta4"
+            $MultiEdition = $false
+    }
     "w10lt1964" {
         # make 10 ltsc2019 64
-        $ospath = "/系统/MSDN/NT10.0_Win10/17763_LTSC2019/cn_windows_10_enterprise_ltsc_2019_x64_dvd_9c09ff24.iso"
+        $ospath = "/系统/MSDN/NT10.0_Win10/17763_LTSC2019/1_RTM/cn_windows_10_enterprise_ltsc_2019_x64_dvd_2efc9ac2.iso"
         if ($true -eq $UpdateFromUUP) {
             $uupid = ((Invoke-WebRequest -Uri "https://uupdump.net/known.php?q=category:w10-1809").Links | Where-Object {$_.href -like "selectlang.php?id=*"} | Where-Object {$_.outerHTML -like "*amd64*"})[0].href.replace("selectlang.php?id=","")
             $UUPScript = "https://uupdump.net/get.php?id=$uupid&pack=0&edition=updateOnly&aria2=2"
@@ -83,11 +124,31 @@ switch ($MakeVersion) {
         $NETScript = "https://raw.githubusercontent.com/adavak/Win_ISO_Patching_Scripts/master/Scripts/netfx4.8/script_netfx4.8_17763_x64.meta4"
         $MultiEdition = $false
     }
+    "w10lt1932" {
+        # make 10 ltsc2019 32
+        $ospath = "/系统/MSDN/NT10.0_Win10/17763_LTSC2019/1_RTM/cn_windows_10_enterprise_ltsc_2019_x86_dvd_2908ee10.iso"
+        if ($true -eq $UpdateFromUUP) {
+            $uupid = ((Invoke-WebRequest -Uri "https://uupdump.net/known.php?q=category:w10-1809").Links | Where-Object {$_.href -like "selectlang.php?id=*"} | Where-Object {$_.outerHTML -like "*x86*"})[0].href.replace("selectlang.php?id=","")
+            $UUPScript = "https://uupdump.net/get.php?id=$uupid&pack=0&edition=updateOnly&aria2=2"
+            Start-Sleep -Seconds 3
+        } else {
+            $WUScript = "https://raw.githubusercontent.com/adavak/Win_ISO_Patching_Scripts/master/Scripts/script_17763_x86.meta4"
+        }
+        $NETScript = "https://raw.githubusercontent.com/adavak/Win_ISO_Patching_Scripts/master/Scripts/netfx4.8/script_netfx4.8_17763_x86.meta4"
+        $MultiEdition = $false
+    }
     "w10lt1664" {
         # make 10 ltsb2016 64 (unsupport uup)
         $ospath = "/系统/MSDN/NT10.0_Win10/14393_LTSB2016/cn_windows_10_enterprise_2016_ltsb_x64_dvd_9060409.iso"
         $WUScript = "https://raw.githubusercontent.com/adavak/Win_ISO_Patching_Scripts/master/Scripts/script_14393_x64.meta4"
         $NETScript = "https://raw.githubusercontent.com/adavak/Win_ISO_Patching_Scripts/master/Scripts/netfx4.8/script_netfx4.8_14393_x64.meta4"
+        $MultiEdition = $false
+    }
+    "w10lt1632" {
+        # make 10 ltsb2016 32 (unsupport uup)
+        $ospath = "/系统/MSDN/NT10.0_Win10/14393_LTSB2016/cn_windows_10_enterprise_2016_ltsb_x86_dvd_9057089.iso"
+        $WUScript = "https://raw.githubusercontent.com/adavak/Win_ISO_Patching_Scripts/master/Scripts/script_14393_x86.meta4"
+        $NETScript = "https://raw.githubusercontent.com/adavak/Win_ISO_Patching_Scripts/master/Scripts/netfx4.8/script_netfx4.8_14393_x86.meta4"
         $MultiEdition = $false
     }
     default {
@@ -189,7 +250,10 @@ if (($null -ne $entgpack) -and ($true -eq $MultiEdition)) {
 $MSStoreScript = "echo nostore"
 if ($true -eq $msstore) {
     # get msstore
-    .\getappx.ps1
+    Remove-Item -Path "$PSScriptRoot\msstore" -Force -ErrorAction SilentlyContinue
+    New-Item -ItemType Directory -Path "$PSScriptRoot\msstore" -ErrorAction SilentlyContinue
+    Get-Appx 'Microsoft.DesktopAppInstaller'
+    Get-Appx 'Microsoft.WindowsStore'
     $MSStoreScript = @"
 for %%a in (%~dp0msstore\Microsoft.UI.Xaml.2.*_8wekyb3d8bbwe.Appx) do call :Add-ProvisionedAppxPackage "%%a"
 for %%a in (%~dp0msstore\Microsoft.VCLibs.140.00.UWPDesktop_14.0.*_8wekyb3d8bbwe.Appx) do call :Add-ProvisionedAppxPackage "%%a"
@@ -505,3 +569,29 @@ Drv_Source    =\Drivers
 
 # execute W10UI script
 .\bin\NSudoLC.exe -Wait -U:T -P:E -CurrentDirectory:. -UseCurrentConsole .\W10UI.cmd
+
+function Get-Appx($Name) {
+    $obj = Invoke-WebRequest -Uri "https://store.xr6.xyz/api/GetFiles" `
+    -Method "POST" `
+    -ContentType "application/x-www-form-urlencoded" `
+    -Body @{
+        type = 'PackageFamilyName'
+        url = $Name + '_8wekyb3d8bbwe'
+        ring = 'RP'
+        lang = 'zh-CN'
+    }
+
+    foreach ($link in $obj.Links) {
+        if ($link.outerHTML -match '(?<=<a\b[^>]*>).*?(?=</a>)') {
+            $linkText = $Matches[0]
+            if ($linkText -match '(x64|neutral).*\.(appx|appxbundle|msixbundle)\b') {
+                Write-Debug "$linkText : $($link.href)"
+                if (Test-Path -Path $linkText) {
+                    Write-Warning "Already exists, skiping $linkText"
+                } else {
+                    Invoke-WebRequest -Uri $link.href -OutFile "$PSScriptRoot\msstore\$linkText"
+                }
+            }
+        }
+    }
+}

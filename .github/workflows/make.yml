@@ -10,9 +10,13 @@ on:
         options:
           - w1164
           - w1064
+          - w1032
           - w10lt2164
+          - w10lt2132
           - w10lt1964
+          - w10lt1932
           - w10lt1664
+          - w10lt1632
       UpdateFromUUP:
         description: 'Update from UUP'
         required: false
