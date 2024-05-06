@@ -635,6 +635,7 @@ Get-ChildItem -Path ".\*.iso" -File | ForEach-Object {
     $FileInfo.Hash = @{}
     $FileInfo.Hash.SHA256 = Get-FileHash -Path $_.Name -Algorithm SHA256 | Select-Object -ExpandProperty Hash
     $FileInfo.Hash.MD5 = Get-FileHash -Path $_.Name -Algorithm MD5 | Select-Object -ExpandProperty Hash
+    $FileInfo.OsType = "MSUpdate"
     $FileInfo.MakeVersion = $MakeVersion
     $FileInfo.MSUpdate = $true
     $FileInfo.MultiEdition = $MultiEdition
@@ -642,6 +643,5 @@ Get-ChildItem -Path ".\*.iso" -File | ForEach-Object {
     $FileInfo.AddUnattend = $AddUnattend
     $FileInfo.SkipCheck = $SkipCheck
     $FileInfo.MakeFrom = $osfile
-    $FileInfo.MakeFrom = $msstore
     $FileInfo | ConvertTo-Json | Out-File -FilePath ".\$($_.Name).json" -Encoding utf8
 }
