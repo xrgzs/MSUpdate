@@ -1,4 +1,31 @@
 ﻿$ErrorActionPreference = 'Stop'
+
+function Get-Appx($Name) {
+    $obj = Invoke-WebRequest -Uri "https://store.xr6.xyz/api/GetFiles" `
+    -Method "POST" `
+    -ContentType "application/x-www-form-urlencoded" `
+    -Body @{
+        type = 'PackageFamilyName'
+        url = $Name + '_8wekyb3d8bbwe'
+        ring = 'RP'
+        lang = 'zh-CN'
+    }
+
+    foreach ($link in $obj.Links) {
+        if ($link.outerHTML -match '(?<=<a\b[^>]*>).*?(?=</a>)') {
+            $linkText = $Matches[0]
+            if ($linkText -match '(x64|x86|neutral).*\.(appx|appxbundle|msixbundle)\b') {
+                Write-Debug "$linkText : $($link.href)"
+                if (Test-Path -Path $linkText) {
+                    Write-Warning "Already exists, skiping $linkText"
+                } else {
+                    Invoke-WebRequest -Uri $link.href -OutFile "$PSScriptRoot\msstore\$linkText"
+                }
+            }
+        }
+    }
+}
+
 # set system info
 switch ($MakeVersion) {
     "w1164" {
@@ -83,7 +110,7 @@ switch ($MakeVersion) {
             $entgpack = "https://file.uhsea.com/2405/4bb4e1af531d4cd8bea6d1ffdc933c048J.esd"
         }
         $NETScript = "https://mirror.ghproxy.com/https://raw.githubusercontent.com/adavak/Win_ISO_Patching_Scripts/master/Scripts/netfx4.8.1/script_netfx4.8.1_19041_x86.meta4"
-        $msstore = $false
+        $msstore = $true
     }
     "w10lt2164" {
     # make 10 ltsc2021 64
@@ -97,19 +124,21 @@ switch ($MakeVersion) {
         }
         $NETScript = "https://raw.githubusercontent.com/adavak/Win_ISO_Patching_Scripts/master/Scripts/netfx4.8.1/script_netfx4.8.1_19041_x64.meta4"
         $MultiEdition = $false
+        $msstore = $true
     }
     "w10lt2132" {
-        # make 10 ltsc2021 64
-            $ospath = "/系统/MSDN/NT10.0_Win10/19044_LTSC2021/zh-cn_windows_10_enterprise_ltsc_2021_x86_dvd_30600d9c.iso"
-            if ($true -eq $UpdateFromUUP) {
-                $uupid = ((Invoke-WebRequest -Uri "https://uupdump.net/known.php?q=category:w10-22h2").Links | Where-Object {$_.href -like "selectlang.php?id=*"} | Where-Object {$_.outerHTML -like "*x86*"})[0].href.replace("selectlang.php?id=","")
-                $UUPScript = "https://uupdump.net/get.php?id=$uupid&pack=0&edition=updateOnly&aria2=2"
-                Start-Sleep -Seconds 3
-            } else {
-                $WUScript = "https://raw.githubusercontent.com/adavak/Win_ISO_Patching_Scripts/master/Scripts/script_19041_x86.meta4"
-            }
-            $NETScript = "https://raw.githubusercontent.com/adavak/Win_ISO_Patching_Scripts/master/Scripts/netfx4.8.1/script_netfx4.8.1_19041_x86.meta4"
-            $MultiEdition = $false
+        # make 10 ltsc2021 32
+        $ospath = "/系统/MSDN/NT10.0_Win10/19044_LTSC2021/zh-cn_windows_10_enterprise_ltsc_2021_x86_dvd_30600d9c.iso"
+        if ($true -eq $UpdateFromUUP) {
+            $uupid = ((Invoke-WebRequest -Uri "https://uupdump.net/known.php?q=category:w10-22h2").Links | Where-Object {$_.href -like "selectlang.php?id=*"} | Where-Object {$_.outerHTML -like "*x86*"})[0].href.replace("selectlang.php?id=","")
+            $UUPScript = "https://uupdump.net/get.php?id=$uupid&pack=0&edition=updateOnly&aria2=2"
+            Start-Sleep -Seconds 3
+        } else {
+            $WUScript = "https://raw.githubusercontent.com/adavak/Win_ISO_Patching_Scripts/master/Scripts/script_19041_x86.meta4"
+        }
+        $NETScript = "https://raw.githubusercontent.com/adavak/Win_ISO_Patching_Scripts/master/Scripts/netfx4.8.1/script_netfx4.8.1_19041_x86.meta4"
+        $MultiEdition = $false
+        $msstore = $true
     }
     "w10lt1964" {
         # make 10 ltsc2019 64
@@ -570,33 +599,6 @@ Drv_Source    =\Drivers
 
 # execute W10UI script
 .\bin\NSudoLC.exe -Wait -U:T -P:E -CurrentDirectory:. -UseCurrentConsole .\W10UI.cmd
-
-function Get-Appx($Name) {
-    $obj = Invoke-WebRequest -Uri "https://store.xr6.xyz/api/GetFiles" `
-    -Method "POST" `
-    -ContentType "application/x-www-form-urlencoded" `
-    -Body @{
-        type = 'PackageFamilyName'
-        url = $Name + '_8wekyb3d8bbwe'
-        ring = 'RP'
-        lang = 'zh-CN'
-    }
-
-    foreach ($link in $obj.Links) {
-        if ($link.outerHTML -match '(?<=<a\b[^>]*>).*?(?=</a>)') {
-            $linkText = $Matches[0]
-            if ($linkText -match '(x64|neutral).*\.(appx|appxbundle|msixbundle)\b') {
-                Write-Debug "$linkText : $($link.href)"
-                if (Test-Path -Path $linkText) {
-                    Write-Warning "Already exists, skiping $linkText"
-                } else {
-                    Invoke-WebRequest -Uri $link.href -OutFile "$PSScriptRoot\msstore\$linkText"
-                }
-            }
-        }
-    }
-}
-
 
 # rename
 Get-ChildItem -Path ".\*.iso" -File | ForEach-Object {
