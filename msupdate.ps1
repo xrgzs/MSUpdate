@@ -596,3 +596,43 @@ function Get-Appx($Name) {
         }
     }
 }
+
+
+# rename
+Get-ChildItem -Path ".\*.iso" -File | ForEach-Object {
+    $NewName = $_.Name
+    if ($true -eq $MultiEdition) {
+        $NewName = $NewName -replace "_CLIENT", "_CLIENTMULTI"
+    }
+    if ($true -eq $UpdateFromUUP) {
+        $NameAppend += "_UUP"
+    }
+    if ($true -eq $AddVMD) {
+        $NameAppend += "_VMD"
+    }
+    if ($true -eq $AddUnattend) {
+        $NameAppend += "_Unattend"
+    }
+    if ($true -eq $SkipCheck) {
+        $NameAppend += "_SkipCheck"
+    }
+    if ($null -ne $NameAppend) {
+        $NewName = $NewName -replace ".iso", "$NameAppend.iso"
+    }
+    if ($_.Name -ne $NewName) {
+        Rename-Item -Path $_.Name -NewName $NewName
+    }
+}
+
+# get hash
+Get-ChildItem -Path ".\*.iso" -File | ForEach-Object {
+    Write-Host "Getting hash for $($_.Name)..."
+    $FileInfo = [ordered] @{}
+    $FileInfo.Name = $_.Name
+    $FileInfo.Hash = @{}
+    $FileInfo.Hash.SHA256 = Get-FileHash -Path $_.Name -Algorithm SHA256 | Select-Object -ExpandProperty Hash
+    $FileInfo.Hash.MD5 = Get-FileHash -Path $_.Name -Algorithm MD5 | Select-Object -ExpandProperty Hash
+    $FileInfo.Size = $_.Length
+    $FileInfo.Date = $_.LastWriteTime
+    $FileInfo | ConvertTo-Json | Out-File -FilePath ".\$($_.Name).json" -Encoding utf8
+}

@@ -75,6 +75,9 @@ jobs:
             Copy-Item -Path .\temp\rclone-*-windows-amd64\rclone.exe -Destination .\bin\rclone.exe
           }
           # upload to cloud
-          Get-ChildItem -Path "./*.iso" -File | ForEach-Object {
+          Get-ChildItem -Path ".\*.iso" -File | ForEach-Object {
+            .\bin\rclone.exe copy $_.FullName "${{ vars.RCLONE_PATH }}" --progress
+          }
+          Get-ChildItem -Path ".\*.json" -File | ForEach-Object {
             .\bin\rclone.exe copy $_.FullName "${{ vars.RCLONE_PATH }}" --progress
           }

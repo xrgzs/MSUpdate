@@ -51,6 +51,14 @@ $MultiEdition  = [bool]   $True
 .\msupdate.ps1
 ```
 
+目前支持的参数有：
+
+- MakeVersion：生成版本号
+- UpdateFromUUP：是否从 UUP 更新
+- MultiEdition：是否转换多版本
+
+构建完成后会生成 BuildLabEx 样式的 .iso 文件和 .iso.json 的校验信息文件
+
 ## 构建依赖
 
 本项目需要使用到大量工具进行构建，包括但不限于：
