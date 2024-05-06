@@ -628,11 +628,20 @@ Get-ChildItem -Path ".\*.iso" -File | ForEach-Object {
 Get-ChildItem -Path ".\*.iso" -File | ForEach-Object {
     Write-Host "Getting hash for $($_.Name)..."
     $FileInfo = [ordered] @{}
+    $FileInfo.UUID = [guid]::NewGuid().ToString()
     $FileInfo.Name = $_.Name
+    $FileInfo.Size = $_.Length
+    $FileInfo.Date = $_.LastWriteTime
     $FileInfo.Hash = @{}
     $FileInfo.Hash.SHA256 = Get-FileHash -Path $_.Name -Algorithm SHA256 | Select-Object -ExpandProperty Hash
     $FileInfo.Hash.MD5 = Get-FileHash -Path $_.Name -Algorithm MD5 | Select-Object -ExpandProperty Hash
-    $FileInfo.Size = $_.Length
-    $FileInfo.Date = $_.LastWriteTime
+    $FileInfo.MakeVersion = $MakeVersion
+    $FileInfo.MSUpdate = $true
+    $FileInfo.MultiEdition = $MultiEdition
+    $FileInfo.UpdateFromUUP = $UpdateFromUUP
+    $FileInfo.AddUnattend = $AddUnattend
+    $FileInfo.SkipCheck = $SkipCheck
+    $FileInfo.MakeFrom = $osfile
+    $FileInfo.MakeFrom = $msstore
     $FileInfo | ConvertTo-Json | Out-File -FilePath ".\$($_.Name).json" -Encoding utf8
 }
