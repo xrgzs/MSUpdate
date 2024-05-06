@@ -628,20 +628,20 @@ Get-ChildItem -Path ".\*.iso" -File | ForEach-Object {
 Get-ChildItem -Path ".\*.iso" -File | ForEach-Object {
     Write-Host "Getting hash for $($_.Name)..."
     $FileInfo = [ordered] @{}
-    $FileInfo.UUID = [guid]::NewGuid().ToString()
-    $FileInfo.Name = $_.Name
-    $FileInfo.Size = $_.Length
-    $FileInfo.Date = $_.LastWriteTime
-    $FileInfo.Hash = @{}
-    $FileInfo.Hash.SHA256 = Get-FileHash -Path $_.Name -Algorithm SHA256 | Select-Object -ExpandProperty Hash
-    $FileInfo.Hash.MD5 = Get-FileHash -Path $_.Name -Algorithm MD5 | Select-Object -ExpandProperty Hash
-    $FileInfo.OsType = "MSUpdate"
-    $FileInfo.MSUpdate = @{}
-    $FileInfo.MSUpdate.MakeVersion = $MakeVersion
-    $FileInfo.MSUpdate.MultiEdition = $MultiEdition
-    $FileInfo.MSUpdate.UpdateFromUUP = $UpdateFromUUP
-    $FileInfo.MSUpdate.AddUnattend = $AddUnattend
-    $FileInfo.MSUpdate.SkipCheck = $SkipCheck
-    $FileInfo.MSUpdate.MakeFrom = $osfile
+    $FileInfo.uuid = [guid]::NewGuid().ToString()
+    $FileInfo.name = $_.Name
+    $FileInfo.size = $_.Length
+    $FileInfo.date = $_.LastWriteTime
+    $FileInfo.hash = @{}
+    $FileInfo.hash.sha256 = Get-FileHash -Path $_.Name -Algorithm SHA256 | Select-Object -ExpandProperty Hash
+    $FileInfo.hash.md5 = Get-FileHash -Path $_.Name -Algorithm MD5 | Select-Object -ExpandProperty Hash
+    $FileInfo.ostype = "MSUpdate"
+    $FileInfo.msupdate = @{}
+    $FileInfo.msupdate.makeversion = $MakeVersion
+    $FileInfo.msupdate.multiedition = $MultiEdition
+    $FileInfo.msupdate.updatefromuup = $UpdateFromUUP
+    $FileInfo.msupdate.addunattend = $AddUnattend
+    $FileInfo.msupdate.skipcheck = $SkipCheck
+    $FileInfo.msupdate.makefrom = $osfile
     $FileInfo | ConvertTo-Json | Out-File -FilePath ".\$($_.Name).json" -Encoding utf8
 }
