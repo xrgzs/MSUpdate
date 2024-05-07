@@ -811,7 +811,7 @@ Get-ChildItem -Path ".\*.iso" -File | ForEach-Object {
     $FileInfo.os_version = [string] $_.Name.Split(".")[0] + "." + $_.Name.Split(".")[1]
     $FileInfo.os_rsversion = $os_rsversion
     $FileInfo.os_release = $os_release
-    $FileInfo.os_build = $os_build
+    $FileInfo.os_build = [string] $os_build
     $FileInfo.os_edition = $os_edition
     $FileInfo.os_arch = $os_arch
     $FileInfo.os_lang = $os_lang
