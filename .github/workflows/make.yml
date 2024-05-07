@@ -1,5 +1,5 @@
 name: MSUpdate
-run-name: Make MSUpdate ${{ inputs.makeversion }} by @${{ github.actor }} ${{ inputs.UpdateFromUUP == true && '- UUP' }} ${{ inputs.MultiEdition == true && '- Multi' }}
+run-name: Make MSUpdate ${{ inputs.makeversion }} by @${{ github.actor }} ${{ inputs.UpdateFromUUP == true && '- UUP' || '' }} ${{ inputs.MultiEdition == true && '- Multi' || ''}} ${{ inputs.SkipCheck == true && '- SkipCheck' || ''}}
 on:
   workflow_dispatch:
     inputs:
