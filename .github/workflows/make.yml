@@ -82,8 +82,8 @@ jobs:
           }
           # upload to cloud
           Get-ChildItem -Path ".\*.iso" -File | ForEach-Object {
-            .\bin\rclone.exe copy $_.FullName "${{ vars.RCLONE_PATH }}" --progress
+            .\bin\rclone.exe copy $_.FullName "${{ vars.RCLONE_PATH }}\${{ inputs.MakeVersion }}" --progress
           }
           Get-ChildItem -Path ".\*.json" -File | ForEach-Object {
-            .\bin\rclone.exe copy $_.FullName "${{ vars.RCLONE_PATH }}" --progress
+            .\bin\rclone.exe copy $_.FullName "${{ vars.RCLONE_PATH }}\${{ inputs.MakeVersion }}" --progress
           }
