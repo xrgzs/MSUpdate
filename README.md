@@ -53,9 +53,20 @@ $MultiEdition  = [bool]   $True
 
 目前支持的参数有：
 
-- MakeVersion：生成版本号
-- UpdateFromUUP：是否从 UUP 更新
-- MultiEdition：是否转换多版本
+- MakeVersion：选择制作的系统版本
+  - w1164
+  - w1064
+  - w1032
+  - w11lt2464
+  - w10lt2164
+  - w10lt2132
+  - w10lt1964
+  - w10lt1932
+  - w10lt1664
+  - w10lt1632
+- UpdateFromUUP：从UUPDUMP获取更新(1809+)
+- MultiEdition：转换多版本(LTSC勿选)
+- SkipCheck：跳过硬件检测(Win11)
 
 构建完成后会生成 BuildLabEx 样式的 .iso 文件和 .iso.json 的校验信息文件
 

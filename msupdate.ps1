@@ -114,7 +114,7 @@ switch ($MakeVersion) {
     }
     "w1124h264" {
         # make 11 24h2 64
-        $ospath = "not ready"
+        $ospath = "/系统/Windows/Win10/24H2/26100.1.240331-1435.ge_release_CLIENTCHINA_UUP_RET_x64fre_zh-cn.iso"
         $UpdateFromUUP = $true
         $uupid = ((Invoke-WebRequest -Uri "https://uupdump.net/known.php?q=category:w11-24h2").Links | Where-Object {$_.href -like "selectlang.php?id=*"} | Where-Object {$_.outerHTML -like "*amd64*"})[0].href.replace("selectlang.php?id=","")
         $UUPScript = "https://uupdump.net/get.php?id=$uupid&pack=0&edition=updateOnly&aria2=2"
