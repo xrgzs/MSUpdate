@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       makeversion:
-        description: 'Target OS Version'
+        description: '选择制作的系统版本'
         required: true
         type: choice
         options:
