@@ -85,7 +85,7 @@ jobs:
           # upload to cloud
           Get-ChildItem -Path ".\*.json" -File | ForEach-Object {
             $json = Get-Content $_.FullName | Convertfrom-Json
-            .\bin\rclone.exe copy ".\$json.name" "${{ vars.RCLONE_PATH }}\$($json.os_ver)\$($json.os_release)\$($json.os_version)" --progress
-            .\bin\rclone.exe copy "$_.FullName" "${{ vars.RCLONE_PATH }}\$($json.os_ver)\$($json.os_release)\$($json.os_version)" --progress
-            .\bin\rclone.exe copyto "$_.FullName" "${{ vars.RCLONE_PATH }}\$($json.os_ver)\$($json.os_release)\latest_$($json.os_arch).json" --progress
+            .\bin\rclone.exe copy ".\$($json.name)" "${{ vars.RCLONE_PATH }}\$($json.os_ver)\$($json.os_release)\$($json.os_version)" --progress
+            .\bin\rclone.exe copy "$($_.FullName)" "${{ vars.RCLONE_PATH }}\$($json.os_ver)\$($json.os_release)\$($json.os_version)" --progress
+            .\bin\rclone.exe copyto "$($_.FullName)" "${{ vars.RCLONE_PATH }}\$($json.os_ver)\$($json.os_release)\latest_$($json.os_arch).json" --progress
           }
