@@ -28,6 +28,28 @@ function Get-Appx($Name) {
 
 # set system info
 switch ($MakeVersion) {
+    "w1124h264" {
+        # make 11 24h2 64
+        $os_ver = "11"
+        $os_rsversion = "24H2"
+        $os_build = "26100"
+        $os_edition = "CoreCountrySpecific"
+        $os_display = "Windows $os_ver $os_rsversion"
+        $os_arch = "x64"
+        $os_lang = "zh-cn"
+        $ospath = "/系统/Windows/Win10/24H2/26100.1.240331-1435.ge_release_CLIENTCHINA_UUP_RET_x64fre_zh-cn.iso"
+        $UpdateFromUUP = $true
+        $uupid = ((Invoke-WebRequest -Uri "https://uupdump.net/known.php?q=category:w11-24h2").Links | Where-Object {$_.href -like "selectlang.php?id=*"} | Where-Object {$_.outerHTML -like "*amd64*"})[0].href.replace("selectlang.php?id=","")
+        $UUPScript = "https://uupdump.net/get.php?id=$uupid&pack=0&edition=updateOnly&aria2=2"
+        Start-Sleep -Seconds 3
+        $Miracast = ((Invoke-WebRequest -Uri "https://uupdump.net/getfile.php?id=$uupid&file=Microsoft-Windows-WirelessDisplay-FOD-Package-amd64.cab").Links | Where-Object {$_.outerHTML -like “*microsoft.com*"})[0].href
+        Start-Sleep -Seconds 3
+        $MiracastLP = ((Invoke-WebRequest -Uri "https://uupdump.net/getfile.php?id=$uupid&file=Microsoft-Windows-WirelessDisplay-FOD-Package-amd64-zh-cn.cab").Links | Where-Object {$_.outerHTML -like “*microsoft.com*"})[0].href
+        Start-Sleep -Seconds 3
+        $entgpack = ((Invoke-WebRequest -Uri "https://uupdump.net/getfile.php?id=$uupid&file=Microsoft-Windows-EditionSpecific-EnterpriseG-Package.ESD").Links | Where-Object {$_.outerHTML -like “*microsoft.com*"})[0].href
+        Start-Sleep -Seconds 3
+        $msstore = $true
+    }
     "w1123h264" {
         # make 11 23h2 64
         $os_ver = "11"
@@ -63,7 +85,7 @@ switch ($MakeVersion) {
         }
         $msstore = $true
     }
-    "w1064" {
+    "w1022h264" {
         # make 10 22h2 64
         $os_ver = "10"
         $os_rsversion = "22H2"
@@ -98,7 +120,7 @@ switch ($MakeVersion) {
         $NETScript = "https://raw.githubusercontent.com/adavak/Win_ISO_Patching_Scripts/master/Scripts/netfx4.8.1/script_netfx4.8.1_19041_x64.meta4"
         $msstore = $true
     }
-    "w1032" {
+    "w1022h232" {
         # make 10 22h2 32
         $os_ver = "10"
         $os_rsversion = "22H2"
@@ -131,28 +153,6 @@ switch ($MakeVersion) {
             $entgpack = "https://file.uhsea.com/2405/4bb4e1af531d4cd8bea6d1ffdc933c048J.esd"
         }
         $NETScript = "https://mirror.ghproxy.com/https://raw.githubusercontent.com/adavak/Win_ISO_Patching_Scripts/master/Scripts/netfx4.8.1/script_netfx4.8.1_19041_x86.meta4"
-        $msstore = $true
-    }
-    "w1124h264" {
-        # make 11 24h2 64
-        $os_ver = "11"
-        $os_rsversion = "24H2"
-        $os_build = "26100"
-        $os_edition = "CoreCountrySpecific"
-        $os_display = "Windows $os_ver $os_rsversion"
-        $os_arch = "x64"
-        $os_lang = "zh-cn"
-        $ospath = "/系统/Windows/Win10/24H2/26100.1.240331-1435.ge_release_CLIENTCHINA_UUP_RET_x64fre_zh-cn.iso"
-        $UpdateFromUUP = $true
-        $uupid = ((Invoke-WebRequest -Uri "https://uupdump.net/known.php?q=category:w11-24h2").Links | Where-Object {$_.href -like "selectlang.php?id=*"} | Where-Object {$_.outerHTML -like "*amd64*"})[0].href.replace("selectlang.php?id=","")
-        $UUPScript = "https://uupdump.net/get.php?id=$uupid&pack=0&edition=updateOnly&aria2=2"
-        Start-Sleep -Seconds 3
-        $Miracast = ((Invoke-WebRequest -Uri "https://uupdump.net/getfile.php?id=$uupid&file=Microsoft-Windows-WirelessDisplay-FOD-Package-amd64.cab").Links | Where-Object {$_.outerHTML -like “*microsoft.com*"})[0].href
-        Start-Sleep -Seconds 3
-        $MiracastLP = ((Invoke-WebRequest -Uri "https://uupdump.net/getfile.php?id=$uupid&file=Microsoft-Windows-WirelessDisplay-FOD-Package-amd64-zh-cn.cab").Links | Where-Object {$_.outerHTML -like “*microsoft.com*"})[0].href
-        Start-Sleep -Seconds 3
-        $entgpack = ((Invoke-WebRequest -Uri "https://uupdump.net/getfile.php?id=$uupid&file=Microsoft-Windows-EditionSpecific-EnterpriseG-Package.ESD").Links | Where-Object {$_.outerHTML -like “*microsoft.com*"})[0].href
-        Start-Sleep -Seconds 3
         $msstore = $true
     }
     "w11lt2464" {
