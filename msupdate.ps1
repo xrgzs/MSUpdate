@@ -1,4 +1,4 @@
-﻿$ErrorActionPreference = 'Stop'
+$ErrorActionPreference = 'Stop'
 
 function Get-Appx($Name) {
     $obj = Invoke-WebRequest -Uri "https://store.xr6.xyz/api/GetFiles" `
@@ -718,6 +718,9 @@ Get-ChildItem -Path ".\*.iso" -File | ForEach-Object {
     $FileInfo.hash = @{}
     $FileInfo.hash.sha256 = Get-FileHash -Path $_.Name -Algorithm SHA256 | Select-Object -ExpandProperty Hash
     $FileInfo.hash.md5 = Get-FileHash -Path $_.Name -Algorithm MD5 | Select-Object -ExpandProperty Hash
+$FileInfo.version = $_.Name.Split(".")[0] + "." + $_.Name.Split(".")[1]
+    $FileInfo.redstone_version = $RedstoneVersion
+    $FileInfo.arch = $osarch
     $FileInfo.ostype = "MSUpdate"
     $FileInfo.msupdate = @{}
     $FileInfo.msupdate.makeversion = $MakeVersion
