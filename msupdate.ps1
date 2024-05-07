@@ -112,8 +112,33 @@ switch ($MakeVersion) {
         $NETScript = "https://mirror.ghproxy.com/https://raw.githubusercontent.com/adavak/Win_ISO_Patching_Scripts/master/Scripts/netfx4.8.1/script_netfx4.8.1_19041_x86.meta4"
         $msstore = $true
     }
+    "w1124h264" {
+        # make 11 24h2 64
+        $ospath = "not ready"
+        $UpdateFromUUP = $true
+        $uupid = ((Invoke-WebRequest -Uri "https://uupdump.net/known.php?q=category:w11-24h2").Links | Where-Object {$_.href -like "selectlang.php?id=*"} | Where-Object {$_.outerHTML -like "*amd64*"})[0].href.replace("selectlang.php?id=","")
+        $UUPScript = "https://uupdump.net/get.php?id=$uupid&pack=0&edition=updateOnly&aria2=2"
+        Start-Sleep -Seconds 3
+        $Miracast = ((Invoke-WebRequest -Uri "https://uupdump.net/getfile.php?id=$uupid&file=Microsoft-Windows-WirelessDisplay-FOD-Package-amd64.cab").Links | Where-Object {$_.outerHTML -like “*microsoft.com*"})[0].href
+        Start-Sleep -Seconds 3
+        $MiracastLP = ((Invoke-WebRequest -Uri "https://uupdump.net/getfile.php?id=$uupid&file=Microsoft-Windows-WirelessDisplay-FOD-Package-amd64-zh-cn.cab").Links | Where-Object {$_.outerHTML -like “*microsoft.com*"})[0].href
+        Start-Sleep -Seconds 3
+        $entgpack = ((Invoke-WebRequest -Uri "https://uupdump.net/getfile.php?id=$uupid&file=Microsoft-Windows-EditionSpecific-EnterpriseG-Package.ESD").Links | Where-Object {$_.outerHTML -like “*microsoft.com*"})[0].href
+        Start-Sleep -Seconds 3
+        $msstore = $true
+    }
+    "w11lt2464" {
+        # make 11 ltsc2024 64
+        $ospath = "/系统/Windows/Win10/LTSC2024/26100.1.240406-1435.ge_release_CLIENT_ENTERPRISES_OEM_x64FRE_zh-cn.iso"
+        $UpdateFromUUP = $true
+        $uupid = ((Invoke-WebRequest -Uri "https://uupdump.net/known.php?q=category:w11-24h2").Links | Where-Object {$_.href -like "selectlang.php?id=*"} | Where-Object {$_.outerHTML -like "*amd64*"})[0].href.replace("selectlang.php?id=","")
+        $UUPScript = "https://uupdump.net/get.php?id=$uupid&pack=0&edition=updateOnly&aria2=2"
+        Start-Sleep -Seconds 3
+        $MultiEdition = $false
+        $msstore = $true
+    }
     "w10lt2164" {
-    # make 10 ltsc2021 64
+        # make 10 ltsc2021 64
         $ospath = "/系统/MSDN/NT10.0_Win10/19044_LTSC2021/zh-cn_windows_10_enterprise_ltsc_2021_x64_dvd_033b7312.iso"
         if ($true -eq $UpdateFromUUP) {
             $uupid = ((Invoke-WebRequest -Uri "https://uupdump.net/known.php?q=category:w10-22h2").Links | Where-Object {$_.href -like "selectlang.php?id=*"} | Where-Object {$_.outerHTML -like "*amd64*"})[0].href.replace("selectlang.php?id=","")
