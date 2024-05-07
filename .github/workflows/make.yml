@@ -8,10 +8,10 @@ on:
         required: true
         type: choice
         options:
-          - w1123h264
-          - w1064
-          - w1032
           - w1124h264
+          - w1123h264
+          - w1022h264
+          - w1022h232
           - w11lt2464
           - w10lt2164
           - w10lt2132
@@ -85,7 +85,6 @@ jobs:
           # upload to cloud
           Get-ChildItem -Path ".\*.json" -File | ForEach-Object {
             $json = Get-Content $_.FullName | Convertfrom-Json
-            $json.os_ver 
             .\bin\rclone.exe copy ".\$json.name" "${{ vars.RCLONE_PATH }}\$($json.os_ver)\$($json.os_release)\$($json.os_version)" --progress
             .\bin\rclone.exe copy "$_.FullName" "${{ vars.RCLONE_PATH }}\$($json.os_ver)\$($json.os_release)\$($json.os_version)" --progress
             .\bin\rclone.exe copyto "$_.FullName" "${{ vars.RCLONE_PATH }}\$($json.os_ver)\$($json.os_release)\latest_$($json.os_arch).json" --progress
