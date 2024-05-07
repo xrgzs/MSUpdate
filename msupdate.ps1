@@ -1,14 +1,23 @@
 $ErrorActionPreference = 'Stop'
 
 function Get-Appx($Name) {
-    $obj = Invoke-WebRequest -Uri "https://store.xr6.xyz/api/GetFiles" `
-    -Method "POST" `
-    -ContentType "application/x-www-form-urlencoded" `
-    -Body @{
+    $Body = @{
         type = 'PackageFamilyName'
         url = $Name + '_8wekyb3d8bbwe'
         ring = 'RP'
         lang = 'zh-CN'
+    }
+    try {
+        $obj = Invoke-WebRequest -Uri "https://store.xr6.xyz/api/GetFiles" `
+        -Method "POST" `
+        -ContentType "application/x-www-form-urlencoded" `
+        -Body $Body
+    }
+    catch {
+        $obj = Invoke-WebRequest -Uri "https://store.rg-adguard.net/api/GetFiles" `
+        -Method "POST" `
+        -ContentType "application/x-www-form-urlencoded" `
+        -Body $Body
     }
 
     foreach ($link in $obj.Links) {
