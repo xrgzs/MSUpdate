@@ -410,8 +410,12 @@ $MSStoreScript = "echo nostore"
 if ($true -eq $msstore) {
     Remove-Item -Path "$PSScriptRoot\msstore" -Force -ErrorAction SilentlyContinue
     New-Item -ItemType Directory -Path "$PSScriptRoot\msstore" -ErrorAction SilentlyContinue
-    Get-Appx 'Microsoft.DesktopAppInstaller'
-    Get-Appx 'Microsoft.WindowsStore'
+    if ($os_edition -like "*LTSC*") {
+        Get-Appx 'Microsoft.VCLibs.140.00'
+    } else {
+        Get-Appx 'Microsoft.DesktopAppInstaller'
+        Get-Appx 'Microsoft.WindowsStore'
+    }
     $MSStoreScript = @"
 for %%a in (%~dp0msstore\Microsoft.UI.Xaml.2.*_8wekyb3d8bbwe.Appx) do call :Add-ProvisionedAppxPackage "%%a"
 for %%a in (%~dp0msstore\Microsoft.VCLibs.140.00.UWPDesktop_14.0.*_8wekyb3d8bbwe.Appx) do call :Add-ProvisionedAppxPackage "%%a"
