@@ -34,7 +34,7 @@ switch ($MakeVersion) {
         $os_rsversion = "24H2"
         $os_build = "26100"
         $os_edition = "CoreCountrySpecific"
-        $os_display = "Windows $os_ver $os_rsversion"
+        $os_display = "Windows $os_ver $os_rsversion 预览版"
         $os_arch = "x64"
         $os_lang = "zh-cn"
         $ospath = "/系统/Windows/Win10/24H2/26100.1.240331-1435.ge_release_CLIENTCHINA_UUP_RET_x64fre_zh-cn.iso"
@@ -44,7 +44,7 @@ switch ($MakeVersion) {
         Start-Sleep -Seconds 3
         $Miracast = ((Invoke-WebRequest -Uri "https://uupdump.net/getfile.php?id=$uupid&file=Microsoft-Windows-WirelessDisplay-FOD-Package-amd64.cab").Links | Where-Object {$_.outerHTML -like “*microsoft.com*"})[0].href
         Start-Sleep -Seconds 3
-        $MiracastLP = ((Invoke-WebRequest -Uri "https://uupdump.net/getfile.php?id=$uupid&file=Microsoft-Windows-WirelessDisplay-FOD-Package-amd64-zh-cn.cab").Links | Where-Object {$_.outerHTML -like “*microsoft.com*"})[0].href
+        $MiracastLP = ((Invoke-WebRequest -Uri "https://uupdump.net/getfile.php?id=$uupid&file=Microsoft-Windows-WirelessDisplay-FOD-Package-amd64-zh-CN.cab").Links | Where-Object {$_.outerHTML -like “*microsoft.com*"})[0].href
         Start-Sleep -Seconds 3
         $entgpack = ((Invoke-WebRequest -Uri "https://uupdump.net/getfile.php?id=$uupid&file=Microsoft-Windows-EditionSpecific-EnterpriseG-Package.ESD").Links | Where-Object {$_.outerHTML -like “*microsoft.com*"})[0].href
         Start-Sleep -Seconds 3
