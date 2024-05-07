@@ -233,7 +233,13 @@ if (-not (Test-Path -Path ".\bin\NSudoLC.exe")) {
 
 # get wupatch
 if ($null -ne $UUPScript) {
-    Invoke-WebRequest -Uri $UUPScript -OutFile ".\temp\UUPScript.txt"
+    try {
+        Invoke-WebRequest -Uri $UUPScript -OutFile ".\temp\UUPScript.txt"
+    }
+    catch {
+        Start-Sleep -Seconds 5
+        Invoke-WebRequest -Uri $UUPScript -OutFile ".\temp\UUPScript.txt"
+    }
     .\bin\aria2c.exe --check-certificate=false -x16 -s16 -j5 -c -R -d ".\patch" -i ".\temp\UUPScript.txt"
     if (!$?) {Write-Error "UUPScript Download Failed!"}
 } elseif ($null -ne $WUScript) {
