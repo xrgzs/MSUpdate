@@ -54,9 +54,10 @@ $MultiEdition  = [bool]   $True
 目前支持的参数有：
 
 - MakeVersion：选择制作的系统版本
-  - w1164
-  - w1064
-  - w1032
+  - w1124h264
+  - w1123h264
+  - w1022h264
+  - w1022h232
   - w11lt2464
   - w10lt2164
   - w10lt2132
