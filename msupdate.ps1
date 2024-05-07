@@ -28,8 +28,15 @@ function Get-Appx($Name) {
 
 # set system info
 switch ($MakeVersion) {
-    "w1164" {
+    "w1123h264" {
         # make 11 23h2 64
+        $os_ver = "11"
+        $os_rsversion = "23H2"
+        $os_build = "22631"
+        $os_edition = "CoreCountrySpecific"
+        $os_display = "Windows $os_ver $os_rsversion"
+        $os_arch = "x64"
+        $os_lang = "zh-cn"
         try {
             $osurl = ((Invoke-WebRequest -Uri "https://api.gravesoft.dev/msdl/proxy?product_id=2936&sku_id=17435").Links | Where-Object {$_.outerHTML -like "*Isox64 Download*"})[0].href
             $osfile = "Win11_23H2_China_GGK_Chinese_Simplified_x64v2.iso"
@@ -58,6 +65,13 @@ switch ($MakeVersion) {
     }
     "w1064" {
         # make 10 22h2 64
+        $os_ver = "10"
+        $os_rsversion = "22H2"
+        $os_build = "19045"
+        $os_edition = "CoreCountrySpecific"
+        $os_display = "Windows $os_ver $os_rsversion"
+        $os_arch = "x64"
+        $os_lang = "zh-cn"
         try {
             $osurl = ((Invoke-WebRequest -Uri "https://api.gravesoft.dev/msdl/proxy?product_id=2378&sku_id=15004").Links | Where-Object {$_.outerHTML -like "*Isox64 Download*"})[0].href
             $osfile = "Win10_22H2_China_GGK_Chinese_Simplified_x64.iso"
@@ -86,6 +100,13 @@ switch ($MakeVersion) {
     }
     "w1032" {
         # make 10 22h2 32
+        $os_ver = "10"
+        $os_rsversion = "22H2"
+        $os_build = "19045"
+        $os_edition = "CoreCountrySpecific"
+        $os_display = "Windows $os_ver $os_rsversion"
+        $os_arch = "x86"
+        $os_lang = "zh-cn"
         try {
             $osurl = ((Invoke-WebRequest -Uri "https://api.gravesoft.dev/msdl/proxy?product_id=2378&sku_id=15004").Links | Where-Object {$_.outerHTML -like "*Isox86 Download*"})[0].href
             $osfile = "Win10_22H2_China_GGK_Chinese_Simplified_x32.iso"
@@ -114,6 +135,13 @@ switch ($MakeVersion) {
     }
     "w1124h264" {
         # make 11 24h2 64
+        $os_ver = "11"
+        $os_rsversion = "24H2"
+        $os_build = "26100"
+        $os_edition = "CoreCountrySpecific"
+        $os_display = "Windows $os_ver $os_rsversion"
+        $os_arch = "x64"
+        $os_lang = "zh-cn"
         $ospath = "/系统/Windows/Win10/24H2/26100.1.240331-1435.ge_release_CLIENTCHINA_UUP_RET_x64fre_zh-cn.iso"
         $UpdateFromUUP = $true
         $uupid = ((Invoke-WebRequest -Uri "https://uupdump.net/known.php?q=category:w11-24h2").Links | Where-Object {$_.href -like "selectlang.php?id=*"} | Where-Object {$_.outerHTML -like "*amd64*"})[0].href.replace("selectlang.php?id=","")
@@ -129,16 +157,29 @@ switch ($MakeVersion) {
     }
     "w11lt2464" {
         # make 11 ltsc2024 64
+        $os_ver = "11"
+        $os_rsversion = "24H2"
+        $os_build = "26100"
+        $os_edition = "LTSC2024"
+        $os_display = "Windows $os_ver LTSC 2024 预览版"
+        $os_arch = "x64"
+        $os_lang = "zh-cn"
         $ospath = "/系统/Windows/Win10/LTSC2024/26100.1.240406-1435.ge_release_CLIENT_ENTERPRISES_OEM_x64FRE_zh-cn.iso"
         $UpdateFromUUP = $true
         $uupid = ((Invoke-WebRequest -Uri "https://uupdump.net/known.php?q=category:w11-24h2").Links | Where-Object {$_.href -like "selectlang.php?id=*"} | Where-Object {$_.outerHTML -like "*amd64*"})[0].href.replace("selectlang.php?id=","")
         $UUPScript = "https://uupdump.net/get.php?id=$uupid&pack=0&edition=updateOnly&aria2=2"
         Start-Sleep -Seconds 3
         $MultiEdition = $false
-        $msstore = $true
     }
     "w10lt2164" {
         # make 10 ltsc2021 64
+        $os_ver = "10"
+        $os_rsversion = "21H2"
+        $os_build = "19044"
+        $os_edition = "LTSC2021"
+        $os_display = "Windows $os_ver LTSC 2021"
+        $os_arch = "x64"
+        $os_lang = "zh-cn"
         $ospath = "/系统/MSDN/NT10.0_Win10/19044_LTSC2021/zh-cn_windows_10_enterprise_ltsc_2021_x64_dvd_033b7312.iso"
         if ($true -eq $UpdateFromUUP) {
             $uupid = ((Invoke-WebRequest -Uri "https://uupdump.net/known.php?q=category:w10-22h2").Links | Where-Object {$_.href -like "selectlang.php?id=*"} | Where-Object {$_.outerHTML -like "*amd64*"})[0].href.replace("selectlang.php?id=","")
@@ -149,10 +190,16 @@ switch ($MakeVersion) {
         }
         $NETScript = "https://raw.githubusercontent.com/adavak/Win_ISO_Patching_Scripts/master/Scripts/netfx4.8.1/script_netfx4.8.1_19041_x64.meta4"
         $MultiEdition = $false
-        $msstore = $true
     }
     "w10lt2132" {
         # make 10 ltsc2021 32
+        $os_ver = "10"
+        $os_rsversion = "21H2"
+        $os_build = "19044"
+        $os_edition = "LTSC2021"
+        $os_display = "Windows $os_ver LTSC 2021"
+        $os_arch = "x86"
+        $os_lang = "zh-cn"
         $ospath = "/系统/MSDN/NT10.0_Win10/19044_LTSC2021/zh-cn_windows_10_enterprise_ltsc_2021_x86_dvd_30600d9c.iso"
         if ($true -eq $UpdateFromUUP) {
             $uupid = ((Invoke-WebRequest -Uri "https://uupdump.net/known.php?q=category:w10-22h2").Links | Where-Object {$_.href -like "selectlang.php?id=*"} | Where-Object {$_.outerHTML -like "*x86*"})[0].href.replace("selectlang.php?id=","")
@@ -163,10 +210,16 @@ switch ($MakeVersion) {
         }
         $NETScript = "https://raw.githubusercontent.com/adavak/Win_ISO_Patching_Scripts/master/Scripts/netfx4.8.1/script_netfx4.8.1_19041_x86.meta4"
         $MultiEdition = $false
-        $msstore = $true
     }
     "w10lt1964" {
         # make 10 ltsc2019 64
+        $os_ver = "10"
+        $os_rsversion = "1809"
+        $os_build = "17763"
+        $os_edition = "LTSC2019"
+        $os_display = "Windows $os_ver LTSC 2019"
+        $os_arch = "x64"
+        $os_lang = "zh-cn"
         $ospath = "/系统/MSDN/NT10.0_Win10/17763_LTSC2019/1_RTM/cn_windows_10_enterprise_ltsc_2019_x64_dvd_2efc9ac2.iso"
         if ($true -eq $UpdateFromUUP) {
             $uupid = ((Invoke-WebRequest -Uri "https://uupdump.net/known.php?q=category:w10-1809").Links | Where-Object {$_.href -like "selectlang.php?id=*"} | Where-Object {$_.outerHTML -like "*amd64*"})[0].href.replace("selectlang.php?id=","")
@@ -180,6 +233,13 @@ switch ($MakeVersion) {
     }
     "w10lt1932" {
         # make 10 ltsc2019 32
+        $os_ver = "10"
+        $os_rsversion = "1809"
+        $os_build = "17763"
+        $os_edition = "LTSC2019"
+        $os_display = "Windows $os_ver LTSC 2019"
+        $os_arch = "x86"
+        $os_lang = "zh-cn"
         $ospath = "/系统/MSDN/NT10.0_Win10/17763_LTSC2019/1_RTM/cn_windows_10_enterprise_ltsc_2019_x86_dvd_2908ee10.iso"
         if ($true -eq $UpdateFromUUP) {
             $uupid = ((Invoke-WebRequest -Uri "https://uupdump.net/known.php?q=category:w10-1809").Links | Where-Object {$_.href -like "selectlang.php?id=*"} | Where-Object {$_.outerHTML -like "*x86*"})[0].href.replace("selectlang.php?id=","")
@@ -193,6 +253,13 @@ switch ($MakeVersion) {
     }
     "w10lt1664" {
         # make 10 ltsb2016 64 (unsupport uup)
+        $os_ver = "10"
+        $os_rsversion = "1607"
+        $os_build = "14393"
+        $os_edition = "LTSB2016"
+        $os_display = "Windows $os_ver LTSB 2016"
+        $os_arch = "x64"
+        $os_lang = "zh-cn"
         $ospath = "/系统/MSDN/NT10.0_Win10/14393_LTSB2016/cn_windows_10_enterprise_2016_ltsb_x64_dvd_9060409.iso"
         $WUScript = "https://raw.githubusercontent.com/adavak/Win_ISO_Patching_Scripts/master/Scripts/script_14393_x64.meta4"
         $NETScript = "https://raw.githubusercontent.com/adavak/Win_ISO_Patching_Scripts/master/Scripts/netfx4.8/script_netfx4.8_14393_x64.meta4"
@@ -200,6 +267,13 @@ switch ($MakeVersion) {
     }
     "w10lt1632" {
         # make 10 ltsb2016 32 (unsupport uup)
+        $os_ver = "10"
+        $os_rsversion = "1607"
+        $os_build = "14393"
+        $os_edition = "LTSB2016"
+        $os_display = "Windows $os_ver LTSB 2016"
+        $os_arch = "x86"
+        $os_lang = "zh-cn"
         # $ospath = "/系统/MSDN/NT10.0_Win10/14393_LTSB2016/cn_windows_10_enterprise_2016_ltsb_x86_dvd_9057089.iso"
         $ospath = "/系统/Windows/Win10/LTSB2016/cn_windows_10_enterprise_2016_ltsb_x86_dvd_9057089_FixSSShim.iso"
         $WUScript = "https://raw.githubusercontent.com/adavak/Win_ISO_Patching_Scripts/master/Scripts/script_14393_x86.meta4"
@@ -215,6 +289,20 @@ switch ($MakeVersion) {
             .\msupdate.ps1
         "
     }
+}
+
+# ltscfix
+if ($os_edition -like "*LTSC*") {
+    $MultiEdition = $false
+    $msstore = $true
+    $os_release = $os_edition
+} else {
+    $os_release = $os_rsversion
+}
+
+# os_edition fix
+if ($MultiEdition -eq $true) {
+    $os_edition = "Multi"
 }
 
 # remove temporaty files
@@ -718,10 +806,16 @@ Get-ChildItem -Path ".\*.iso" -File | ForEach-Object {
     $FileInfo.hash = @{}
     $FileInfo.hash.sha256 = Get-FileHash -Path $_.Name -Algorithm SHA256 | Select-Object -ExpandProperty Hash
     $FileInfo.hash.md5 = Get-FileHash -Path $_.Name -Algorithm MD5 | Select-Object -ExpandProperty Hash
-$FileInfo.version = $_.Name.Split(".")[0] + "." + $_.Name.Split(".")[1]
-    $FileInfo.redstone_version = $RedstoneVersion
-    $FileInfo.arch = $osarch
-    $FileInfo.ostype = "MSUpdate"
+    $FileInfo.os_ver = [string] $os_ver
+    $FileInfo.os_display = $os_display
+    $FileInfo.os_version = [string] $_.Name.Split(".")[0] + "." + $_.Name.Split(".")[1]
+    $FileInfo.os_rsversion = $os_rsversion
+    $FileInfo.os_release = $os_release
+    $FileInfo.os_build = $os_build
+    $FileInfo.os_edition = $os_edition
+    $FileInfo.os_arch = $os_arch
+    $FileInfo.os_lang = $os_lang
+    $FileInfo.os_type = "MSUpdate"
     $FileInfo.msupdate = @{}
     $FileInfo.msupdate.makeversion = $MakeVersion
     $FileInfo.msupdate.multiedition = $MultiEdition

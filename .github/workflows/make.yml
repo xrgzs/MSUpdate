@@ -8,7 +8,7 @@ on:
         required: true
         type: choice
         options:
-          - w1164
+          - w1123h264
           - w1064
           - w1032
           - w1124h264
@@ -83,9 +83,10 @@ jobs:
             Copy-Item -Path .\temp\rclone-*-windows-amd64\rclone.exe -Destination .\bin\rclone.exe
           }
           # upload to cloud
-          Get-ChildItem -Path ".\*.iso" -File | ForEach-Object {
-            .\bin\rclone.exe copy $_.FullName "${{ vars.RCLONE_PATH }}\${{ inputs.MakeVersion }}" --progress
-          }
           Get-ChildItem -Path ".\*.json" -File | ForEach-Object {
-            .\bin\rclone.exe copy $_.FullName "${{ vars.RCLONE_PATH }}\${{ inputs.MakeVersion }}" --progress
+            $json = Get-Content $_.FullName | Convertfrom-Json
+            $json.os_ver 
+            .\bin\rclone.exe copy ".\$json.name" "${{ vars.RCLONE_PATH }}\$($json.os_ver)\$($json.os_release)\$($json.os_version)" --progress
+            .\bin\rclone.exe copy "$_.FullName" "${{ vars.RCLONE_PATH }}\$($json.os_ver)\$($json.os_release)\$($json.os_version)" --progress
+            .\bin\rclone.exe copyto "$_.FullName" "${{ vars.RCLONE_PATH }}\$($json.os_ver)\$($json.os_release)\latest_$($json.os_arch).json" --progress
           }
