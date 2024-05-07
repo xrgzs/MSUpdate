@@ -18,14 +18,19 @@ on:
           - w10lt1664
           - w10lt1632
       UpdateFromUUP:
-        description: 'Update from UUP'
-        required: false
-        default: false
-        type: boolean
-      MultiEdition:
-        description: 'Convert Multi-Editions'
+        description: '从UUPDUMP获取更新(1809+)'
         required: false
         default: true
+        type: boolean
+      MultiEdition:
+        description: '转换多版本(LTSC勿选)'
+        required: false
+        default: true
+        type: boolean
+      SkipCheck:
+        description: '跳过硬件检测(Win11)'
+        required: false
+        default: false
         type: boolean
 
 jobs:
@@ -52,6 +57,7 @@ jobs:
           $MakeVersion   = [string] "${{ inputs.MakeVersion }}"
           $UpdateFromUUP = [bool]   $${{ inputs.UpdateFromUUP }}
           $MultiEdition  = [bool]   $${{ inputs.MultiEdition }}
+          $SkipCheck     = [bool]   $${{ inputs.SkipCheck }}
           .\msupdate.ps1
 
       - name: Get rclone Config

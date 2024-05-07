@@ -277,9 +277,9 @@ if (($null -ne $entgpack) -and ($true -eq $MultiEdition)) {
     ."C:\Program Files\7-Zip\7z.exe" x ".\temp\entg.esd" -o".\entg" -r
 }
 
+# get msstore
 $MSStoreScript = "echo nostore"
 if ($true -eq $msstore) {
-    # get msstore
     Remove-Item -Path "$PSScriptRoot\msstore" -Force -ErrorAction SilentlyContinue
     New-Item -ItemType Directory -Path "$PSScriptRoot\msstore" -ErrorAction SilentlyContinue
     Get-Appx 'Microsoft.DesktopAppInstaller'
@@ -295,6 +295,12 @@ for %%a in (%~dp0msstore\Microsoft.DesktopAppInstaller_*_8wekyb3d8bbwe.Msixbundl
 "@
 }
 
+if ($true -eq $SkipCheck) { 
+    # get appraiserres.dll from Windows 10 19041 latest setup
+    Invoke-WebRequest -Uri "https://file.uhsea.com/2405/bb11859dcc17d54fb95a115da8c5d26aTG.zip" -OutFile ".\temp\appraiserres.zip"
+    Expand-Archive -Path ".\temp\appraiserres.zip" -DestinationPath ".\temp"
+}
+
 # abbodi1406/W10UI, auto inject hook
 $W10UI = "@chcp 65001`n"
 $W10UI += (Invoke-WebRequest -Uri "https://raw.githubusercontent.com/abbodi1406/BatUtil/master/W10UI/W10UI.cmd").Content
@@ -307,6 +313,26 @@ echo ============================================================
 echo Hook W10UI beforewim Successfully!
 echo Current Dir: %cd%
 echo ============================================================
+
+if /i "$SkipCheck"=="true" (
+    echo skip hardware check by reg
+    REG.exe LOAD "HKLM\Mount_SYSTEM" "!mountdir!\Windows\System32\config\SYSTEM"
+    for %%a in (BypassCPUCheck,BypassRAMCheck,BypassSecureBootCheck,BypassStorageCheck,BypassTPMCheck) do (
+        REG.exe ADD "HKLM\Mount_SYSTEM\\Setup\LabConfig"/f /v "%%a" /t REG_DWORD /d 1
+    )
+    REG.exe ADD "HKLM\Mount_SYSTEM\\Setup\MoSetup"/f /v "AllowUpgradesWithUnsupportedTPMOrCPU" /t REG_DWORD /d 1
+    REG.exe UNLOAD "HKLM\Mount_SYSTEM"
+
+    echo skip oobe force-login check
+    REG.exe LOAD "HKLM\Mount_SOFTWARE" "!mountdir!\Windows\System32\config\SOFTWARE"
+    REG.exe ADD "HKLM\Mount_SOFTWARE\Microsoft\Windows\CurrentVersion\OOBE" /v "BypassNRO" /t REG_DWORD /d "1" /f
+    REG.exe UNLOAD "HKLM\Mount_SOFTWARE"
+    
+    echo skip personal data export check for cn
+    REG LOAD "HKLM\Mount_Default" "!mountdir!\Default\NTUSER.DAT"
+    REG ADD "HKLM\Mount_Default\Software\Microsoft\Windows\CurrentVersion\CloudExperienceHost\Intent\PersonalDataExport" /f /v "PDEShown" /t REG_DWORD /d 2
+    REG UNLOAD "HKLM\Mount_Default"
+)
 
 if exist "!mountdir!\Windows\Servicing\Packages\*WinPE-LanguagePack*.mum" (
     echo.
@@ -488,6 +514,30 @@ set "wimlib=bin\wimlib-imagex.exe"
 
 for /F "tokens=3" %%a in ('%wimlib% info "%filename%" ^| findstr /C:"Image Count:"') do set "ImageCount=%%a"
 for /L %%# in (1,1,%ImageCount%) do call :editwiminfo %%#
+
+if /i "$SkipCheck"=="true" (
+    echo change installation type to server
+    for /L %%# in (1,1,%ImageCount%) do (
+        %wimlib% info "%filename%" %%# --image-property WINDOWS/INSTALLATIONTYPE=Server
+    )
+
+    echo write ei.cfg
+    >ISO\sources\ei.cfg echo [Channel]
+    >>ISO\sources\ei.cfg echo _Default
+    >>ISO\sources\ei.cfg echo [VL]
+    >>ISO\sources\ei.cfg echo 0
+
+    echo replace appraiserres.dll to windows 10 19041 setup
+    copy /y "temp\appraiserres.dll" "ISO\sources\appraiserres.dll"
+
+    echo write 4+1 batch file to ISO root path
+    >ISO\SkipCheck.cmd echo REG.exe ADD "HKLM\SYSTEM\Setup\LabConfig" /v "BypassTPMCheck" /t REG_DWORD /d "1" /f
+    >>ISO\SkipCheck.cmd echo REG.exe ADD "HKLM\SYSTEM\Setup\LabConfig" /v "BypassSecureBootCheck" /t REG_DWORD /d "1" /f
+    >>ISO\SkipCheck.cmd echo REG.exe ADD "HKLM\SYSTEM\Setup\LabConfig" /v "BypassRAMCheck" /t REG_DWORD /d "1" /f
+    >>ISO\SkipCheck.cmd echo REG.exe ADD "HKLM\SYSTEM\Setup\LabConfig" /v "BypassStorageCheck" /t REG_DWORD /d "1" /f
+    >>ISO\SkipCheck.cmd echo REG.exe ADD "HKLM\SYSTEM\Setup\MoSetup" /v "AllowUpgradesWithUnsupportedTPMOrCPU" /t REG_DWORD /d "1" /f
+    >>ISO\SkipCheck.cmd echo PAUSE
+)
 exit /b
 
 :readwiminfo
