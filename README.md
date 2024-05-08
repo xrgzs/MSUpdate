@@ -4,35 +4,32 @@
 
 ## 特性：
 
-- 集成系统更新至最新 Release 版本
+- 保持最新：集成系统更新至最新 Release 版本
 
-- 母盘为初始发布版镜像，避免使用 UUP 构建系统，组件完整
+- 直链下载：提供 HTTP 直链下载，任何平台都能轻松获取到最新 Windows 镜像
+- 组件完整：
+  - 集成.NET3.5 - 4.8.1 运行库
+  - 更新内置 UWP：Microsoft Store、 WinGet 及 运行库 到最新版本
+  - 集成 无线显示器（Miracast 投屏）、.NET 3.5、IE 11 及中文语言包等 Features On Demand 组件
+  - 开启 Telnet 客户端、Direct Play 等功能
+- 过程开源：
+  - 使用仓库 [xrgzs/MSUpdate](https://github.com/xrgzs/MSUpdate) 集成更新，整个集成过程（包括用到第三方程序）全部开源，请放心使用
+  - 所有文件尽可能来自微软服务器及项目发布地址，感谢UUPDUMP的大力支持
+- 不夹带私货：
+  - 未集成任何第三方程序，纯净安全可靠
+  - 未对系统进行任何优化调整，保证原滋原味
+- 整合多个 SKU：
+  - 由 家庭中文版 集成更新并转换为 9 个版本：
 
-- 不使用 ResetBase 清理镜像，不会出现奇奇怪怪的问题
-
-- 集成.NET3.5 - 4.8.1 运行库
-
-- 更新内置 UWP：Microsoft Store、 WinGet 及 运行库 到最新版本
-
-- 所有文件均来自微软服务器，未集成任何第三方程序，纯净安全可靠
-
-- 未对系统进行任何优化调整，保证原滋原味
-
-- 集成 无线显示器（Miracast 投屏）、.NET 3.5、IE 11 及中文语言包等 Features On Demand 组件
-
-- 开启 Telnet 客户端、Direct Play 等功能
-
-- 由 家庭中文版 集成更新并转换为 9 个版本：
-
-  - 家庭中文版 CoreCountrySpecific
-  - 家庭版 Core
-  - 家庭单语言版 CoreSingleLanguage
-  - 专业版 Professional
-  - 专业工作站版 ProfessionalWorkstation
-  - 教育版 Education
-  - 企业版 Enterprise
-  - IoT企业版 IoTEnterprise
-  - 企业版G EnterpriseG
+    - 家庭中文版 CoreCountrySpecific
+    - 家庭版 Core
+    - 家庭单语言版 CoreSingleLanguage
+    - 专业版 Professional
+    - 专业工作站版 ProfessionalWorkstation
+    - 教育版 Education
+    - 企业版 Enterprise
+    - IoT企业版 IoTEnterprise
+    - 企业版G EnterpriseG
 - ESD 打包，效率更高，方便快速装机
 
 **了解更多：**
