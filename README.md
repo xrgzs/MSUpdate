@@ -42,12 +42,43 @@ https://sys.xrgzs.top/get/msupdate.html
 
 MSUpdate 现在使用 GitHub Actions 的 Windows Runner 进行自动构建，能持续获取到最新的Windows系统映像。
 
+Github Cli 一键执行所有构建：
+
+```shell
+gh workflow run make.yml -f makeversion=w1124h264 -f UpdateFromUUP=true -f MultiEdition=true -f SkipCheck=false
+gh workflow run make.yml -f makeversion=w1124h264 -f UpdateFromUUP=true -f MultiEdition=true -f SkipCheck=true
+
+gh workflow run make.yml -f makeversion=w1123h264 -f UpdateFromUUP=true -f MultiEdition=true -f SkipCheck=false
+gh workflow run make.yml -f makeversion=w1123h264 -f UpdateFromUUP=true -f MultiEdition=true -f SkipCheck=true
+gh workflow run make.yml -f makeversion=w1123h264 -f UpdateFromUUP=false -f MultiEdition=true -f SkipCheck=false
+gh workflow run make.yml -f makeversion=w1123h264 -f UpdateFromUUP=false -f MultiEdition=true -f SkipCheck=true
+
+gh workflow run make.yml -f makeversion=w1022h264 -f UpdateFromUUP=true -f MultiEdition=true -f SkipCheck=false
+gh workflow run make.yml -f makeversion=w1022h264 -f UpdateFromUUP=false -f MultiEdition=true -f SkipCheck=false
+
+gh workflow run make.yml -f makeversion=w1022h232 -f UpdateFromUUP=true -f MultiEdition=true -f SkipCheck=false
+gh workflow run make.yml -f makeversion=w1022h232 -f UpdateFromUUP=false -f MultiEdition=true -f SkipCheck=false
+
+gh workflow run make.yml -f makeversion=w11lt2464 -f UpdateFromUUP=true -f MultiEdition=false -f SkipCheck=false
+gh workflow run make.yml -f makeversion=w11lt2464 -f UpdateFromUUP=true -f MultiEdition=false -f SkipCheck=true
+
+gh workflow run make.yml -f makeversion=w10lt2164 -f UpdateFromUUP=false -f MultiEdition=false -f SkipCheck=false
+gh workflow run make.yml -f makeversion=w10lt2132 -f UpdateFromUUP=false -f MultiEdition=false -f SkipCheck=false
+
+gh workflow run make.yml -f makeversion=w10lt1964 -f UpdateFromUUP=false -f MultiEdition=false -f SkipCheck=false
+gh workflow run make.yml -f makeversion=w10lt1932 -f UpdateFromUUP=false -f MultiEdition=false -f SkipCheck=false
+
+gh workflow run make.yml -f makeversion=w10lt1664 -f UpdateFromUUP=false -f MultiEdition=false -f SkipCheck=false
+gh workflow run make.yml -f makeversion=w10lt1632 -f UpdateFromUUP=false -f MultiEdition=false -f SkipCheck=false
+```
+
 手动构建方法：
 
 ```powershell
 $MakeVersion   = [string] "w1164"
-$UpdateFromUUP = [bool]   $False
+$UpdateFromUUP = [bool]   $True
 $MultiEdition  = [bool]   $True
+$SkipCheck     = [bool]   $True
 .\msupdate.ps1
 ```
 
