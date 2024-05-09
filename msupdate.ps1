@@ -300,8 +300,8 @@ switch ($MakeVersion) {
     }
 }
 
-# ltscfix
-if ($os_edition -like "*LTSC*") {
+# ltsxfix
+if ($os_edition -like "*LTS*") {
     $MultiEdition = $false
     $msstore = $true
     $os_release = $os_edition
