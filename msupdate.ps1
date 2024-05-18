@@ -48,16 +48,40 @@ switch ($MakeVersion) {
         $os_lang = "zh-cn"
         $ospath = "/系统/Windows/Win10/24H2/26100.1.240331-1435.ge_release_CLIENTCHINA_UUP_RET_x64fre_zh-cn.iso"
         $UpdateFromUUP = $true
-        $uupid = ((Invoke-WebRequest -Uri "https://uupdump.net/known.php?q=category:w11-24h2").Links | Where-Object {$_.href -like "selectlang.php?id=*"} | Where-Object {$_.outerHTML -like "*amd64*"})[0].href.replace("selectlang.php?id=","")
+        $uupid = ((Invoke-WebRequest -Uri "https://uupdump.net/known.php?q=category:w11-24h2").Links | Where-Object {$_.href -like "selectlang.php?id=*"} | Where-Object {$_.outerHTML -like "*Windows 11*amd64*"})[0].href.replace("selectlang.php?id=","")
         $UUPScript = "https://uupdump.net/get.php?id=$uupid&pack=0&edition=updateOnly&aria2=2"
         Start-Sleep -Seconds 3
         $Miracast = ((Invoke-WebRequest -Uri "https://uupdump.net/getfile.php?id=$uupid&file=Microsoft-Windows-WirelessDisplay-FOD-Package-amd64.cab").Links | Where-Object {$_.outerHTML -like “*microsoft.com*"})[0].href
         Start-Sleep -Seconds 3
         $MiracastLP = ((Invoke-WebRequest -Uri "https://uupdump.net/getfile.php?id=$uupid&file=Microsoft-Windows-WirelessDisplay-FOD-Package-amd64-zh-CN.cab").Links | Where-Object {$_.outerHTML -like “*microsoft.com*"})[0].href
         Start-Sleep -Seconds 3
+        $iexplorer = ((Invoke-WebRequest -Uri "https://uupdump.net/getfile.php?id=$uupid&file=Microsoft-Windows-InternetExplorer-Optional-Package-amd64.cab").Links | Where-Object {$_.outerHTML -like “*microsoft.com*"})[0].href
+        Start-Sleep -Seconds 3
+        $iexplorerLP = ((Invoke-WebRequest -Uri "https://uupdump.net/getfile.php?id=$uupid&file=Microsoft-Windows-InternetExplorer-Optional-Package-amd64-zh-CN.cab").Links | Where-Object {$_.outerHTML -like “*microsoft.com*"})[0].href
+        Start-Sleep -Seconds 3
         $entgpack = ((Invoke-WebRequest -Uri "https://uupdump.net/getfile.php?id=$uupid&file=Microsoft-Windows-EditionSpecific-EnterpriseG-Package.ESD").Links | Where-Object {$_.outerHTML -like “*microsoft.com*"})[0].href
         Start-Sleep -Seconds 3
         $msstore = $true
+    }
+    "w11lt2464" {
+        # make 11 ltsc2024 64
+        $os_ver = "11"
+        $os_rsversion = "24H2"
+        $os_build = "26100"
+        $os_edition = "LTSC2024"
+        $os_display = "Windows $os_ver LTSC 2024 预览版"
+        $os_arch = "x64"
+        $os_lang = "zh-cn"
+        $ospath = "/系统/Windows/Win10/LTSC2024/26100.1.240406-1435.ge_release_CLIENT_ENTERPRISES_OEM_x64FRE_zh-cn.iso"
+        $UpdateFromUUP = $true
+        $uupid = ((Invoke-WebRequest -Uri "https://uupdump.net/known.php?q=category:w11-24h2").Links | Where-Object {$_.href -like "selectlang.php?id=*"} | Where-Object {$_.outerHTML -like "*Windows 11*amd64*"})[0].href.replace("selectlang.php?id=","")
+        $UUPScript = "https://uupdump.net/get.php?id=$uupid&pack=0&edition=updateOnly&aria2=2"
+        Start-Sleep -Seconds 3
+        $iexplorer = ((Invoke-WebRequest -Uri "https://uupdump.net/getfile.php?id=$uupid&file=Microsoft-Windows-InternetExplorer-Optional-Package-amd64.cab").Links | Where-Object {$_.outerHTML -like “*microsoft.com*"})[0].href
+        Start-Sleep -Seconds 3
+        $iexplorerLP = ((Invoke-WebRequest -Uri "https://uupdump.net/getfile.php?id=$uupid&file=Microsoft-Windows-InternetExplorer-Optional-Package-amd64-zh-CN.cab").Links | Where-Object {$_.outerHTML -like “*microsoft.com*"})[0].href
+        Start-Sleep -Seconds 3
+        $MultiEdition = $false
     }
     "w1123h264" {
         # make 11 23h2 64
@@ -76,18 +100,19 @@ switch ($MakeVersion) {
             $ospath = "/系统/MSDN/NT10.0_Win11/22631_23H2/2861_202312/Win11_23H2_China_GGK_Chinese_Simplified_x64v2.iso"
         }
         if ($true -eq $UpdateFromUUP) {
-            $uupid = ((Invoke-WebRequest -Uri "https://uupdump.net/known.php?q=category:w11-23h2").Links | Where-Object {$_.href -like "selectlang.php?id=*"} | Where-Object {$_.outerHTML -like "*amd64*"})[0].href.replace("selectlang.php?id=","")
+            $uupid = ((Invoke-WebRequest -Uri "https://uupdump.net/known.php?q=category:w11-23h2").Links | Where-Object {$_.href -like "selectlang.php?id=*"} | Where-Object {$_.outerHTML -like "*Windows 11*amd64*"})[0].href.replace("selectlang.php?id=","")
             $UUPScript = "https://uupdump.net/get.php?id=$uupid&pack=0&edition=updateOnly&aria2=2"
-            # Start-Sleep -Seconds 3
-            # $Miracast = ((Invoke-WebRequest -Uri "https://uupdump.net/getfile.php?id=$uupid&file=Microsoft-Windows-WirelessDisplay-FOD-Package-amd64.cab").Links | Where-Object {$_.outerHTML -like “*microsoft.com*"})[0].href
-            # Start-Sleep -Seconds 3
-            # $MiracastLP = ((Invoke-WebRequest -Uri "https://uupdump.net/getfile.php?id=$uupid&file=Microsoft-Windows-WirelessDisplay-FOD-Package-amd64-zh-cn.cab").Links | Where-Object {$_.outerHTML -like “*microsoft.com*"})[0].href
+            Start-Sleep -Seconds 3
+            $Miracast = ((Invoke-WebRequest -Uri "https://uupdump.net/getfile.php?id=$uupid&file=Microsoft-Windows-WirelessDisplay-FOD-Package-amd64.cab").Links | Where-Object {$_.outerHTML -like “*microsoft.com*"})[0].href
+            Start-Sleep -Seconds 3
+            $MiracastLP = ((Invoke-WebRequest -Uri "https://uupdump.net/getfile.php?id=$uupid&file=Microsoft-Windows-WirelessDisplay-FOD-Package-amd64-zh-cn.cab").Links | Where-Object {$_.outerHTML -like “*microsoft.com*"})[0].href
+            Start-Sleep -Seconds 3
+            $iexplorer = ((Invoke-WebRequest -Uri "https://uupdump.net/getfile.php?id=$uupid&file=Microsoft-Windows-InternetExplorer-Optional-Package-amd64.cab").Links | Where-Object {$_.outerHTML -like “*microsoft.com*"})[0].href
+            Start-Sleep -Seconds 3
+            $iexplorerLP = ((Invoke-WebRequest -Uri "https://uupdump.net/getfile.php?id=$uupid&file=Microsoft-Windows-InternetExplorer-Optional-Package-amd64-zh-cn.cab").Links | Where-Object {$_.outerHTML -like “*microsoft.com*"})[0].href
             Start-Sleep -Seconds 3
             $entgpack = ((Invoke-WebRequest -Uri "https://uupdump.net/getfile.php?id=$uupid&file=Microsoft-Windows-EditionSpecific-EnterpriseG-Package.ESD").Links | Where-Object {$_.outerHTML -like “*microsoft.com*"})[0].href
             Start-Sleep -Seconds 3
-            $Miracast = "https://file.uhsea.com/2404/9dee091435ee149c1f6207f70fb46a6a7U.cab"
-            $MiracastLP = "https://file.uhsea.com/2404/9f8486cf6b5fe60d7f0fff1777715b8cW0.cab"
-            $iexplorer = "https://file.uhsea.com/2404/0d0a81d87b97263a9745229c715b849bKF.cab"
         } else {
             $WUScript = "https://raw.githubusercontent.com/adavak/Win_ISO_Patching_Scripts/master/Scripts/script_22621_x64.meta4"
             $Miracast = "https://file.uhsea.com/2404/9dee091435ee149c1f6207f70fb46a6a7U.cab"
@@ -166,22 +191,6 @@ switch ($MakeVersion) {
         }
         $NETScript = "https://mirror.ghproxy.com/https://raw.githubusercontent.com/adavak/Win_ISO_Patching_Scripts/master/Scripts/netfx4.8.1/script_netfx4.8.1_19041_x86.meta4"
         $msstore = $true
-    }
-    "w11lt2464" {
-        # make 11 ltsc2024 64
-        $os_ver = "11"
-        $os_rsversion = "24H2"
-        $os_build = "26100"
-        $os_edition = "LTSC2024"
-        $os_display = "Windows $os_ver LTSC 2024 预览版"
-        $os_arch = "x64"
-        $os_lang = "zh-cn"
-        $ospath = "/系统/Windows/Win10/LTSC2024/26100.1.240406-1435.ge_release_CLIENT_ENTERPRISES_OEM_x64FRE_zh-cn.iso"
-        $UpdateFromUUP = $true
-        $uupid = ((Invoke-WebRequest -Uri "https://uupdump.net/known.php?q=category:w11-24h2").Links | Where-Object {$_.href -like "selectlang.php?id=*"} | Where-Object {$_.outerHTML -like "*amd64*"})[0].href.replace("selectlang.php?id=","")
-        $UUPScript = "https://uupdump.net/get.php?id=$uupid&pack=0&edition=updateOnly&aria2=2"
-        Start-Sleep -Seconds 3
-        $MultiEdition = $false
     }
     "w10lt2164" {
         # make 10 ltsc2021 64
@@ -391,7 +400,7 @@ if ($null -ne $Miracast) {
     # Microsoft-Windows-WirelessDisplay-FOD-Package~zh-CN.cab
     .\bin\aria2c.exe --check-certificate=false -x16 -s16 -d ".\fod\MiracastLP\" -o "update.cab" "$MiracastLP"
     if (!$?) {Write-Error "MiracastLP Download Failed!"}
-    expand -f:* ".\fod\Miracast\update.cab" ".\fod\MiracastLP\" >nul
+    expand -f:* ".\fod\MiracastLP\update.cab" ".\fod\MiracastLP\" >nul
 }
 if ($null -ne $iexplorer) {
     # microsoft-windows-internetexplorer-optional-package.cab
@@ -399,7 +408,12 @@ if ($null -ne $iexplorer) {
     if (!$?) {Write-Error "iexplorer Download Failed!"}
     expand -f:* ".\fod\iexplorer\update.cab" ".\fod\iexplorer\" >nul
 }
-
+if ($null -ne $iexplorerLP) {
+    # Microsoft-Windows-InternetExplorer-Optional-Package-amd64-zh-cn.cab
+    .\bin\aria2c.exe --check-certificate=false -x16 -s16 -d ".\fod\iexplorerLP\" -o "update.cab" "$iexplorer"
+    if (!$?) {Write-Error "iexplorerLP Download Failed!"}
+    expand -f:* ".\fod\iexplorerLP\update.cab" ".\fod\iexplorerLP\" >nul
+}
 # get entg
 if (($null -ne $entgpack) -and ($true -eq $MultiEdition)) {
     # Microsoft-Windows-EditionSpecific-EnterpriseG-Package.ESD
@@ -501,7 +515,9 @@ if exist "%~dp0fod\Miracast\update.mum" (
 if exist "%~dp0fod\iexplorer\update.mum" (
     %_dism2%:"!_cabdir!" %dismtarget% /Add-Package /PackagePath:"%~dp0fod\iexplorer\update.mum" 
 )
-
+if exist "%~dp0fod\iexplorerLP\update.mum" (
+    %_dism2%:"!_cabdir!" %dismtarget% /Add-Package /PackagePath:"%~dp0fod\iexplorerLP\update.mum" 
+)
 echo.
 echo ============================================================
 echo Updating Microsoft Store...
