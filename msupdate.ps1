@@ -203,7 +203,7 @@ switch ($MakeVersion) {
         $os_lang = "zh-cn"
         $ospath = "/系统/MSDN/NT10.0_Win10/19044_LTSC2021/zh-cn_windows_10_enterprise_ltsc_2021_x64_dvd_033b7312.iso"
         if ($true -eq $UpdateFromUUP) {
-            $uupid = ((Invoke-WebRequest -Uri "https://uupdump.net/known.php?q=category:w10-22h2").Links | Where-Object {$_.href -like "selectlang.php?id=*"} | Where-Object {$_.outerHTML -like "*amd64*"})[0].href.replace("selectlang.php?id=","")
+            $uupid = ((Invoke-WebRequest -Uri "https://uupdump.net/known.php?q=category:w10-21h2").Links | Where-Object {$_.href -like "selectlang.php?id=*"} | Where-Object {$_.outerHTML -like "*amd64*"})[0].href.replace("selectlang.php?id=","")
             $UUPScript = "https://uupdump.net/get.php?id=$uupid&pack=0&edition=updateOnly&aria2=2"
             Start-Sleep -Seconds 3
         } else {
@@ -223,7 +223,7 @@ switch ($MakeVersion) {
         $os_lang = "zh-cn"
         $ospath = "/系统/MSDN/NT10.0_Win10/19044_LTSC2021/zh-cn_windows_10_enterprise_ltsc_2021_x86_dvd_30600d9c.iso"
         if ($true -eq $UpdateFromUUP) {
-            $uupid = ((Invoke-WebRequest -Uri "https://uupdump.net/known.php?q=category:w10-22h2").Links | Where-Object {$_.href -like "selectlang.php?id=*"} | Where-Object {$_.outerHTML -like "*x86*"})[0].href.replace("selectlang.php?id=","")
+            $uupid = ((Invoke-WebRequest -Uri "https://uupdump.net/known.php?q=category:w10-21h2").Links | Where-Object {$_.href -like "selectlang.php?id=*"} | Where-Object {$_.outerHTML -like "*x86*"})[0].href.replace("selectlang.php?id=","")
             $UUPScript = "https://uupdump.net/get.php?id=$uupid&pack=0&edition=updateOnly&aria2=2"
             Start-Sleep -Seconds 3
         } else {
