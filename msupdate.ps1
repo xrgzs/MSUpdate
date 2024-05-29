@@ -69,7 +69,7 @@ switch ($MakeVersion) {
         $os_rsversion = "24H2"
         $os_build = "26100"
         $os_edition = "LTSC2024"
-        $os_display = "Windows $os_ver LTSC 2024 预览版"
+        $os_display = "Windows $os_ver LTSC 2024"
         $os_arch = "x64"
         $os_lang = "zh-cn"
         $ospath = "/系统/Windows/Win10/LTSC2024/26100.1.240406-1435.ge_release_CLIENT_ENTERPRISES_OEM_x64FRE_zh-cn.iso"
