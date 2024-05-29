@@ -43,10 +43,10 @@ switch ($MakeVersion) {
         $os_rsversion = "24H2"
         $os_build = "26100"
         $os_edition = "CoreCountrySpecific"
-        $os_display = "Windows $os_ver $os_rsversion 预览版"
+        $os_display = "Windows $os_ver $os_rsversion"
         $os_arch = "x64"
         $os_lang = "zh-cn"
-        $ospath = "/系统/MSDN/NT10.0_Win11/26100_24H2/560_InsiderPreview/Windows11_InsiderPreview_ChinaOnly_x64_zh-cn_26100.iso"
+        $ospath = "/系统/MSDN/NT10.0_Win11/26100_24H2/1_OEM/26100.1.240331-1435.ge_release_CLIENTCHINA_OEM_x64FRE_zh-cn.iso"
         $UpdateFromUUP = $true
         $uupid = ((Invoke-WebRequest -Uri "https://uupdump.net/known.php?q=category:w11-24h2").Links | Where-Object {$_.href -like "selectlang.php?id=*"} | Where-Object {$_.outerHTML -like "*Windows 11*amd64*"})[0].href.replace("selectlang.php?id=","")
         $UUPScript = "https://uupdump.net/get.php?id=$uupid&pack=0&edition=updateOnly&aria2=2"
