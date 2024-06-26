@@ -94,7 +94,7 @@ jobs:
             .\bin\rclone.exe copy "$($_.FullName)" "${{ vars.RCLONE_PATH }}\$($json.os_ver)\$($json.os_release)\$($json.os_version)" --progress
 
             # upload non-skipcheck latest version json
-            if ($json.msupdate.skipcheck -neq $true) {
+            if ($json.msupdate.skipcheck -ne $true) {
               .\bin\rclone.exe copyto "$($_.FullName)" "${{ vars.RCLONE_PATH }}\$($json.os_ver)\$($json.os_release)\latest_$($json.os_arch).json" --progress
             }
           }
