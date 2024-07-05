@@ -61,6 +61,8 @@ switch ($MakeVersion) {
         Start-Sleep -Seconds 3
         $entgpack = ((Invoke-WebRequest -Uri "https://uupdump.net/getfile.php?id=$uupid&file=Microsoft-Windows-EditionSpecific-EnterpriseG-Package.ESD").Links | Where-Object {$_.outerHTML -like "*microsoft.com*"})[0].href
         Start-Sleep -Seconds 3
+        $entgLP = ((Invoke-WebRequest -Uri "https://uupdump.net/getfile.php?id=$uupid&file=Microsoft-Windows-Client-LanguagePack-Package-amd64-zh-CN.esd").Links | Where-Object {$_.outerHTML -like "*microsoft.com*"})[0].href
+        Start-Sleep -Seconds 3
         $msstore = $true
     }
     "w11lt2464" {
@@ -113,12 +115,15 @@ switch ($MakeVersion) {
             Start-Sleep -Seconds 3
             $entgpack = ((Invoke-WebRequest -Uri "https://uupdump.net/getfile.php?id=$uupid&file=Microsoft-Windows-EditionSpecific-EnterpriseG-Package.ESD").Links | Where-Object {$_.outerHTML -like "*microsoft.com*"})[0].href
             Start-Sleep -Seconds 3
+            $entgLP = ((Invoke-WebRequest -Uri "https://uupdump.net/getfile.php?id=$uupid&file=Microsoft-Windows-Client-LanguagePack-Package_zh-cn-amd64-zh-cn.esd").Links | Where-Object {$_.outerHTML -like "*microsoft.com*"})[0].href
+            Start-Sleep -Seconds 3
         } else {
             $WUScript = "https://raw.githubusercontent.com/adavak/Win_ISO_Patching_Scripts/master/Scripts/script_22621_x64.meta4"
             $Miracast = "https://file.uhsea.com/2404/9dee091435ee149c1f6207f70fb46a6a7U.cab"
             $MiracastLP = "https://file.uhsea.com/2404/9f8486cf6b5fe60d7f0fff1777715b8cW0.cab"
             $iexplorer = "https://file.uhsea.com/2404/0d0a81d87b97263a9745229c715b849bKF.cab"
             $entgpack = "https://file.uhsea.com/2404/88f1f9ffe957989bf3387864b8b950b43N.esd"
+            $entgLP = "https://file.uhsea.com/2407/0de02f9612f5c90b14c9ce854146245eE4.esd"
         }
         $msstore = $true
     }
@@ -148,11 +153,14 @@ switch ($MakeVersion) {
             Start-Sleep -Seconds 3
             $entgpack = ((Invoke-WebRequest -Uri "https://uupdump.net/getfile.php?id=$uupid&file=Microsoft-Windows-EditionSpecific-EnterpriseG-Package.ESD").Links | Where-Object {$_.outerHTML -like "*microsoft.com*"})[0].href
             Start-Sleep -Seconds 3
+            $entgLP = ((Invoke-WebRequest -Uri "https://uupdump.net/getfile.php?id=$uupid&file=Microsoft-Windows-Client-LanguagePack-Package_zh-cn-amd64-zh-cn.esd").Links | Where-Object {$_.outerHTML -like "*microsoft.com*"})[0].href
+            Start-Sleep -Seconds 3
         } else {
             $WUScript = "https://raw.githubusercontent.com/adavak/Win_ISO_Patching_Scripts/master/Scripts/script_19041_x64.meta4"
             $Miracast = "https://file.uhsea.com/2404/fa949c449de5880ea5e0648e16aa802a43.cab"
             $MiracastLP = "https://file.uhsea.com/2404/907cdd078f41d9b8ca0615b5c1557790S1.cab"
             $entgpack = "https://file.uhsea.com/2404/6bd7514f05984c2726a3b29cf1d416ebS8.esd"
+            $entgLP = "https://file.uhsea.com/2407/0e070889aaa0659a6c55af9cbde83241CU.esd"
         }
         $NETScript = "https://raw.githubusercontent.com/adavak/Win_ISO_Patching_Scripts/master/Scripts/netfx4.8.1/script_netfx4.8.1_19041_x64.meta4"
         $msstore = $true
@@ -183,11 +191,13 @@ switch ($MakeVersion) {
             Start-Sleep -Seconds 3
             $entgpack = ((Invoke-WebRequest -Uri "https://uupdump.net/getfile.php?id=$uupid&file=Microsoft-Windows-EditionSpecific-EnterpriseG-Package.ESD").Links | Where-Object {$_.outerHTML -like "*microsoft.com*"})[0].href
             Start-Sleep -Seconds 3
+            $entgLP = ((Invoke-WebRequest -Uri "https://uupdump.net/getfile.php?id=$uupid&file=Microsoft-Windows-Client-LanguagePack-Package_zh-cn-x86-zh-cn.esd").Links | Where-Object {$_.outerHTML -like "*microsoft.com*"})[0].href
+            Start-Sleep -Seconds 3
         } else {
             $WUScript = "https://raw.githubusercontent.com/adavak/Win_ISO_Patching_Scripts/master/Scripts/script_19041_x86.meta4"
             $Miracast = "https://file.uhsea.com/2405/2ff40a3b9782eca5254a7dda8cb700289C.cab"
             $MiracastLP = "https://file.uhsea.com/2405/8e3ea4a6e3fbf275640a3fa43c63502aNY.cab"
-            $entgpack = "https://file.uhsea.com/2405/4bb4e1af531d4cd8bea6d1ffdc933c048J.esd"
+            $entgLP = "https://file.uhsea.com/2407/bf7ab933e2d6e8de9bfb7beb708f005aCZ.esd"
         }
         $NETScript = "https://mirror.ghproxy.com/https://raw.githubusercontent.com/adavak/Win_ISO_Patching_Scripts/master/Scripts/netfx4.8.1/script_netfx4.8.1_19041_x86.meta4"
         $msstore = $true
@@ -421,6 +431,12 @@ if (($null -ne $entgpack) -and ($true -eq $MultiEdition)) {
     if (!$?) {Write-Error "entg Download Failed!"}
     ."C:\Program Files\7-Zip\7z.exe" x ".\temp\entg.esd" -o".\entg" -r
 }
+if (($null -ne $entgLP) -and ($true -eq $MultiEdition)) {
+    # Microsoft-Windows-EditionSpecific-EnterpriseG-Package.ESD
+    .\bin\aria2c.exe --check-certificate=false -x16 -s16 -d ".\temp\" -o "entgLP.esd" "$entgLP"
+    if (!$?) {Write-Error "entgLP Download Failed!"}
+    ."C:\Program Files\7-Zip\7z.exe" x ".\temp\entgLP.esd" -o".\entgLP" -r
+}
 
 # get msstore
 $MSStoreScript = "echo nostore"
@@ -592,6 +608,8 @@ echo Note: If errors occur, it is normal.
 echo ============================================================
 %_dism2%:"!_cabdir!" %dismtarget% /Set-Edition:Enterprise
 FOR %%a IN (%~dp0entg\*.mum) DO %_dism2%:"!_cabdir!" %dismtarget% /Add-Package /PackagePath:"%%a"
+rem add language pack
+FOR %%a IN (%~dp0entgLP\*-EnterpriseG-*.mum) DO %_dism2%:"!_cabdir!" %dismtarget% /Add-Package /PackagePath:"%%a"
 
 echo.
 echo ============================================================
@@ -650,8 +668,6 @@ echo Setting key and license...
 echo ============================================================
 %_dism2%:"!_cabdir!" %dismtarget% /Set-ProductKey:FV469-WGNG4-YQP66-2B2HY-KD8YX
 %_dism2%:"!_cabdir!" %dismtarget% /Get-CurrentEdition
-MKDIR "!mountdir!\Windows\System32\Licenses\neutral\_Default\EnterpriseG"
-COPY /Y "!mountdir!\Windows\System32\Licenses\neutral\Volume\Professional\*.*" "!mountdir!\Windows\System32\Licenses\neutral\_Default\EnterpriseG"
 
 goto :EOF
 "@ | Out-File -FilePath ".\hook_beforewim.cmd"
