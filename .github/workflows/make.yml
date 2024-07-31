@@ -51,6 +51,7 @@ jobs:
               Set-DnsClientServerAddress -InterfaceIndex $adapter.ifIndex -ResetServerAddresses
               Set-DnsClientServerAddress -InterfaceIndex $adapter.ifIndex -ServerAddresses $newDnsServers
           }
+          echo "192.3.232.250 file.uhsea.com" >> C:\Windows\System32\drivers\etc\hosts
           ipconfig /flushdns
 
       - name: Big Task
