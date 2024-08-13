@@ -119,11 +119,12 @@ switch ($MakeVersion) {
             Start-Sleep -Seconds 3
         } else {
             $WUScript = "https://raw.githubusercontent.com/adavak/Win_ISO_Patching_Scripts/master/Scripts/script_22621_x64.meta4"
-            $Miracast = "https://file.uhsea.com/2404/9dee091435ee149c1f6207f70fb46a6a7U.cab"
-            $MiracastLP = "https://file.uhsea.com/2404/9f8486cf6b5fe60d7f0fff1777715b8cW0.cab"
-            $iexplorer = "https://file.uhsea.com/2404/0d0a81d87b97263a9745229c715b849bKF.cab"
-            $entgpack = "https://file.uhsea.com/2404/88f1f9ffe957989bf3387864b8b950b43N.esd"
-            $entgLP = "https://file.uhsea.com/2407/0de02f9612f5c90b14c9ce854146245eE4.esd"
+            $Miracast = "https://alist.xrgzs.top/d/pxy/System/Windows/Win10/Res/22621/Microsoft-Windows-WirelessDisplay-FOD-Package~31bf3856ad364e35~amd64~~.cab"
+            $MiracastLP = "https://alist.xrgzs.top/d/pxy/System/Windows/Win10/Res/22621/Microsoft-Windows-WirelessDisplay-FOD-Package~31bf3856ad364e35~amd64~zh-CN~.cab"
+            $iexplorer = "https://alist.xrgzs.top/d/pxy/System/Windows/Win10/Res/22621/Microsoft-Windows-InternetExplorer-Optional-Package~31bf3856ad364e35~amd64~~.cab"
+            $iexplorerLP = "https://alist.xrgzs.top/d/pxy/System/Windows/Win10/Res/22621/Microsoft-Windows-InternetExplorer-Optional-Package~31bf3856ad364e35~amd64~zh-CN~.cab"
+            $entgpack = "https://alist.xrgzs.top/d/pxy/System/Windows/Win10/Res/22621/Microsoft-Windows-EditionSpecific-EnterpriseG-Package.ESD"
+            $entgLP = "https://alist.xrgzs.top/d/pxy/System/Windows/Win10/Res/22621/Microsoft-Windows-Client-LanguagePack-Package_zh-cn-amd64-zh-cn.esd"
         }
         $msstore = $true
     }
@@ -157,10 +158,10 @@ switch ($MakeVersion) {
             Start-Sleep -Seconds 3
         } else {
             $WUScript = "https://raw.githubusercontent.com/adavak/Win_ISO_Patching_Scripts/master/Scripts/script_19041_x64.meta4"
-            $Miracast = "https://file.uhsea.com/2404/fa949c449de5880ea5e0648e16aa802a43.cab"
-            $MiracastLP = "https://file.uhsea.com/2404/907cdd078f41d9b8ca0615b5c1557790S1.cab"
-            $entgpack = "https://file.uhsea.com/2404/6bd7514f05984c2726a3b29cf1d416ebS8.esd"
-            $entgLP = "https://file.uhsea.com/2407/0e070889aaa0659a6c55af9cbde83241CU.esd"
+            $Miracast = "https://alist.xrgzs.top/d/pxy/System/Windows/Win10/Res/19041/amd64/Microsoft-Windows-WirelessDisplay-FOD-Package~31bf3856ad364e35~amd64~~.cab"
+            $MiracastLP = "https://alist.xrgzs.top/d/pxy/System/Windows/Win10/Res/19041/amd64/Microsoft-Windows-WirelessDisplay-FOD-Package~31bf3856ad364e35~amd64~zh-CN~.cab"
+            $entgpack = "https://alist.xrgzs.top/d/pxy/System/Windows/Win10/Res/19041/amd64/Microsoft-Windows-EditionSpecific-EnterpriseG-Package.ESD"
+            $entgLP = "https://alist.xrgzs.top/d/pxy/System/Windows/Win10/Res/19041/amd64/Microsoft-Windows-Client-LanguagePack-Package_zh-cn-amd64-zh-cn.esd"
         }
         $NETScript = "https://raw.githubusercontent.com/adavak/Win_ISO_Patching_Scripts/master/Scripts/netfx4.8.1/script_netfx4.8.1_19041_x64.meta4"
         $msstore = $true
@@ -195,9 +196,10 @@ switch ($MakeVersion) {
             Start-Sleep -Seconds 3
         } else {
             $WUScript = "https://raw.githubusercontent.com/adavak/Win_ISO_Patching_Scripts/master/Scripts/script_19041_x86.meta4"
-            $Miracast = "https://file.uhsea.com/2405/2ff40a3b9782eca5254a7dda8cb700289C.cab"
-            $MiracastLP = "https://file.uhsea.com/2405/8e3ea4a6e3fbf275640a3fa43c63502aNY.cab"
-            $entgLP = "https://file.uhsea.com/2407/bf7ab933e2d6e8de9bfb7beb708f005aCZ.esd"
+            $Miracast = "https://alist.xrgzs.top/d/pxy/System/Windows/Win10/Res/19041/x86/Microsoft-Windows-WirelessDisplay-FOD-Package~31bf3856ad364e35~x86~~.cab"
+            $MiracastLP = "https://alist.xrgzs.top/d/pxy/System/Windows/Win10/Res/19041/x86/Microsoft-Windows-WirelessDisplay-FOD-Package~31bf3856ad364e35~x86~zh-CN~.cab"
+            $entgpack = "https://alist.xrgzs.top/d/pxy/System/Windows/Win10/Res/19041/x86/Microsoft-Windows-EditionSpecific-EnterpriseG-Package.ESD"
+            $entgLP = "https://alist.xrgzs.top/d/pxy/System/Windows/Win10/Res/19041/x86/Microsoft-Windows-Client-LanguagePack-Package_zh-cn-x86-zh-cn.esd"
         }
         $NETScript = "https://mirror.ghproxy.com/https://raw.githubusercontent.com/adavak/Win_ISO_Patching_Scripts/master/Scripts/netfx4.8.1/script_netfx4.8.1_19041_x86.meta4"
         $msstore = $true
