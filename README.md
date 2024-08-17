@@ -82,16 +82,22 @@ MSUpdate 现在使用 GitHub Actions 的 Windows Runner 进行自动构建，能
 Github Cli 一键执行所有构建：
 
 ```shell
+gh workflow run make.yml -f makeversion=w1124h2a64 -f UpdateFromUUP=true -f MultiEdition=true -f SkipCheck=false
+gh workflow run make.yml -f makeversion=w1124h2a64 -f UpdateFromUUP=true -f MultiEdition=true -f SkipCheck=true
 gh workflow run make.yml -f makeversion=w1124h264 -f UpdateFromUUP=true -f MultiEdition=true -f SkipCheck=false
 gh workflow run make.yml -f makeversion=w1124h264 -f UpdateFromUUP=true -f MultiEdition=true -f SkipCheck=true
 gh workflow run make.yml -f makeversion=w11lt2464 -f UpdateFromUUP=true -f MultiEdition=false -f SkipCheck=false
 gh workflow run make.yml -f makeversion=w11lt2464 -f UpdateFromUUP=true -f MultiEdition=false -f SkipCheck=true
 
+gh workflow run make.yml -f makeversion=w1123h2a64 -f UpdateFromUUP=true -f MultiEdition=true -f SkipCheck=false
+gh workflow run make.yml -f makeversion=w1123h2a64 -f UpdateFromUUP=true -f MultiEdition=true -f SkipCheck=true
 gh workflow run make.yml -f makeversion=w1123h264 -f UpdateFromUUP=true -f MultiEdition=true -f SkipCheck=false
 gh workflow run make.yml -f makeversion=w1123h264 -f UpdateFromUUP=true -f MultiEdition=true -f SkipCheck=true
 # gh workflow run make.yml -f makeversion=w1123h264 -f UpdateFromUUP=false -f MultiEdition=true -f SkipCheck=false
 # gh workflow run make.yml -f makeversion=w1123h264 -f UpdateFromUUP=false -f MultiEdition=true -f SkipCheck=true
 
+gh workflow run make.yml -f makeversion=w1022h2a64 -f UpdateFromUUP=true -f MultiEdition=true -f SkipCheck=false
+gh workflow run make.yml -f makeversion=w1022h2a32 -f UpdateFromUUP=true -f MultiEdition=true -f SkipCheck=false
 gh workflow run make.yml -f makeversion=w1022h264 -f UpdateFromUUP=true -f MultiEdition=true -f SkipCheck=false
 gh workflow run make.yml -f makeversion=w1022h232 -f UpdateFromUUP=true -f MultiEdition=true -f SkipCheck=false
 # gh workflow run make.yml -f makeversion=w1022h264 -f UpdateFromUUP=false -f MultiEdition=true -f SkipCheck=false
