@@ -97,7 +97,6 @@ gh workflow run make.yml -f makeversion=w1123h264 -f UpdateFromUUP=true -f Multi
 # gh workflow run make.yml -f makeversion=w1123h264 -f UpdateFromUUP=false -f MultiEdition=true -f SkipCheck=true
 
 gh workflow run make.yml -f makeversion=w1022h2a64 -f UpdateFromUUP=true -f MultiEdition=true -f SkipCheck=false
-gh workflow run make.yml -f makeversion=w1022h2a32 -f UpdateFromUUP=true -f MultiEdition=true -f SkipCheck=false
 gh workflow run make.yml -f makeversion=w1022h264 -f UpdateFromUUP=true -f MultiEdition=true -f SkipCheck=false
 gh workflow run make.yml -f makeversion=w1022h232 -f UpdateFromUUP=true -f MultiEdition=true -f SkipCheck=false
 # gh workflow run make.yml -f makeversion=w1022h264 -f UpdateFromUUP=false -f MultiEdition=true -f SkipCheck=false
