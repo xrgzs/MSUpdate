@@ -2,38 +2,78 @@
 
 基于原版镜像，集成系统更新，创建多版本的系统镜像。
 
-## 特性：
+## 项目介绍
 
-- 保持最新：集成系统更新至最新 Release 版本
+MSUpdate 能帮助你轻松获取最新集成更新版本的 Windows 系统镜像
 
-- 直链下载：提供 HTTP 直链下载，任何平台都能轻松获取到最新 Windows 镜像
-- 组件完整：
-  - 集成.NET3.5 - 4.8.1 运行库
-  - 更新内置 UWP：Microsoft Store、 WinGet 及 运行库 到最新版本
-  - 集成 无线显示器（Miracast 投屏）、.NET 3.5、IE 11 及中文语言包等 Features On Demand 组件
-  - 开启 Telnet 客户端、Direct Play 等功能
-- 过程开源：
-  - 使用仓库 [xrgzs/MSUpdate](https://github.com/xrgzs/MSUpdate) 集成更新，整个集成过程（包括用到第三方程序）全部开源，请放心使用
-  - 所有文件尽可能来自微软服务器及项目发布地址，感谢UUPDUMP的大力支持
-- 不夹带私货：
-  - 未集成任何第三方程序，纯净安全可靠
-  - 未对系统进行任何优化调整，保证原滋原味
-- 整合多个 SKU：
-  - 由 家庭中文版 集成更新并转换为 9 个版本：
+> [!note]
+>
+> 该项目为 Latest10.win 停运后的替代方案
+> 该项目为非盈利项目，与 Microsoft 无关，也不是 Microsoft 旗下网站！
 
-    - 家庭中文版 CoreCountrySpecific
-    - 家庭版 Core
-    - 家庭单语言版 CoreSingleLanguage
-    - 专业版 Professional
-    - 专业工作站版 ProfessionalWorkstation
-    - 教育版 Education
-    - 企业版 Enterprise
-    - IoT企业版 IoTEnterprise
-    - 企业版G EnterpriseG
-- ESD 打包，效率更高，方便快速装机
+服务器定时从 [UUPDUMP](https://uupdump.net/)、 [adavak/Win_ISO_Patching_Scripts](https://github.com/adavak/Win_ISO_Patching_Scripts) 检测新 Build ，并自动集成更新、校验打包后上传。
 
-**了解更多：**
-https://sys.xrgzs.top/get/msupdate.html
+> [!tip]
+>
+> 目前使用 UUP 构建的系统，或多或少会出现一些莫名其妙的问题，因此，我们尽量不从 UUP 构建，仅基于官网 RTM 版本集成更新制作，最多只是从 UUP 下载更新包，避免出现组件缺失等问题
+
+## 特点
+
+### 保持最新
+
+集成系统更新至 {{ (new Date()).getFullYear()+"."+((new Date()).getMonth()+1) }} 最新版本
+
+### 直链下载
+
+提供 HTTP 直链下载，任何平台都能轻松获取到最新 Windows 镜像
+
+### 组件完整
+
+集成.NET3.5 - 4.8.1 运行库
+
+更新内置 UWP：Microsoft Store、 WinGet 及 运行库 到最新版本
+
+集成 无线显示器（Miracast 投屏）、.NET 3.5、IE 11 及中文语言包等 Features On Demand 组件
+
+开启 Telnet 客户端、Direct Play 等功能
+
+### 过程开源
+
+使用仓库 [xrgzs/MSUpdate](https://github.com/xrgzs/MSUpdate) 集成更新，整个集成过程（包括用到第三方程序）全部开源，请放心使用
+
+### 不夹带私货
+
+未集成任何第三方程序，纯净安全可靠
+
+未对系统进行任何优化调整，保证原滋原味
+
+### 整合多个 SKU
+
+由 家庭中文版 集成更新并转换为 9 个版本：
+
+- 家庭中文版 CoreCountrySpecific
+- 家庭版 Core
+- 家庭单语言版 CoreSingleLanguage
+- 专业版 Professional
+- 专业工作站版 ProfessionalWorkstation
+- 教育版 Education
+- 企业版 Enterprise
+- IoT企业版 IoTEnterprise
+- 企业版G EnterpriseG
+
+### ESD 打包
+
+效率更高，方便快速装机
+
+### 提供部分旧版本 Build 镜像
+
+## 获取镜像：
+
+https://sys.xrgzs.top/get/msupdate
+
+网盘备用：
+
+- OneDrive分享：[Share](https://oofutech-my.sharepoint.com/:f:/g/personal/xrgzs_oofutech_onmicrosoft_com/El4WpU-mYnBEik9K-IbMXdABfoiNqjUHHWNCwwfcwXPv2Q?e=lfMZ5a)
 
 ## 持续集成
 
