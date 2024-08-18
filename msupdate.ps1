@@ -93,6 +93,26 @@ switch ($MakeVersion) {
         Start-Sleep -Seconds 3
         $msstore = $true
     }
+    "w11lt24a64" {
+        # make 11 ltsc2024 arm64
+        $os_ver = "11"
+        $os_rsversion = "24H2"
+        $os_build = "26100"
+        $os_edition = "LTSC2024"
+        $os_display = "Windows $os_ver LTSC 2024"
+        $os_arch = "arm64"
+        $os_lang = "zh-cn"
+        $ospath = "/系统/Windows/Win10/Res/26100/arm64/26100.1.240331-1435.ge_release_CLIENT_ENTERPRISES_OEM_A64FRE_zh-cn.iso"
+        $UpdateFromUUP = $true
+        $uupid = ((Invoke-WebRequest -Uri "https://uupdump.net/known.php?q=category:w11-24h2").Links | Where-Object {$_.href -like "selectlang.php?id=*"} | Where-Object {$_.outerHTML -like "*Windows 11*arm64*"})[0].href.replace("selectlang.php?id=","")
+        $UUPScript = "https://uupdump.net/get.php?id=$uupid&pack=0&edition=updateOnly&aria2=2"
+        Start-Sleep -Seconds 3
+        $iexplorer = ((Invoke-WebRequest -Uri "https://uupdump.net/getfile.php?id=$uupid&file=Microsoft-Windows-InternetExplorer-Optional-Package-arm64.cab").Links | Where-Object {$_.outerHTML -like "*microsoft.com*"})[0].href
+        Start-Sleep -Seconds 3
+        $iexplorerLP = ((Invoke-WebRequest -Uri "https://uupdump.net/getfile.php?id=$uupid&file=Microsoft-Windows-InternetExplorer-Optional-Package-arm64-zh-CN.cab").Links | Where-Object {$_.outerHTML -like "*microsoft.com*"})[0].href
+        Start-Sleep -Seconds 3
+        $MultiEdition = $false
+    }
     "w11lt2464" {
         # make 11 ltsc2024 x64
         $os_ver = "11"
@@ -102,7 +122,7 @@ switch ($MakeVersion) {
         $os_display = "Windows $os_ver LTSC 2024"
         $os_arch = "x64"
         $os_lang = "zh-cn"
-        $ospath = "/系统/Windows/Win10/LTSC2024/26100.1.240406-1435.ge_release_CLIENT_ENTERPRISES_OEM_x64FRE_zh-cn.iso"
+        $ospath = "/系统/Windows/Win10/Res/26100/amd64/26100.1.240331-1435.ge_release_CLIENT_ENTERPRISES_OEM_x64FRE_zh-cn.iso"
         $UpdateFromUUP = $true
         $uupid = ((Invoke-WebRequest -Uri "https://uupdump.net/known.php?q=category:w11-24h2").Links | Where-Object {$_.href -like "selectlang.php?id=*"} | Where-Object {$_.outerHTML -like "*Windows 11*amd64*"})[0].href.replace("selectlang.php?id=","")
         $UUPScript = "https://uupdump.net/get.php?id=$uupid&pack=0&edition=updateOnly&aria2=2"
