@@ -584,9 +584,9 @@ if /i "$SkipCheck"=="true" (
     echo skip hardware check by reg
     REG.exe LOAD "HKLM\Mount_SYSTEM" "!mountdir!\Windows\System32\config\SYSTEM"
     for %%a in (BypassCPUCheck,BypassRAMCheck,BypassSecureBootCheck,BypassStorageCheck,BypassTPMCheck) do (
-        REG.exe ADD "HKLM\Mount_SYSTEM\Setup\LabConfig"/f /v "%%a" /t REG_DWORD /d 1
+        REG.exe ADD "HKLM\Mount_SYSTEM\Setup\LabConfig" /f /v "%%a" /t REG_DWORD /d 1
     )
-    REG.exe ADD "HKLM\Mount_SYSTEM\Setup\MoSetup"/f /v "AllowUpgradesWithUnsupportedTPMOrCPU" /t REG_DWORD /d 1
+    REG.exe ADD "HKLM\Mount_SYSTEM\Setup\MoSetup" /f /v "AllowUpgradesWithUnsupportedTPMOrCPU" /t REG_DWORD /d 1
     REG.exe UNLOAD "HKLM\Mount_SYSTEM"
 
     echo skip oobe force-login check
