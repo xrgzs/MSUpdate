@@ -485,56 +485,56 @@ if ($null -ne $UUPScript) {
         Start-Sleep -Seconds 5
         Invoke-WebRequest -Uri $UUPScript -OutFile ".\temp\UUPScript.txt"
     }
-    .\bin\aria2c.exe --check-certificate=false -x16 -s16 -j5 -c -R -d ".\patch" -i ".\temp\UUPScript.txt"
+    .\bin\aria2c.exe -c -R --retry-wait=5 --check-certificate=false -x16 -s16 -j5 -d ".\patch" -i ".\temp\UUPScript.txt"
     if (!$?) {Write-Error "UUPScript Download Failed!"}
 } elseif ($null -ne $WUScript) {
     Invoke-WebRequest -Uri $WUScript -OutFile ".\temp\WUScript.meta4"
-    .\bin\aria2c.exe --check-certificate=false -x16 -s16 -j5 -c -R -d ".\patch" -M ".\temp\WUScript.meta4"
+    .\bin\aria2c.exe -c -R --retry-wait=5 --check-certificate=false -x16 -s16 -j5 -d ".\patch" -M ".\temp\WUScript.meta4"
     if (!$?) {Write-Error "WUScript Download Failed!"}
 } else {
     Write-Error "No Windows Update Scripts Found!"
 }
 if ($null -ne $NETScript) {
     Invoke-WebRequest -Uri $NETScript -OutFile ".\temp\NETScript.meta4"
-    .\bin\aria2c.exe --check-certificate=false -x16 -s16 -j5 -c -R -d ".\patch" -M ".\temp\NETScript.meta4" --metalink-language="neutral"
+    .\bin\aria2c.exe -c -R --retry-wait=5 --check-certificate=false -x16 -s16 -j5 -d ".\patch" -M ".\temp\NETScript.meta4" --metalink-language="neutral"
     if (!$?) {Write-Error "NETScript Download Failed!"}
-    .\bin\aria2c.exe --check-certificate=false -x16 -s16 -j5 -c -R -d ".\patch" -M ".\temp\NETScript.meta4" --metalink-language="zh-CN"
+    .\bin\aria2c.exe -c -R --retry-wait=5 --check-certificate=false -x16 -s16 -j5 -d ".\patch" -M ".\temp\NETScript.meta4" --metalink-language="zh-CN"
     if (!$?) {Write-Error "NETScript Download Failed!"}
 }
 
 # get fod
 if ($null -ne $Miracast) {
     # Microsoft-Windows-WirelessDisplay-FOD-Package.cab
-    .\bin\aria2c.exe --check-certificate=false -x16 -s16 -d ".\fod\Miracast\" -o "update.cab" "$Miracast"
+    .\bin\aria2c.exe -c -R --retry-wait=5 --check-certificate=false -x16 -s16 -d ".\fod\Miracast\" -o "update.cab" "$Miracast"
     if (!$?) {Write-Error "Miracast Download Failed!"}
     expand -f:* ".\fod\Miracast\update.cab" ".\fod\Miracast\" >nul
     # Microsoft-Windows-WirelessDisplay-FOD-Package~zh-CN.cab
-    .\bin\aria2c.exe --check-certificate=false -x16 -s16 -d ".\fod\MiracastLP\" -o "update.cab" "$MiracastLP"
+    .\bin\aria2c.exe -c -R --retry-wait=5 --check-certificate=false -x16 -s16 -d ".\fod\MiracastLP\" -o "update.cab" "$MiracastLP"
     if (!$?) {Write-Error "MiracastLP Download Failed!"}
     expand -f:* ".\fod\MiracastLP\update.cab" ".\fod\MiracastLP\" >nul
 }
 if ($null -ne $iexplorer) {
     # microsoft-windows-internetexplorer-optional-package.cab
-    .\bin\aria2c.exe --check-certificate=false -x16 -s16 -d ".\fod\iexplorer\" -o "update.cab" "$iexplorer"
+    .\bin\aria2c.exe -c -R --retry-wait=5 --check-certificate=false -x16 -s16 -d ".\fod\iexplorer\" -o "update.cab" "$iexplorer"
     if (!$?) {Write-Error "iexplorer Download Failed!"}
     expand -f:* ".\fod\iexplorer\update.cab" ".\fod\iexplorer\" >nul
 }
 if ($null -ne $iexplorerLP) {
     # Microsoft-Windows-InternetExplorer-Optional-Package-amd64-zh-cn.cab
-    .\bin\aria2c.exe --check-certificate=false -x16 -s16 -d ".\fod\iexplorerLP\" -o "update.cab" "$iexplorer"
+    .\bin\aria2c.exe -c -R --retry-wait=5 --check-certificate=false -x16 -s16 -d ".\fod\iexplorerLP\" -o "update.cab" "$iexplorer"
     if (!$?) {Write-Error "iexplorerLP Download Failed!"}
     expand -f:* ".\fod\iexplorerLP\update.cab" ".\fod\iexplorerLP\" >nul
 }
 # get entg
 if (($null -ne $entgpack) -and ($true -eq $MultiEdition)) {
     # Microsoft-Windows-EditionSpecific-EnterpriseG-Package.ESD
-    .\bin\aria2c.exe --check-certificate=false -x16 -s16 -d ".\temp\" -o "entg.esd" "$entgpack"
+    .\bin\aria2c.exe -c -R --retry-wait=5 --check-certificate=false -x16 -s16 -d ".\temp\" -o "entg.esd" "$entgpack"
     if (!$?) {Write-Error "entg Download Failed!"}
     ."C:\Program Files\7-Zip\7z.exe" x ".\temp\entg.esd" -o".\entg" -r
 }
 if (($null -ne $entgLP) -and ($true -eq $MultiEdition)) {
     # Microsoft-Windows-EditionSpecific-EnterpriseG-Package.ESD
-    .\bin\aria2c.exe --check-certificate=false -x16 -s16 -d ".\temp\" -o "entgLP.esd" "$entgLP"
+    .\bin\aria2c.exe -c -R --retry-wait=5 --check-certificate=false -x16 -s16 -d ".\temp\" -o "entgLP.esd" "$entgLP"
     if (!$?) {Write-Error "entgLP Download Failed!"}
     ."C:\Program Files\7-Zip\7z.exe" x ".\temp\entgLP.esd" -o".\entgLP" -r
 }
@@ -864,7 +864,7 @@ if ($null -ne $ospath) {
 Write-Host "Original system file: $osfile
 Original system download link: $osurl
 "
-.\bin\aria2c.exe --check-certificate=false -s16 -x16 -d ".\temp" -o "$osfile" "$osurl"
+.\bin\aria2c.exe -c -R --retry-wait=5 --check-certificate=false -s16 -x16 -d ".\temp" -o "$osfile" "$osurl"
 if ($?) {Write-Host "System Image Download Successfully!"} else {Write-Error "System Image Download Failed!"}
 
 # $isopath = Resolve-Path -Path ".\temp\$osfile"
