@@ -104,6 +104,7 @@ switch ($MakeVersion) {
         $os_lang = "zh-cn"
         $ospath = "/系统/Windows/Win10/Res/26100/arm64/26100.1.240331-1435.ge_release_CLIENT_ENTERPRISES_OEM_A64FRE_zh-cn.iso"
         $UpdateFromUUP = $true
+        $Cleanup = $false
         $uupid = ((Invoke-WebRequest -Uri "https://uupdump.net/known.php?q=category:w11-24h2").Links | Where-Object {$_.href -like "selectlang.php?id=*"} | Where-Object {$_.outerHTML -like "*Windows 11*arm64*"})[0].href.replace("selectlang.php?id=","")
         $UUPScript = "https://uupdump.net/get.php?id=$uupid&pack=0&edition=updateOnly&aria2=2"
         Start-Sleep -Seconds 3
@@ -124,6 +125,7 @@ switch ($MakeVersion) {
         $os_lang = "zh-cn"
         $ospath = "/系统/Windows/Win10/Res/26100/amd64/26100.1.240331-1435.ge_release_CLIENT_ENTERPRISES_OEM_x64FRE_zh-cn.iso"
         $UpdateFromUUP = $true
+        $Cleanup = $false
         $uupid = ((Invoke-WebRequest -Uri "https://uupdump.net/known.php?q=category:w11-24h2").Links | Where-Object {$_.href -like "selectlang.php?id=*"} | Where-Object {$_.outerHTML -like "*Windows 11*amd64*"})[0].href.replace("selectlang.php?id=","")
         $UUPScript = "https://uupdump.net/get.php?id=$uupid&pack=0&edition=updateOnly&aria2=2"
         Start-Sleep -Seconds 3
@@ -889,7 +891,7 @@ if ($?) {Write-Host "System Image Download Successfully!"} else {Write-Error "Sy
 
 .\bin\wimlib-imagex.exe info ".\ISO\sources\install.wim" --extract-xml ".\temp\WIMInfo2.xml"
 Get-Content ".\temp\WIMInfo2.xml"
-
+if ($null -eq $Cleanup) {$Cleanup =$true}
 # write W10UI conf
 @"
 [W10UI-Configuration]
@@ -899,7 +901,7 @@ DismRoot      =dism.exe
 
 Net35         =1
 Net35Source   =
-Cleanup       =1
+Cleanup       =$($Cleanup ? 1 : 0)
 ResetBase     =0
 LCUwinre      =1
 WinRE         =1
@@ -983,6 +985,7 @@ Get-ChildItem -Path ".\*.iso" -File | ForEach-Object {
     $FileInfo.msupdate.updatefromuup = $UpdateFromUUP
     $FileInfo.msupdate.addunattend = $AddUnattend
     $FileInfo.msupdate.skipcheck = $SkipCheck
+    $FileInfo.msupdate.cleanup = $Cleanup
     $FileInfo.msupdate.makefrom = $osfile
     $FileInfo | ConvertTo-Json | Out-File -FilePath ".\$($_.Name).json" -Encoding utf8
 }
