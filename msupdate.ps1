@@ -48,6 +48,7 @@ switch ($MakeVersion) {
         $os_lang = "zh-cn"
         $ospath = "/系统/MSDN/NT10.0_Win11/26100_24H2/1_OEM/26100.1.240331-1435.ge_release_CLIENTCHINA_OEM_A64FRE_zh-cn.iso"
         $UpdateFromUUP = $true
+        $Cleanup = $false
         $uupid = ((Invoke-WebRequest -Uri "https://uupdump.net/known.php?q=category:w11-24h2").Links | Where-Object {$_.href -like "selectlang.php?id=*"} | Where-Object {$_.outerHTML -like "*Windows 11*arm64*"})[0].href.replace("selectlang.php?id=","")
         $UUPScript = "https://uupdump.net/get.php?id=$uupid&pack=0&edition=updateOnly&aria2=2"
         Start-Sleep -Seconds 3
@@ -76,6 +77,7 @@ switch ($MakeVersion) {
         $os_lang = "zh-cn"
         $ospath = "/系统/MSDN/NT10.0_Win11/26100_24H2/1_OEM/26100.1.240331-1435.ge_release_CLIENTCHINA_OEM_x64FRE_zh-cn.iso"
         $UpdateFromUUP = $true
+        $Cleanup = $false
         $uupid = ((Invoke-WebRequest -Uri "https://uupdump.net/known.php?q=category:w11-24h2").Links | Where-Object {$_.href -like "selectlang.php?id=*"} | Where-Object {$_.outerHTML -like "*Windows 11*amd64*"})[0].href.replace("selectlang.php?id=","")
         $UUPScript = "https://uupdump.net/get.php?id=$uupid&pack=0&edition=updateOnly&aria2=2"
         Start-Sleep -Seconds 3
