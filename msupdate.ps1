@@ -52,17 +52,17 @@ switch ($MakeVersion) {
         $uupid = ((Invoke-WebRequest -Uri "https://uupdump.net/known.php?q=category:w11-24h2").Links | Where-Object {$_.href -like "selectlang.php?id=*"} | Where-Object {$_.outerHTML -like "*Windows 11*arm64*"})[0].href.replace("selectlang.php?id=","")
         $UUPScript = "https://uupdump.net/get.php?id=$uupid&pack=0&edition=updateOnly&aria2=2"
         Start-Sleep -Seconds 3
-        $Miracast = ((Invoke-WebRequest -Uri "https://uupdump.net/getfile.php?id=$uupid&file=Microsoft-Windows-WirelessDisplay-FOD-Package-arm64.cab").Links | Where-Object {$_.outerHTML -like "*microsoft.com*"})[0].href
+        $Miracast = ((Invoke-WebRequest -Uri "https://uupdump.net/getfile.php?id=$uupid&file=Microsoft-Windows-WirelessDisplay-FOD-Package-arm64.cab").Links | Where-Object {$_.outerHTML -like "*mp.microsoft.com*"})[0].href
         Start-Sleep -Seconds 3
-        $MiracastLP = ((Invoke-WebRequest -Uri "https://uupdump.net/getfile.php?id=$uupid&file=Microsoft-Windows-WirelessDisplay-FOD-Package-arm64-zh-CN.cab").Links | Where-Object {$_.outerHTML -like "*microsoft.com*"})[0].href
+        $MiracastLP = ((Invoke-WebRequest -Uri "https://uupdump.net/getfile.php?id=$uupid&file=Microsoft-Windows-WirelessDisplay-FOD-Package-arm64-zh-CN.cab").Links | Where-Object {$_.outerHTML -like "*mp.microsoft.com*"})[0].href
         Start-Sleep -Seconds 3
-        $iexplorer = ((Invoke-WebRequest -Uri "https://uupdump.net/getfile.php?id=$uupid&file=Microsoft-Windows-InternetExplorer-Optional-Package-arm64.cab").Links | Where-Object {$_.outerHTML -like "*microsoft.com*"})[0].href
+        $iexplorer = ((Invoke-WebRequest -Uri "https://uupdump.net/getfile.php?id=$uupid&file=Microsoft-Windows-InternetExplorer-Optional-Package-arm64.cab").Links | Where-Object {$_.outerHTML -like "*mp.microsoft.com*"})[0].href
         Start-Sleep -Seconds 3
-        $iexplorerLP = ((Invoke-WebRequest -Uri "https://uupdump.net/getfile.php?id=$uupid&file=Microsoft-Windows-InternetExplorer-Optional-Package-arm64-zh-CN.cab").Links | Where-Object {$_.outerHTML -like "*microsoft.com*"})[0].href
+        $iexplorerLP = ((Invoke-WebRequest -Uri "https://uupdump.net/getfile.php?id=$uupid&file=Microsoft-Windows-InternetExplorer-Optional-Package-arm64-zh-CN.cab").Links | Where-Object {$_.outerHTML -like "*mp.microsoft.com*"})[0].href
         Start-Sleep -Seconds 3
-        $entgpack = ((Invoke-WebRequest -Uri "https://uupdump.net/getfile.php?id=$uupid&file=Microsoft-Windows-EditionSpecific-EnterpriseG-Package.ESD").Links | Where-Object {$_.outerHTML -like "*microsoft.com*"})[0].href
+        $entgpack = ((Invoke-WebRequest -Uri "https://uupdump.net/getfile.php?id=$uupid&file=Microsoft-Windows-EditionSpecific-EnterpriseG-Package.ESD").Links | Where-Object {$_.outerHTML -like "*mp.microsoft.com*"})[0].href
         Start-Sleep -Seconds 3
-        $entgLP = ((Invoke-WebRequest -Uri "https://uupdump.net/getfile.php?id=$uupid&file=Microsoft-Windows-Client-LanguagePack-Package-arm64-zh-CN.esd").Links | Where-Object {$_.outerHTML -like "*microsoft.com*"})[0].href
+        $entgLP = ((Invoke-WebRequest -Uri "https://uupdump.net/getfile.php?id=$uupid&file=Microsoft-Windows-Client-LanguagePack-Package-arm64-zh-CN.esd").Links | Where-Object {$_.outerHTML -like "*mp.microsoft.com*"})[0].href
         Start-Sleep -Seconds 3
         $msstore = $true
     }
@@ -81,17 +81,17 @@ switch ($MakeVersion) {
         $uupid = ((Invoke-WebRequest -Uri "https://uupdump.net/known.php?q=category:w11-24h2").Links | Where-Object {$_.href -like "selectlang.php?id=*"} | Where-Object {$_.outerHTML -like "*Windows 11*amd64*"})[0].href.replace("selectlang.php?id=","")
         $UUPScript = "https://uupdump.net/get.php?id=$uupid&pack=0&edition=updateOnly&aria2=2"
         Start-Sleep -Seconds 3
-        $Miracast = ((Invoke-WebRequest -Uri "https://uupdump.net/getfile.php?id=$uupid&file=Microsoft-Windows-WirelessDisplay-FOD-Package-amd64.cab").Links | Where-Object {$_.outerHTML -like "*microsoft.com*"})[0].href
+        $Miracast = ((Invoke-WebRequest -Uri "https://uupdump.net/getfile.php?id=$uupid&file=Microsoft-Windows-WirelessDisplay-FOD-Package-amd64.cab").Links | Where-Object {$_.outerHTML -like "*mp.microsoft.com*"})[0].href
         Start-Sleep -Seconds 3
-        $MiracastLP = ((Invoke-WebRequest -Uri "https://uupdump.net/getfile.php?id=$uupid&file=Microsoft-Windows-WirelessDisplay-FOD-Package-amd64-zh-CN.cab").Links | Where-Object {$_.outerHTML -like "*microsoft.com*"})[0].href
+        $MiracastLP = ((Invoke-WebRequest -Uri "https://uupdump.net/getfile.php?id=$uupid&file=Microsoft-Windows-WirelessDisplay-FOD-Package-amd64-zh-CN.cab").Links | Where-Object {$_.outerHTML -like "*mp.microsoft.com*"})[0].href
         Start-Sleep -Seconds 3
-        $iexplorer = ((Invoke-WebRequest -Uri "https://uupdump.net/getfile.php?id=$uupid&file=Microsoft-Windows-InternetExplorer-Optional-Package-amd64.cab").Links | Where-Object {$_.outerHTML -like "*microsoft.com*"})[0].href
+        $iexplorer = ((Invoke-WebRequest -Uri "https://uupdump.net/getfile.php?id=$uupid&file=Microsoft-Windows-InternetExplorer-Optional-Package-amd64.cab").Links | Where-Object {$_.outerHTML -like "*mp.microsoft.com*"})[0].href
         Start-Sleep -Seconds 3
-        $iexplorerLP = ((Invoke-WebRequest -Uri "https://uupdump.net/getfile.php?id=$uupid&file=Microsoft-Windows-InternetExplorer-Optional-Package-amd64-zh-CN.cab").Links | Where-Object {$_.outerHTML -like "*microsoft.com*"})[0].href
+        $iexplorerLP = ((Invoke-WebRequest -Uri "https://uupdump.net/getfile.php?id=$uupid&file=Microsoft-Windows-InternetExplorer-Optional-Package-amd64-zh-CN.cab").Links | Where-Object {$_.outerHTML -like "*mp.microsoft.com*"})[0].href
         Start-Sleep -Seconds 3
-        $entgpack = ((Invoke-WebRequest -Uri "https://uupdump.net/getfile.php?id=$uupid&file=Microsoft-Windows-EditionSpecific-EnterpriseG-Package.ESD").Links | Where-Object {$_.outerHTML -like "*microsoft.com*"})[0].href
+        $entgpack = ((Invoke-WebRequest -Uri "https://uupdump.net/getfile.php?id=$uupid&file=Microsoft-Windows-EditionSpecific-EnterpriseG-Package.ESD").Links | Where-Object {$_.outerHTML -like "*mp.microsoft.com*"})[0].href
         Start-Sleep -Seconds 3
-        $entgLP = ((Invoke-WebRequest -Uri "https://uupdump.net/getfile.php?id=$uupid&file=Microsoft-Windows-Client-LanguagePack-Package-amd64-zh-CN.esd").Links | Where-Object {$_.outerHTML -like "*microsoft.com*"})[0].href
+        $entgLP = ((Invoke-WebRequest -Uri "https://uupdump.net/getfile.php?id=$uupid&file=Microsoft-Windows-Client-LanguagePack-Package-amd64-zh-CN.esd").Links | Where-Object {$_.outerHTML -like "*mp.microsoft.com*"})[0].href
         Start-Sleep -Seconds 3
         $msstore = $true
     }
@@ -110,9 +110,9 @@ switch ($MakeVersion) {
         $uupid = ((Invoke-WebRequest -Uri "https://uupdump.net/known.php?q=category:w11-24h2").Links | Where-Object {$_.href -like "selectlang.php?id=*"} | Where-Object {$_.outerHTML -like "*Windows 11*arm64*"})[0].href.replace("selectlang.php?id=","")
         $UUPScript = "https://uupdump.net/get.php?id=$uupid&pack=0&edition=updateOnly&aria2=2"
         Start-Sleep -Seconds 3
-        $iexplorer = ((Invoke-WebRequest -Uri "https://uupdump.net/getfile.php?id=$uupid&file=Microsoft-Windows-InternetExplorer-Optional-Package-arm64.cab").Links | Where-Object {$_.outerHTML -like "*microsoft.com*"})[0].href
+        $iexplorer = ((Invoke-WebRequest -Uri "https://uupdump.net/getfile.php?id=$uupid&file=Microsoft-Windows-InternetExplorer-Optional-Package-arm64.cab").Links | Where-Object {$_.outerHTML -like "*mp.microsoft.com*"})[0].href
         Start-Sleep -Seconds 3
-        $iexplorerLP = ((Invoke-WebRequest -Uri "https://uupdump.net/getfile.php?id=$uupid&file=Microsoft-Windows-InternetExplorer-Optional-Package-arm64-zh-CN.cab").Links | Where-Object {$_.outerHTML -like "*microsoft.com*"})[0].href
+        $iexplorerLP = ((Invoke-WebRequest -Uri "https://uupdump.net/getfile.php?id=$uupid&file=Microsoft-Windows-InternetExplorer-Optional-Package-arm64-zh-CN.cab").Links | Where-Object {$_.outerHTML -like "*mp.microsoft.com*"})[0].href
         Start-Sleep -Seconds 3
         $MultiEdition = $false
     }
@@ -131,9 +131,9 @@ switch ($MakeVersion) {
         $uupid = ((Invoke-WebRequest -Uri "https://uupdump.net/known.php?q=category:w11-24h2").Links | Where-Object {$_.href -like "selectlang.php?id=*"} | Where-Object {$_.outerHTML -like "*Windows 11*amd64*"})[0].href.replace("selectlang.php?id=","")
         $UUPScript = "https://uupdump.net/get.php?id=$uupid&pack=0&edition=updateOnly&aria2=2"
         Start-Sleep -Seconds 3
-        $iexplorer = ((Invoke-WebRequest -Uri "https://uupdump.net/getfile.php?id=$uupid&file=Microsoft-Windows-InternetExplorer-Optional-Package-amd64.cab").Links | Where-Object {$_.outerHTML -like "*microsoft.com*"})[0].href
+        $iexplorer = ((Invoke-WebRequest -Uri "https://uupdump.net/getfile.php?id=$uupid&file=Microsoft-Windows-InternetExplorer-Optional-Package-amd64.cab").Links | Where-Object {$_.outerHTML -like "*mp.microsoft.com*"})[0].href
         Start-Sleep -Seconds 3
-        $iexplorerLP = ((Invoke-WebRequest -Uri "https://uupdump.net/getfile.php?id=$uupid&file=Microsoft-Windows-InternetExplorer-Optional-Package-amd64-zh-CN.cab").Links | Where-Object {$_.outerHTML -like "*microsoft.com*"})[0].href
+        $iexplorerLP = ((Invoke-WebRequest -Uri "https://uupdump.net/getfile.php?id=$uupid&file=Microsoft-Windows-InternetExplorer-Optional-Package-amd64-zh-CN.cab").Links | Where-Object {$_.outerHTML -like "*mp.microsoft.com*"})[0].href
         Start-Sleep -Seconds 3
         $MultiEdition = $false
     }
@@ -150,17 +150,17 @@ switch ($MakeVersion) {
         $uupid = ((Invoke-WebRequest -Uri "https://uupdump.net/known.php?q=category:w11-23h2").Links | Where-Object {$_.href -like "selectlang.php?id=*"} | Where-Object {$_.outerHTML -like "*Windows 11*arm64*"})[0].href.replace("selectlang.php?id=","")
         $UUPScript = "https://uupdump.net/get.php?id=$uupid&pack=0&edition=updateOnly&aria2=2"
         Start-Sleep -Seconds 3
-        $Miracast = ((Invoke-WebRequest -Uri "https://uupdump.net/getfile.php?id=$uupid&file=Microsoft-Windows-WirelessDisplay-FOD-Package-arm64.cab").Links | Where-Object {$_.outerHTML -like "*microsoft.com*"})[0].href
+        $Miracast = ((Invoke-WebRequest -Uri "https://uupdump.net/getfile.php?id=$uupid&file=Microsoft-Windows-WirelessDisplay-FOD-Package-arm64.cab").Links | Where-Object {$_.outerHTML -like "*mp.microsoft.com*"})[0].href
         Start-Sleep -Seconds 3
-        $MiracastLP = ((Invoke-WebRequest -Uri "https://uupdump.net/getfile.php?id=$uupid&file=Microsoft-Windows-WirelessDisplay-FOD-Package-arm64-zh-cn.cab").Links | Where-Object {$_.outerHTML -like "*microsoft.com*"})[0].href
+        $MiracastLP = ((Invoke-WebRequest -Uri "https://uupdump.net/getfile.php?id=$uupid&file=Microsoft-Windows-WirelessDisplay-FOD-Package-arm64-zh-cn.cab").Links | Where-Object {$_.outerHTML -like "*mp.microsoft.com*"})[0].href
         Start-Sleep -Seconds 3
-        $iexplorer = ((Invoke-WebRequest -Uri "https://uupdump.net/getfile.php?id=$uupid&file=Microsoft-Windows-InternetExplorer-Optional-Package-arm64.cab").Links | Where-Object {$_.outerHTML -like "*microsoft.com*"})[0].href
+        $iexplorer = ((Invoke-WebRequest -Uri "https://uupdump.net/getfile.php?id=$uupid&file=Microsoft-Windows-InternetExplorer-Optional-Package-arm64.cab").Links | Where-Object {$_.outerHTML -like "*mp.microsoft.com*"})[0].href
         Start-Sleep -Seconds 3
-        $iexplorerLP = ((Invoke-WebRequest -Uri "https://uupdump.net/getfile.php?id=$uupid&file=Microsoft-Windows-InternetExplorer-Optional-Package-arm64-zh-cn.cab").Links | Where-Object {$_.outerHTML -like "*microsoft.com*"})[0].href
+        $iexplorerLP = ((Invoke-WebRequest -Uri "https://uupdump.net/getfile.php?id=$uupid&file=Microsoft-Windows-InternetExplorer-Optional-Package-arm64-zh-cn.cab").Links | Where-Object {$_.outerHTML -like "*mp.microsoft.com*"})[0].href
         Start-Sleep -Seconds 3
-        $entgpack = ((Invoke-WebRequest -Uri "https://uupdump.net/getfile.php?id=$uupid&file=Microsoft-Windows-EditionSpecific-EnterpriseG-Package.ESD").Links | Where-Object {$_.outerHTML -like "*microsoft.com*"})[0].href
+        $entgpack = ((Invoke-WebRequest -Uri "https://uupdump.net/getfile.php?id=$uupid&file=Microsoft-Windows-EditionSpecific-EnterpriseG-Package.ESD").Links | Where-Object {$_.outerHTML -like "*mp.microsoft.com*"})[0].href
         Start-Sleep -Seconds 3
-        $entgLP = ((Invoke-WebRequest -Uri "https://uupdump.net/getfile.php?id=$uupid&file=Microsoft-Windows-Client-LanguagePack-Package_zh-cn-arm64-zh-cn.esd").Links | Where-Object {$_.outerHTML -like "*microsoft.com*"})[0].href
+        $entgLP = ((Invoke-WebRequest -Uri "https://uupdump.net/getfile.php?id=$uupid&file=Microsoft-Windows-Client-LanguagePack-Package_zh-cn-arm64-zh-cn.esd").Links | Where-Object {$_.outerHTML -like "*mp.microsoft.com*"})[0].href
         Start-Sleep -Seconds 3
         $msstore = $true
     }
@@ -184,17 +184,17 @@ switch ($MakeVersion) {
             $uupid = ((Invoke-WebRequest -Uri "https://uupdump.net/known.php?q=category:w11-23h2").Links | Where-Object {$_.href -like "selectlang.php?id=*"} | Where-Object {$_.outerHTML -like "*Windows 11*amd64*"})[0].href.replace("selectlang.php?id=","")
             $UUPScript = "https://uupdump.net/get.php?id=$uupid&pack=0&edition=updateOnly&aria2=2"
             Start-Sleep -Seconds 3
-            $Miracast = ((Invoke-WebRequest -Uri "https://uupdump.net/getfile.php?id=$uupid&file=Microsoft-Windows-WirelessDisplay-FOD-Package-amd64.cab").Links | Where-Object {$_.outerHTML -like "*microsoft.com*"})[0].href
+            $Miracast = ((Invoke-WebRequest -Uri "https://uupdump.net/getfile.php?id=$uupid&file=Microsoft-Windows-WirelessDisplay-FOD-Package-amd64.cab").Links | Where-Object {$_.outerHTML -like "*mp.microsoft.com*"})[0].href
             Start-Sleep -Seconds 3
-            $MiracastLP = ((Invoke-WebRequest -Uri "https://uupdump.net/getfile.php?id=$uupid&file=Microsoft-Windows-WirelessDisplay-FOD-Package-amd64-zh-cn.cab").Links | Where-Object {$_.outerHTML -like "*microsoft.com*"})[0].href
+            $MiracastLP = ((Invoke-WebRequest -Uri "https://uupdump.net/getfile.php?id=$uupid&file=Microsoft-Windows-WirelessDisplay-FOD-Package-amd64-zh-cn.cab").Links | Where-Object {$_.outerHTML -like "*mp.microsoft.com*"})[0].href
             Start-Sleep -Seconds 3
-            $iexplorer = ((Invoke-WebRequest -Uri "https://uupdump.net/getfile.php?id=$uupid&file=Microsoft-Windows-InternetExplorer-Optional-Package-amd64.cab").Links | Where-Object {$_.outerHTML -like "*microsoft.com*"})[0].href
+            $iexplorer = ((Invoke-WebRequest -Uri "https://uupdump.net/getfile.php?id=$uupid&file=Microsoft-Windows-InternetExplorer-Optional-Package-amd64.cab").Links | Where-Object {$_.outerHTML -like "*mp.microsoft.com*"})[0].href
             Start-Sleep -Seconds 3
-            $iexplorerLP = ((Invoke-WebRequest -Uri "https://uupdump.net/getfile.php?id=$uupid&file=Microsoft-Windows-InternetExplorer-Optional-Package-amd64-zh-cn.cab").Links | Where-Object {$_.outerHTML -like "*microsoft.com*"})[0].href
+            $iexplorerLP = ((Invoke-WebRequest -Uri "https://uupdump.net/getfile.php?id=$uupid&file=Microsoft-Windows-InternetExplorer-Optional-Package-amd64-zh-cn.cab").Links | Where-Object {$_.outerHTML -like "*mp.microsoft.com*"})[0].href
             Start-Sleep -Seconds 3
-            $entgpack = ((Invoke-WebRequest -Uri "https://uupdump.net/getfile.php?id=$uupid&file=Microsoft-Windows-EditionSpecific-EnterpriseG-Package.ESD").Links | Where-Object {$_.outerHTML -like "*microsoft.com*"})[0].href
+            $entgpack = ((Invoke-WebRequest -Uri "https://uupdump.net/getfile.php?id=$uupid&file=Microsoft-Windows-EditionSpecific-EnterpriseG-Package.ESD").Links | Where-Object {$_.outerHTML -like "*mp.microsoft.com*"})[0].href
             Start-Sleep -Seconds 3
-            $entgLP = ((Invoke-WebRequest -Uri "https://uupdump.net/getfile.php?id=$uupid&file=Microsoft-Windows-Client-LanguagePack-Package_zh-cn-amd64-zh-cn.esd").Links | Where-Object {$_.outerHTML -like "*microsoft.com*"})[0].href
+            $entgLP = ((Invoke-WebRequest -Uri "https://uupdump.net/getfile.php?id=$uupid&file=Microsoft-Windows-Client-LanguagePack-Package_zh-cn-amd64-zh-cn.esd").Links | Where-Object {$_.outerHTML -like "*mp.microsoft.com*"})[0].href
             Start-Sleep -Seconds 3
         } else {
             $WUScript = "https://raw.githubusercontent.com/adavak/Win_ISO_Patching_Scripts/master/Scripts/script_22621_x64.meta4"
@@ -220,13 +220,13 @@ switch ($MakeVersion) {
         $uupid = ((Invoke-WebRequest -Uri "https://uupdump.net/known.php?q=category:w10-22h2").Links | Where-Object {$_.href -like "selectlang.php?id=*"} | Where-Object {$_.outerHTML -like "*arm64*"})[0].href.replace("selectlang.php?id=","")
         $UUPScript = "https://uupdump.net/get.php?id=$uupid&pack=0&edition=updateOnly&aria2=2"
         Start-Sleep -Seconds 3
-        $Miracast = ((Invoke-WebRequest -Uri "https://uupdump.net/getfile.php?id=$uupid&file=Microsoft-Windows-WirelessDisplay-FOD-Package-arm64.cab").Links | Where-Object {$_.outerHTML -like "*microsoft.com*"})[0].href
+        $Miracast = ((Invoke-WebRequest -Uri "https://uupdump.net/getfile.php?id=$uupid&file=Microsoft-Windows-WirelessDisplay-FOD-Package-arm64.cab").Links | Where-Object {$_.outerHTML -like "*mp.microsoft.com*"})[0].href
         Start-Sleep -Seconds 3
-        $MiracastLP = ((Invoke-WebRequest -Uri "https://uupdump.net/getfile.php?id=$uupid&file=Microsoft-Windows-WirelessDisplay-FOD-Package-arm64-zh-cn.cab").Links | Where-Object {$_.outerHTML -like "*microsoft.com*"})[0].href
+        $MiracastLP = ((Invoke-WebRequest -Uri "https://uupdump.net/getfile.php?id=$uupid&file=Microsoft-Windows-WirelessDisplay-FOD-Package-arm64-zh-cn.cab").Links | Where-Object {$_.outerHTML -like "*mp.microsoft.com*"})[0].href
         Start-Sleep -Seconds 3
-        $entgpack = ((Invoke-WebRequest -Uri "https://uupdump.net/getfile.php?id=$uupid&file=Microsoft-Windows-EditionSpecific-EnterpriseG-Package.ESD").Links | Where-Object {$_.outerHTML -like "*microsoft.com*"})[0].href
+        $entgpack = ((Invoke-WebRequest -Uri "https://uupdump.net/getfile.php?id=$uupid&file=Microsoft-Windows-EditionSpecific-EnterpriseG-Package.ESD").Links | Where-Object {$_.outerHTML -like "*mp.microsoft.com*"})[0].href
         Start-Sleep -Seconds 3
-        $entgLP = ((Invoke-WebRequest -Uri "https://uupdump.net/getfile.php?id=$uupid&file=Microsoft-Windows-Client-LanguagePack-Package_zh-cn-arm64-zh-cn.esd").Links | Where-Object {$_.outerHTML -like "*microsoft.com*"})[0].href
+        $entgLP = ((Invoke-WebRequest -Uri "https://uupdump.net/getfile.php?id=$uupid&file=Microsoft-Windows-Client-LanguagePack-Package_zh-cn-arm64-zh-cn.esd").Links | Where-Object {$_.outerHTML -like "*mp.microsoft.com*"})[0].href
         Start-Sleep -Seconds 3
         $NETScript = "https://raw.githubusercontent.com/adavak/Win_ISO_Patching_Scripts/master/Scripts/netfx4.8/script_netfx4.8_19041_arm64.meta4"
         $msstore = $true
@@ -251,13 +251,13 @@ switch ($MakeVersion) {
             $uupid = ((Invoke-WebRequest -Uri "https://uupdump.net/known.php?q=category:w10-22h2").Links | Where-Object {$_.href -like "selectlang.php?id=*"} | Where-Object {$_.outerHTML -like "*amd64*"})[0].href.replace("selectlang.php?id=","")
             $UUPScript = "https://uupdump.net/get.php?id=$uupid&pack=0&edition=updateOnly&aria2=2"
             Start-Sleep -Seconds 3
-            $Miracast = ((Invoke-WebRequest -Uri "https://uupdump.net/getfile.php?id=$uupid&file=Microsoft-Windows-WirelessDisplay-FOD-Package-amd64.cab").Links | Where-Object {$_.outerHTML -like "*microsoft.com*"})[0].href
+            $Miracast = ((Invoke-WebRequest -Uri "https://uupdump.net/getfile.php?id=$uupid&file=Microsoft-Windows-WirelessDisplay-FOD-Package-amd64.cab").Links | Where-Object {$_.outerHTML -like "*mp.microsoft.com*"})[0].href
             Start-Sleep -Seconds 3
-            $MiracastLP = ((Invoke-WebRequest -Uri "https://uupdump.net/getfile.php?id=$uupid&file=Microsoft-Windows-WirelessDisplay-FOD-Package-amd64-zh-cn.cab").Links | Where-Object {$_.outerHTML -like "*microsoft.com*"})[0].href
+            $MiracastLP = ((Invoke-WebRequest -Uri "https://uupdump.net/getfile.php?id=$uupid&file=Microsoft-Windows-WirelessDisplay-FOD-Package-amd64-zh-cn.cab").Links | Where-Object {$_.outerHTML -like "*mp.microsoft.com*"})[0].href
             Start-Sleep -Seconds 3
-            $entgpack = ((Invoke-WebRequest -Uri "https://uupdump.net/getfile.php?id=$uupid&file=Microsoft-Windows-EditionSpecific-EnterpriseG-Package.ESD").Links | Where-Object {$_.outerHTML -like "*microsoft.com*"})[0].href
+            $entgpack = ((Invoke-WebRequest -Uri "https://uupdump.net/getfile.php?id=$uupid&file=Microsoft-Windows-EditionSpecific-EnterpriseG-Package.ESD").Links | Where-Object {$_.outerHTML -like "*mp.microsoft.com*"})[0].href
             Start-Sleep -Seconds 3
-            $entgLP = ((Invoke-WebRequest -Uri "https://uupdump.net/getfile.php?id=$uupid&file=Microsoft-Windows-Client-LanguagePack-Package_zh-cn-amd64-zh-cn.esd").Links | Where-Object {$_.outerHTML -like "*microsoft.com*"})[0].href
+            $entgLP = ((Invoke-WebRequest -Uri "https://uupdump.net/getfile.php?id=$uupid&file=Microsoft-Windows-Client-LanguagePack-Package_zh-cn-amd64-zh-cn.esd").Links | Where-Object {$_.outerHTML -like "*mp.microsoft.com*"})[0].href
             Start-Sleep -Seconds 3
         } else {
             $WUScript = "https://raw.githubusercontent.com/adavak/Win_ISO_Patching_Scripts/master/Scripts/script_19041_x64.meta4"
@@ -289,13 +289,13 @@ switch ($MakeVersion) {
             $uupid = ((Invoke-WebRequest -Uri "https://uupdump.net/known.php?q=category:w10-22h2").Links | Where-Object {$_.href -like "selectlang.php?id=*"} | Where-Object {$_.outerHTML -like "*x86*"})[0].href.replace("selectlang.php?id=","")
             $UUPScript = "https://uupdump.net/get.php?id=$uupid&pack=0&edition=updateOnly&aria2=2"
             Start-Sleep -Seconds 3
-            $Miracast = ((Invoke-WebRequest -Uri "https://uupdump.net/getfile.php?id=$uupid&file=Microsoft-Windows-WirelessDisplay-FOD-Package-x86.cab").Links | Where-Object {$_.outerHTML -like "*microsoft.com*"})[0].href
+            $Miracast = ((Invoke-WebRequest -Uri "https://uupdump.net/getfile.php?id=$uupid&file=Microsoft-Windows-WirelessDisplay-FOD-Package-x86.cab").Links | Where-Object {$_.outerHTML -like "*mp.microsoft.com*"})[0].href
             Start-Sleep -Seconds 3
-            $MiracastLP = ((Invoke-WebRequest -Uri "https://uupdump.net/getfile.php?id=$uupid&file=Microsoft-Windows-WirelessDisplay-FOD-Package-x86-zh-cn.cab").Links | Where-Object {$_.outerHTML -like "*microsoft.com*"})[0].href
+            $MiracastLP = ((Invoke-WebRequest -Uri "https://uupdump.net/getfile.php?id=$uupid&file=Microsoft-Windows-WirelessDisplay-FOD-Package-x86-zh-cn.cab").Links | Where-Object {$_.outerHTML -like "*mp.microsoft.com*"})[0].href
             Start-Sleep -Seconds 3
-            $entgpack = ((Invoke-WebRequest -Uri "https://uupdump.net/getfile.php?id=$uupid&file=Microsoft-Windows-EditionSpecific-EnterpriseG-Package.ESD").Links | Where-Object {$_.outerHTML -like "*microsoft.com*"})[0].href
+            $entgpack = ((Invoke-WebRequest -Uri "https://uupdump.net/getfile.php?id=$uupid&file=Microsoft-Windows-EditionSpecific-EnterpriseG-Package.ESD").Links | Where-Object {$_.outerHTML -like "*mp.microsoft.com*"})[0].href
             Start-Sleep -Seconds 3
-            $entgLP = ((Invoke-WebRequest -Uri "https://uupdump.net/getfile.php?id=$uupid&file=Microsoft-Windows-Client-LanguagePack-Package_zh-cn-x86-zh-cn.esd").Links | Where-Object {$_.outerHTML -like "*microsoft.com*"})[0].href
+            $entgLP = ((Invoke-WebRequest -Uri "https://uupdump.net/getfile.php?id=$uupid&file=Microsoft-Windows-Client-LanguagePack-Package_zh-cn-x86-zh-cn.esd").Links | Where-Object {$_.outerHTML -like "*mp.microsoft.com*"})[0].href
             Start-Sleep -Seconds 3
         } else {
             $WUScript = "https://raw.githubusercontent.com/adavak/Win_ISO_Patching_Scripts/master/Scripts/script_19041_x86.meta4"
