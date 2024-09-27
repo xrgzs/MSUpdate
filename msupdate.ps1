@@ -939,6 +939,9 @@ Get-ChildItem -Path ".\*.iso" -File | ForEach-Object {
     if ($true -eq $MultiEdition) {
         $NewName = $NewName -replace "_CLIENT", "_CLIENTMULTI"
     }
+    if ($os_edition -like "*LTS*") {
+        $NewName = $NewName -replace "_CLIENT_", "_CLIENT_ENTERPRISES_"
+    }
     if ($true -eq $UpdateFromUUP) {
         $NameAppend += "_UUP"
     }
