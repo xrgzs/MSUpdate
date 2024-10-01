@@ -943,7 +943,7 @@ Get-ChildItem -Path ".\*.iso" -File | ForEach-Object {
         $NewName = $NewName -replace "_CLIENT_", "_CLIENT_ENTERPRISES_"
     }
     if ($true -eq $UpdateFromUUP) {
-        $NameAppend += "_UUP"
+        $NameAppend += "_FromUUP"
     }
     if ($true -eq $AddVMD) {
         $NameAppend += "_VMD"
