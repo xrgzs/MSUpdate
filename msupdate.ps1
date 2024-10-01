@@ -567,7 +567,7 @@ for %%a in (%~dp0msstore\Microsoft.DesktopAppInstaller_*_8wekyb3d8bbwe.Msixbundl
 
 if ($true -eq $SkipCheck) { 
     # get appraiserres.dll from Windows 10 19041 latest setup
-    Invoke-WebRequest -Uri "https://alist.xrgzs.top/d/pxy/System/Windows/Win10/Res/appraiserres.zip" -OutFile ".\temp\appraiserres.zip"
+    Invoke-WebRequest -Uri "https://github.com/user-attachments/files/17200856/appraiserres.zip" -OutFile ".\temp\appraiserres.zip"
     Expand-Archive -Path ".\temp\appraiserres.zip" -DestinationPath ".\temp"
 }
 
