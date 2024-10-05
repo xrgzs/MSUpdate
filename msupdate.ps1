@@ -603,7 +603,7 @@ if /i "$SkipCheck"=="true" (
     REG.exe UNLOAD "HKLM\Mount_SOFTWARE"
     
     echo skip personal data export check for cn
-    REG LOAD "HKLM\Mount_Default" "!mountdir!\Default\NTUSER.DAT"
+    REG LOAD "HKLM\Mount_Default" "!mountdir!\Users\Default\NTUSER.DAT"
     REG ADD "HKLM\Mount_Default\Software\Microsoft\Windows\CurrentVersion\CloudExperienceHost\Intent\PersonalDataExport" /f /v "PDEShown" /t REG_DWORD /d 2
     REG UNLOAD "HKLM\Mount_Default"
 )
@@ -923,6 +923,7 @@ wim2swm       =0
 ISO           =1
 ISODir        =
 Delete_Source =0
+
 
 AutoStart     =1
 
