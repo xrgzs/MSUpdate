@@ -905,7 +905,7 @@ Repo          =%cd%\patch
 DismRoot      =dism.exe
 
 Net35         =1
-Net35Source   =
+Net35Source   =%cd%\ISO\sources\sxs
 Cleanup       =$($Cleanup ? 1 : 0)
 ResetBase     =0
 LCUwinre      =1
