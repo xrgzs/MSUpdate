@@ -75,9 +75,15 @@ switch ($MakeVersion) {
         $os_display = "Windows $os_ver $os_rsversion"
         $os_arch = "x64"
         $os_lang = "zh-cn"
-        $ospath = "/系统/MSDN/NT10.0_Win11/26100_24H2/1_OEM/26100.1.240331-1435.ge_release_CLIENTCHINA_OEM_x64FRE_zh-cn.iso"
+        try {
+            $osurl = ((Invoke-WebRequest -Uri "https://api.gravesoft.dev/msdl/proxy?product_id=3114&sku_id=18472").Links | Where-Object {$_.outerHTML -like "*Isox64 Download*"})[0].href
+            $osfile = "Win11_24H2_China_GGK_Chinese_Simplified_x64.iso"
+        }
+        catch {
+            $ospath = "/系统/MSDN/NT10.0_Win11/26100_24H2/1742_OEM/X23-81948_26100.1742.240906-0331.ge_release_svc_refresh_CLIENTCHINA_OEM_x64FRE_zh-cn.iso"
+            # $ospath = "/系统/MSDN/NT10.0_Win11/26100_24H2/1742_RTM/Win11_24H2_China_GGK_Chinese_Simplified_x64.iso"
+        }
         $UpdateFromUUP = $true
-        $Cleanup = $false
         $uupid = ((Invoke-WebRequest -Uri "https://uupdump.net/known.php?q=category:w11-24h2").Links | Where-Object {$_.href -like "selectlang.php?id=*"} | Where-Object {$_.outerHTML -like "*Windows 11*amd64*"})[0].href.replace("selectlang.php?id=","")
         $UUPScript = "https://uupdump.net/get.php?id=$uupid&pack=0&edition=updateOnly&aria2=2"
         Start-Sleep -Seconds 3
@@ -125,9 +131,8 @@ switch ($MakeVersion) {
         $os_display = "Windows $os_ver LTSC 2024"
         $os_arch = "x64"
         $os_lang = "zh-cn"
-        $ospath = "/系统/Windows/Win10/Res/26100/amd64/26100.1.240331-1435.ge_release_CLIENT_ENTERPRISES_OEM_x64FRE_zh-cn.iso"
+        $ospath = "/系统/MSDN/NT10.0_Win11/26100_LTSC2024/1742_RTM/zh-cn_windows_11_enterprise_ltsc_2024_x64_dvd_cff9cd2d.iso"
         $UpdateFromUUP = $true
-        $Cleanup = $false
         $uupid = ((Invoke-WebRequest -Uri "https://uupdump.net/known.php?q=category:w11-24h2").Links | Where-Object {$_.href -like "selectlang.php?id=*"} | Where-Object {$_.outerHTML -like "*Windows 11*amd64*"})[0].href.replace("selectlang.php?id=","")
         $UUPScript = "https://uupdump.net/get.php?id=$uupid&pack=0&edition=updateOnly&aria2=2"
         Start-Sleep -Seconds 3
