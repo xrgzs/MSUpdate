@@ -953,6 +953,16 @@ AddDrivers    =0
 Drv_Source    =\Drivers
 "@ | Out-File -FilePath ".\W10UI.ini"
 
+# stop cloudflare wrap to avoid long time disconnection of github
+if (Test-Path "C:\Program Files\Cloudflare\Cloudflare WARP\warp-cli.exe") {
+    try {
+        . "C:\Program Files\Cloudflare\Cloudflare WARP\warp-cli.exe" disconnect
+    }
+    catch {
+        Write-Warning "Failed to disconnect Cloudflare WARP"
+    }
+}
+
 # execute W10UI script
 .\bin\NSudoLC.exe -Wait -U:T -P:E -CurrentDirectory:. -UseCurrentConsole .\W10UI.cmd
 

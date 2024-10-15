@@ -42,12 +42,11 @@ jobs:
           Write-Host "installing Cloudflare WARP..."
           Invoke-WebRequest -Uri "https://1111-releases.cloudflareclient.com/win/latest" -OutFile "C:\cfwarp.msi"
           Start-Process "msiexec.exe" -ArgumentList "/i C:\cfwarp.msi /qn" -Wait
-          Set-Location "C:\Program Files\Cloudflare\Cloudflare WARP"
-          .\warp-cli.exe registration new
-          .\warp-cli.exe connect
+          . "C:\Program Files\Cloudflare\Cloudflare WARP\warp-cli.exe" registration new
+          . "C:\Program Files\Cloudflare\Cloudflare WARP\warp-cli.exe" connect
           # Add a loop to wait for the status to be connected
           for ($attemptCount = 0; $attemptCount -lt 10; $attemptCount++) {
-              $output = .\warp-cli.exe status
+              $output = . "C:\Program Files\Cloudflare\Cloudflare WARP\warp-cli.exe" status
               Write-Host $output
               if ($output -like "*Status update: Connected*") {
                   break
@@ -69,8 +68,14 @@ jobs:
       - name: Disconnect Cloudflare WRAP
         shell: pwsh
         run: |
-          Set-Location "C:\Program Files\Cloudflare\Cloudflare WARP"
-          .\warp-cli.exe disconnect
+            if (Test-Path "C:\Program Files\Cloudflare\Cloudflare WARP\warp-cli.exe") {
+                try {
+                    . "C:\Program Files\Cloudflare\Cloudflare WARP\warp-cli.exe" disconnect
+                }
+                catch {
+                    Write-Warning "Failed to disconnect Cloudflare WARP"
+                }
+            }
           
       - name: Commit and Push Changes
         shell: pwsh
