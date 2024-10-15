@@ -68,7 +68,8 @@ jobs:
           .\warp-cli.exe disconnect
           
       - name: Commit and Push Changes
-        uses: stefanzweifel/git-auto-commit-action@v5
-        with:
-          commit_message: 'Update State.json'
-          file_pattern: 'State.json'
+        shell: pwsh
+        run: |
+          git add State.json
+          git commit -m "Update State.json"
+          git push
