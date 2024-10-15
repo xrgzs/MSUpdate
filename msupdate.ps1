@@ -3,34 +3,49 @@ $ErrorActionPreference = 'Stop'
 function Get-Appx($Name) {
     $Body = @{
         type = 'PackageFamilyName'
-        url = $Name + '_8wekyb3d8bbwe'
+        url  = $Name + '_8wekyb3d8bbwe'
         ring = 'RP'
         lang = 'zh-CN'
     }
-    try {
-        $obj = Invoke-WebRequest -Uri "https://store.xr6.xyz/api/GetFiles" `
-        -Method "POST" `
-        -ContentType "application/x-www-form-urlencoded" `
-        -Body $Body
-    }
-    catch {
-        $obj = Invoke-WebRequest -Uri "https://store.rg-adguard.net/api/GetFiles" `
-        -Method "POST" `
-        -ContentType "application/x-www-form-urlencoded" `
-        -Body $Body
-    }
-
-    foreach ($link in $obj.Links) {
-        if ($link.outerHTML -match '(?<=<a\b[^>]*>).*?(?=</a>)') {
-            $linkText = $Matches[0]
-            if ($linkText -match '(x64|x86|neutral).*\.(appx|appxbundle|msixbundle)\b') {
-                Write-Debug "$linkText : $($link.href)"
-                if (Test-Path -Path $linkText) {
-                    Write-Warning "Already exists, skiping $linkText"
-                } else {
-                    Invoke-WebRequest -Uri $link.href -OutFile "$PSScriptRoot\msstore\$linkText"
+    $msstoreApis = @(
+        "https://store.rg-adguard.net/api/GetFiles",
+        "https://api.xrgzs.top/msstore/GetFiles"
+    )
+    
+    while ($true) {
+        try {
+            foreach ($url in $msstoreApis) {
+                try {
+                    $obj = Invoke-WebRequest -Uri $url `
+                        -Method "POST" `
+                        -ContentType "application/x-www-form-urlencoded" `
+                        -Body $Body
+                    break
+                }
+                catch {
+                    Write-Warning "Request failed with $url, trying next url..."
+                    continue
                 }
             }
+            foreach ($link in $obj.Links) {
+                if ($link.outerHTML -match '(?<=<a\b[^>]*>).*?(?=</a>)') {
+                    $linkText = $Matches[0]
+                    if ($linkText -match '(x64|x86|neutral).*\.(appx|appxbundle|msixbundle)\b') {
+                        Write-Debug "$linkText : $($link.href)"
+                        if (Test-Path -Path $linkText) {
+                            Write-Warning "Already exists, skiping $linkText"
+                        }
+                        else {
+                            Invoke-WebRequest -Uri $link.href -OutFile "$PSScriptRoot\msstore\$linkText"
+                        }
+                    }
+                }
+            }
+            break
+        }
+        catch {
+            Write-Warning "Request failed, retrying in 3 seconds..."
+            Start-Sleep -Seconds 3
         }
     }
 }
