@@ -130,13 +130,17 @@ jobs:
             }
             
             # upload iso
-            .\bin\rclone.exe copy ".\$($json.name)" "${{ vars.RCLONE_PATH }}\$($json.os_ver)\$($json.os_release)\$($json.os_version)" --progress
+            
+            Write-Host "Uploading $(Resolve-Path $json.name) to ${{ vars.RCLONE_PATH }}\$($json.os_ver)\$($json.os_release)\$($json.os_version)..."
+            .\bin\rclone.exe copy "$(Resolve-Path $json.name)" "${{ vars.RCLONE_PATH }}\$($json.os_ver)\$($json.os_release)\$($json.os_version)" --progress
 
             # upload json
-            .\bin\rclone.exe copy "$($_.FullName)" "${{ vars.RCLONE_PATH }}\$($json.os_ver)\$($json.os_release)\$($json.os_version)" --progress
+            Write-Host "Uploading $(Resolve-Path $_.FullName) to ${{ vars.RCLONE_PATH }}\$($json.os_ver)\$($json.os_release)\$($json.os_version)..."
+            .\bin\rclone.exe copy "$(Resolve-Path $_.FullName)" "${{ vars.RCLONE_PATH }}\$($json.os_ver)\$($json.os_release)\$($json.os_version)" --progress
 
             # upload non-skipcheck latest version json
             if ($json.msupdate.skipcheck -ne $true) {
-              .\bin\rclone.exe copyto "$($_.FullName)" "${{ vars.RCLONE_PATH }}\$($json.os_ver)\$($json.os_release)\latest_$($json.os_arch).json" --progress
+              Write-Host "Uploading $(Resolve-Path $_.FullName) to ${{ vars.RCLONE_PATH }}\$($json.os_ver)\$($json.os_release)\latest_$($json.os_arch).json..."
+              .\bin\rclone.exe copyto "$(Resolve-Path $_.FullName)" "${{ vars.RCLONE_PATH }}\$($json.os_ver)\$($json.os_release)\latest_$($json.os_arch).json" --progress
             }
           }
