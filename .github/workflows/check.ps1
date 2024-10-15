@@ -23,7 +23,7 @@ function Request-Update {
     }
 }
 
-$StatePath = Join-Path $PSScriptRoot '..' '..' 'State.json' -Resolve
+$StatePath = Join-Path $PSScriptRoot 'State.json' -Resolve
 
 $CurrentState = Get-Content -Path $StatePath | ConvertFrom-Json
 
