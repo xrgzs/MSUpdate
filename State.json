@@ -1,0 +1,43 @@
+{
+  "w11-24h2": {
+    "Version": "26100.2152",
+    "Commands": [
+      "gh workflow run make.yml -f makeversion=w1124h2a64 -f UpdateFromUUP=true -f MultiEdition=true -f SkipCheck=false",
+      "gh workflow run make.yml -f makeversion=w1124h264 -f UpdateFromUUP=true -f MultiEdition=true -f SkipCheck=false",
+      "gh workflow run make.yml -f makeversion=w1124h264 -f UpdateFromUUP=true -f MultiEdition=true -f SkipCheck=true",
+      "gh workflow run make.yml -f makeversion=w11lt24a64 -f UpdateFromUUP=true -f MultiEdition=false -f SkipCheck=false",
+      "gh workflow run make.yml -f makeversion=w11lt2464 -f UpdateFromUUP=true -f MultiEdition=false -f SkipCheck=false",
+      "gh workflow run make.yml -f makeversion=w11lt2464 -f UpdateFromUUP=true -f MultiEdition=false -f SkipCheck=true"
+    ]
+  },
+  "w11-23h2": {
+    "Version": "22631.4387",
+    "Commands": [
+      "gh workflow run make.yml -f makeversion=w1123h2a64 -f UpdateFromUUP=true -f MultiEdition=true -f SkipCheck=false",
+      "gh workflow run make.yml -f makeversion=w1123h264 -f UpdateFromUUP=true -f MultiEdition=true -f SkipCheck=false",
+      "gh workflow run make.yml -f makeversion=w1123h264 -f UpdateFromUUP=true -f MultiEdition=true -f SkipCheck=true"
+    ]
+  },
+  "w10-22h2": {
+    "Version": "19045.5011",
+    "Commands": [
+      "gh workflow run make.yml -f makeversion=w1022h2a64 -f UpdateFromUUP=true -f MultiEdition=true -f SkipCheck=false",
+      "gh workflow run make.yml -f makeversion=w1022h264 -f UpdateFromUUP=true -f MultiEdition=true -f SkipCheck=false",
+      "gh workflow run make.yml -f makeversion=w1022h232 -f UpdateFromUUP=true -f MultiEdition=true -f SkipCheck=false"
+    ]
+  },
+  "w10-21h2": {
+    "Version": "19044.5011",
+    "Commands": [
+      "gh workflow run make.yml -f makeversion=w10lt2164 -f UpdateFromUUP=true -f MultiEdition=false -f SkipCheck=false",
+      "gh workflow run make.yml -f makeversion=w10lt2132 -f UpdateFromUUP=true -f MultiEdition=false -f SkipCheck=false"
+    ]
+  },
+  "w10-1809": {
+    "Version": "17763.6414",
+    "Commands": [
+      "gh workflow run make.yml -f makeversion=w10lt1964 -f UpdateFromUUP=true -f MultiEdition=false -f SkipCheck=false",
+      "gh workflow run make.yml -f makeversion=w10lt1932 -f UpdateFromUUP=true -f MultiEdition=false -f SkipCheck=false"
+    ]
+  }
+}
