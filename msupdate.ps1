@@ -8,8 +8,8 @@ function Get-Appx($Name) {
         lang = 'zh-CN'
     }
     $msstoreApis = @(
-        "https://store.rg-adguard.net/api/GetFiles",
-        "https://api.xrgzs.top/msstore/GetFiles"
+        "https://api.xrgzs.top/msstore/GetFiles",
+        "https://store.rg-adguard.net/api/GetFiles"
     )
     
     while ($true) {
@@ -19,11 +19,15 @@ function Get-Appx($Name) {
                     $obj = Invoke-WebRequest -Uri $url `
                         -Method "POST" `
                         -ContentType "application/x-www-form-urlencoded" `
-                        -Body $Body
+                        -Body $Body `
+                        -ConnectionTimeoutSeconds 5 -OperationTimeoutSeconds 5
                     break
                 }
                 catch {
-                    Write-Warning "Request failed with $url, trying next url..."
+                    if ($url -eq $msstoreApis[-1]) {
+                        throw "All requests failed. $_"
+                    }
+                    Write-Warning "Request failed with $url, trying next url... ($_)"
                     continue
                 }
             }
@@ -36,6 +40,7 @@ function Get-Appx($Name) {
                             Write-Warning "Already exists, skiping $linkText"
                         }
                         else {
+                            Write-Host "== $linkText ($($link.href))"
                             Invoke-WebRequest -Uri $link.href -OutFile "$PSScriptRoot\msstore\$linkText"
                         }
                     }
@@ -44,7 +49,7 @@ function Get-Appx($Name) {
             break
         }
         catch {
-            Write-Warning "Request failed, retrying in 3 seconds..."
+            Write-Warning "Request failed, retrying in 3 seconds... ($_)"
             Start-Sleep -Seconds 3
         }
     }
