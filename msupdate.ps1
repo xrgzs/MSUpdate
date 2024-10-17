@@ -571,7 +571,7 @@ if ($true -eq $msstore) {
     } else {
         Get-Appx 'Microsoft.DesktopAppInstaller'
         Get-Appx 'Microsoft.WindowsStore'
-        Get-Appx 'Microsoft.GamingServices'
+        Get-Appx 'Microsoft.WindowsTerminal'
     }
     $MSStoreScript = @"
 for %%a in (%~dp0msstore\Microsoft.UI.Xaml.2.*_8wekyb3d8bbwe.Appx) do call :Add-ProvisionedAppxPackage "%%a"
@@ -581,7 +581,7 @@ for %%a in (%~dp0msstore\Microsoft.NET.Native.Runtime.2.*_8wekyb3d8bbwe.Appx) do
 for %%a in (%~dp0msstore\Microsoft.NET.Native.Framework.2.*_8wekyb3d8bbwe.Appx) do call :Add-ProvisionedAppxPackage "%%a"
 for %%a in (%~dp0msstore\Microsoft.WindowsStore_*_8wekyb3d8bbwe.Msixbundle) do call :Add-ProvisionedAppxPackage "%%a"
 for %%a in (%~dp0msstore\Microsoft.DesktopAppInstaller_*_8wekyb3d8bbwe.Msixbundle) do call :Add-ProvisionedAppxPackage "%%a"
-for %%a in (%~dp0msstore\Microsoft.GamingServices_*_8wekyb3d8bbwe.appxbundle) do call :Add-ProvisionedAppxPackage "%%a"
+for %%a in (%~dp0msstore\Microsoft.WindowsTerminal_*_8wekyb3d8bbwe.Msixbundle) do call :Add-ProvisionedAppxPackage "%%a"
 "@
 }
 
