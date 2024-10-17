@@ -6,8 +6,8 @@
       "gh workflow run make.yml -f makeversion=w1124h264 -f UpdateFromUUP=true -f MultiEdition=true -f SkipCheck=false",
       "gh workflow run make.yml -f makeversion=w1124h264 -f UpdateFromUUP=true -f MultiEdition=true -f SkipCheck=true",
       "gh workflow run make.yml -f makeversion=w11lt24a64 -f UpdateFromUUP=true -f MultiEdition=false -f SkipCheck=false",
-      "gh workflow run make.yml -f makeversion=w11lt2464 -f UpdateFromUUP=true -f MultiEdition=false -f SkipCheck=false",
-      "gh workflow run make.yml -f makeversion=w11lt2464 -f UpdateFromUUP=true -f MultiEdition=false -f SkipCheck=true"
+      "gh workflow run make.yml -f makeversion=w11lt2464 -f UpdateFromUUP=true -f MultiEdition=true -f SkipCheck=false",
+      "gh workflow run make.yml -f makeversion=w11lt2464 -f UpdateFromUUP=true -f MultiEdition=true -f SkipCheck=true"
     ]
   },
   "w11-23h2": {
@@ -29,15 +29,15 @@
   "w10-21h2": {
     "Version": "19044.5011",
     "Commands": [
-      "gh workflow run make.yml -f makeversion=w10lt2164 -f UpdateFromUUP=true -f MultiEdition=false -f SkipCheck=false",
-      "gh workflow run make.yml -f makeversion=w10lt2132 -f UpdateFromUUP=true -f MultiEdition=false -f SkipCheck=false"
+      "gh workflow run make.yml -f makeversion=w10lt2164 -f UpdateFromUUP=true -f MultiEdition=true -f SkipCheck=false",
+      "gh workflow run make.yml -f makeversion=w10lt2132 -f UpdateFromUUP=true -f MultiEdition=true -f SkipCheck=false"
     ]
   },
   "w10-1809": {
     "Version": "17763.6414",
     "Commands": [
-      "gh workflow run make.yml -f makeversion=w10lt1964 -f UpdateFromUUP=true -f MultiEdition=false -f SkipCheck=false",
-      "gh workflow run make.yml -f makeversion=w10lt1932 -f UpdateFromUUP=true -f MultiEdition=false -f SkipCheck=false"
+      "gh workflow run make.yml -f makeversion=w10lt1964 -f UpdateFromUUP=true -f MultiEdition=true -f SkipCheck=false",
+      "gh workflow run make.yml -f makeversion=w10lt1932 -f UpdateFromUUP=true -f MultiEdition=true -f SkipCheck=false"
     ]
   }
 }

@@ -160,7 +160,6 @@ switch ($MakeVersion) {
         Start-Sleep -Seconds 3
         $iexplorerLP = ((Invoke-WebRequest -Uri "https://uupdump.net/getfile.php?id=$uupid&file=Microsoft-Windows-InternetExplorer-Optional-Package-amd64-zh-CN.cab").Links | Where-Object {$_.outerHTML -like "*mp.microsoft.com*"})[0].href
         Start-Sleep -Seconds 3
-        $MultiEdition = $false
     }
     "w1123h2a64" {
         # make 11 23h2 arm64
@@ -350,7 +349,6 @@ switch ($MakeVersion) {
             $WUScript = "https://raw.githubusercontent.com/adavak/Win_ISO_Patching_Scripts/master/Scripts/script_19041_x64.meta4"
         }
         $NETScript = "https://raw.githubusercontent.com/adavak/Win_ISO_Patching_Scripts/master/Scripts/netfx4.8.1/script_netfx4.8.1_19041_x64.meta4"
-        $MultiEdition = $false
     }
     "w10lt2132" {
         # make 10 ltsc2021 x86
@@ -370,7 +368,6 @@ switch ($MakeVersion) {
             $WUScript = "https://raw.githubusercontent.com/adavak/Win_ISO_Patching_Scripts/master/Scripts/script_19041_x86.meta4"
         }
         $NETScript = "https://raw.githubusercontent.com/adavak/Win_ISO_Patching_Scripts/master/Scripts/netfx4.8.1/script_netfx4.8.1_19041_x86.meta4"
-        $MultiEdition = $false
     }
     "w10lt1964" {
         # make 10 ltsc2019 x64
@@ -390,7 +387,6 @@ switch ($MakeVersion) {
             $WUScript = "https://raw.githubusercontent.com/adavak/Win_ISO_Patching_Scripts/master/Scripts/script_17763_x64.meta4"
         }
         $NETScript = "https://raw.githubusercontent.com/adavak/Win_ISO_Patching_Scripts/master/Scripts/netfx4.8/script_netfx4.8_17763_x64.meta4"
-        $MultiEdition = $false
     }
     "w10lt1932" {
         # make 10 ltsc2019 x32
@@ -410,7 +406,6 @@ switch ($MakeVersion) {
             $WUScript = "https://raw.githubusercontent.com/adavak/Win_ISO_Patching_Scripts/master/Scripts/script_17763_x86.meta4"
         }
         $NETScript = "https://raw.githubusercontent.com/adavak/Win_ISO_Patching_Scripts/master/Scripts/netfx4.8/script_netfx4.8_17763_x86.meta4"
-        $MultiEdition = $false
     }
     "w10lt1664" {
         # make 10 ltsb2016 x64 (unsupport uup)
@@ -454,16 +449,14 @@ switch ($MakeVersion) {
 
 # ltsxfix
 if ($os_edition -like "*LTS*") {
-    $MultiEdition = $false
     $msstore = $true
     $os_release = $os_edition
 } else {
     $os_release = $os_rsversion
-}
-
-# os_edition fix
-if ($MultiEdition -eq $true) {
-    $os_edition = "Multi"
+    # os_edition fix
+    if ($MultiEdition -eq $true) {
+        $os_edition = "Multi"
+    }
 }
 
 # remove temporaty files
@@ -996,11 +989,11 @@ if (Test-Path "C:\Program Files\Cloudflare\Cloudflare WARP\warp-cli.exe") {
 # rename
 Get-ChildItem -Path ".\*.iso" -File | ForEach-Object {
     $NewName = $_.Name
-    if ($true -eq $MultiEdition) {
-        $NewName = $NewName -replace "_CLIENT", "_CLIENTMULTI"
-    }
     if ($os_edition -like "*LTS*") {
         $NewName = $NewName -replace "_CLIENT_", "_CLIENT_ENTERPRISES_"
+    }
+    if ($true -eq $MultiEdition) {
+        $NewName = $NewName -replace "_CLIENT", "_CLIENTMULTI"
     }
     if ($true -eq $UpdateFromUUP) {
         $NameAppend += "_FromUUP"
