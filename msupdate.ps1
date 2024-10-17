@@ -683,15 +683,26 @@ echo.
 echo ============================================================
 echo Commiting Base-Edition...
 echo ============================================================
-
-rem call :makemulti CoreCountrySpecific
 %_dism2%:"!_cabdir!" /Commit-Image /MountDir:"!mountdir!"
+
 
 echo.
 echo ============================================================
-echo Converting Multi-Edition...
+echo Getting Current-Edition...
 echo ============================================================
+%_dism2%:"!_cabdir!" %dismtarget% /Get-CurrentEdition | find /i "CoreCountrySpecific" && goto :makefromccs
+%_dism2%:"!_cabdir!" %dismtarget% /Get-CurrentEdition | find /i "EnterpriseS" && goto :makefroments
+echo.
+echo Your current edition is not supported, exiting...
+set discard=1
+EXIT /B
 
+
+:makefromccs
+echo.
+echo ============================================================
+echo Converting Multi-Edition from CoreCountrySpecific...
+echo ============================================================
 call :makemulti Core
 call :makemulti CoreSingleLanguage
 call :makemulti Professional
@@ -701,7 +712,18 @@ call :makemulti Enterprise
 call :makemulti IoTEnterprise
 if exist "%~dp0entg\update.mum" call :makeEntG
 if exist "%~dp0entg\update.mum" call :makemulti EnterpriseG
+set discard=1
+EXIT /B
 
+:makefroments
+echo.
+echo ============================================================
+echo Converting Multi-Edition from EnterpriseS...
+echo ============================================================
+FOR /F "tokens=3 delims=: " %%a in ('%_dism2%:"!_cabdir!" %dismtarget% /Get-TargetEditions ^| find /i "Target Edition : "') do (
+    echo Convertable Edition: %%a
+    call :makemulti %%a
+)
 set discard=1
 EXIT /B
 
