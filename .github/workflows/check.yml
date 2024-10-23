@@ -80,6 +80,6 @@ jobs:
       - name: Commit and Push Changes
         shell: pwsh
         run: |
-          git add State.json
-          git commit -m "Update State.json"
+          git add State.yml
+          git commit -m "Update State.yml"
           git push

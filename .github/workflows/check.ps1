@@ -22,14 +22,18 @@ function Request-Update {
     }
 }
 
-Write-Host "Installing PowerShell module powershell-yaml..."
-Install-Module -Name powershell-yaml -Force -ErrorAction Stop
+if (-not (Get-Module -ListAvailable -Name powershell-yaml)) {
+    Write-Host "Installing PowerShell module powershell-yaml..."
+    Install-Module -Name powershell-yaml -Force -ErrorAction Stop
+} else {
+    Write-Host "PowerShell module powershell-yaml is already installed."
+}
 
 $StatePath = Join-Path '.' 'State.yml' -Resolve
 
-$CurrentState = Get-Content -Path $StatePath | ConvertFrom-Yaml
+$CurrentState = Get-Content -Path $StatePath | ConvertFrom-Yaml -Ordered
 
-foreach ($Category in $CurrentState.PSObject.Properties.Name) {
+foreach ($Category in $CurrentState.Keys) {
     $CurrentVersion = $CurrentState.$Category.Version
     Write-Host -ForegroundColor Yellow "Current version of $Category is $CurrentVersion"
     $LatestVersion = Request-Update -Category $Category
@@ -49,7 +53,5 @@ foreach ($Category in $CurrentState.PSObject.Properties.Name) {
         Write-Host -ForegroundColor Yellow "No new version of $Category is available"
     }
 }
-
-$StatePath = Join-Path '.' 'State.yml'
 
 $CurrentState | ConvertTo-Yaml | Set-Content -Path $StatePath
