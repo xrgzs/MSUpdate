@@ -3,8 +3,6 @@ param (
 )
 $ErrorActionPreference = 'Stop'
 
-Install-Module -Name powershell-yaml -Repository PSGallery -Confirm
-
 function Request-Update {
     param (
         [string]
@@ -23,6 +21,9 @@ function Request-Update {
         Write-Host -ForegroundColor Red "Failed to get the latest version"
     }
 }
+
+Write-Host "Installing PowerShell module powershell-yaml..."
+Install-Module -Name powershell-yaml -Force -ErrorAction Stop
 
 $StatePath = Join-Path '.' 'State.yml' -Resolve
 
