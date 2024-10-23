@@ -1,8 +1,9 @@
 param (
     [switch]$DatabaseOnly
 )
-
 $ErrorActionPreference = 'Stop'
+
+Install-Module -Name powershell-yaml -Repository PSGallery -Confirm
 
 function Request-Update {
     param (
@@ -23,9 +24,9 @@ function Request-Update {
     }
 }
 
-$StatePath = Join-Path $PSScriptRoot 'State.json' -Resolve
+$StatePath = Join-Path '.' 'State.yml' -Resolve
 
-$CurrentState = Get-Content -Path $StatePath | ConvertFrom-Json
+$CurrentState = Get-Content -Path $StatePath | ConvertFrom-Yaml
 
 foreach ($Category in $CurrentState.PSObject.Properties.Name) {
     $CurrentVersion = $CurrentState.$Category.Version
@@ -48,4 +49,6 @@ foreach ($Category in $CurrentState.PSObject.Properties.Name) {
     }
 }
 
-$CurrentState | ConvertTo-Json | Set-Content -Path $StatePath
+$StatePath = Join-Path '.' 'State.yml'
+
+$CurrentState | ConvertTo-Yaml | Set-Content -Path $StatePath
