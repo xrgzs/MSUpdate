@@ -3,8 +3,8 @@ run-name: Check UUPDUMP ${{ inputs.DatabaseOnly == true && '(DatabaseOnly)' || '
 
 on:
   schedule:
-    # run every 4 hours
-    - cron: '20 */4 * * *'
+    # Runs at 20 minutes past the hour, every 8 hours.
+    - cron: '20 */8 * * *'
   workflow_dispatch:
     inputs:
       DatabaseOnly:
