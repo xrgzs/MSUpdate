@@ -66,9 +66,15 @@ switch ($MakeVersion) {
         $os_display = "Windows $os_ver $os_rsversion"
         $os_arch = "arm64"
         $os_lang = "zh-cn"
-        $ospath = "/系统/MSDN/NT10.0_Win11/26100_24H2/1_OEM/26100.1.240331-1435.ge_release_CLIENTCHINA_OEM_A64FRE_zh-cn.iso"
+        try {
+            $osurl = ((Invoke-WebRequest -Uri "https://api.gravesoft.dev/msdl/proxy?product_id=3132&sku_id=18616").Links | Where-Object {$_.outerHTML -like "*Unknown Download*"})[0].href
+            $osfile = "Win11_24H2_China_GGK_Chinese_Simplified_Arm64.iso"
+        }
+        catch {
+            $ospath = "/系统/MSDN/NT10.0_Win11/26100_24H2/1742_OEM/X23-81947_26100.1742.240906-0331.ge_release_svc_refresh_CLIENTCHINA_OEM_A64FRE_zh-cn.iso"
+            # $ospath = "/系统/MSDN/NT10.0_Win11/26100_24H2/1742_RTM/Win11_24H2_China_GGK_Chinese_Simplified_Arm64.iso"
+        }
         $UpdateFromUUP = $true
-        $Cleanup = $false
         $uupid = ((Invoke-WebRequest -Uri "https://uupdump.net/known.php?q=category:w11-24h2").Links | Where-Object {$_.href -like "selectlang.php?id=*"} | Where-Object {$_.outerHTML -like "*Windows 11*arm64*"})[0].href.replace("selectlang.php?id=","")
         $UUPScript = "https://uupdump.net/get.php?id=$uupid&pack=0&edition=updateOnly&aria2=2"
         Start-Sleep -Seconds 3
