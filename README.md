@@ -21,7 +21,7 @@ MSUpdate 能帮助你轻松获取最新集成更新版本的 Windows 系统镜�
 
 ### 保持最新
 
-集成系统更新至 {{ (new Date()).getFullYear()+"."+((new Date()).getMonth()+1) }} 最新版本
+集成系统更新至最新版本
 
 ### 直链下载
 
@@ -59,17 +59,19 @@ MSUpdate 能帮助你轻松获取最新集成更新版本的 Windows 系统镜�
 - 教育版 Education
 - 企业版 Enterprise
 - IoT企业版 IoTEnterprise
-- 企业版G EnterpriseG
+- 企业版G EnterpriseG (可能会转换失败)
 
 ### ESD 打包
 
 效率更高，方便快速装机
 
+### 提供 ARM64 版本
+
 ### 提供部分旧版本 Build 镜像
 
-## 获取镜像：
+## 获取镜像
 
-https://sys.xrgzs.top/get/msupdate
+<https://sys.xrgzs.top/get/msupdate>
 
 网盘备用：
 

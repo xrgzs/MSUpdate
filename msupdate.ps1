@@ -136,9 +136,8 @@ switch ($MakeVersion) {
         $os_display = "Windows $os_ver LTSC 2024"
         $os_arch = "arm64"
         $os_lang = "zh-cn"
-        $ospath = "/系统/Windows/Win10/Res/26100/arm64/26100.1.240331-1435.ge_release_CLIENT_ENTERPRISES_OEM_A64FRE_zh-cn.iso"
+        $ospath = "/系统/Windows/Win10/Res/26100/arm64/26100.1742.240906-0331.ge_release_svc_refresh_CLIENT_ENTERPRISES_OEM_A64FRE_zh-cn.iso"
         $UpdateFromUUP = $true
-        $Cleanup = $false
         $uupid = ((Invoke-WebRequest -Uri "https://uupdump.net/known.php?q=category:w11-24h2").Links | Where-Object {$_.href -like "selectlang.php?id=*"} | Where-Object {$_.outerHTML -like "*Windows 11*arm64*"})[0].href.replace("selectlang.php?id=","")
         $UUPScript = "https://uupdump.net/get.php?id=$uupid&pack=0&edition=updateOnly&aria2=2"
         Start-Sleep -Seconds 3
