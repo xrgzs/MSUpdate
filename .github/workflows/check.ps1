@@ -11,7 +11,7 @@ function Request-Update {
 
     $match = ((Invoke-WebRequest -Uri "https://uupdump.net/known.php?q=category:$Category").Links | 
               Where-Object { $_.href -like "selectlang.php?id=*" } | 
-              Where-Object { $_.outerHTML -like "*amd64*" })[0].outerHTML -match '\((\S+)\)'
+              Where-Object { $_.outerHTML -like "*amd64*" })[0].outerHTML -match '\((\d+\.\d+)\)'
 
     if ($match) {
         $LatestVersion = $Matches[1]
