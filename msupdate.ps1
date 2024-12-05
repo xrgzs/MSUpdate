@@ -202,13 +202,7 @@ switch ($MakeVersion) {
         $os_display = "Windows $os_ver $os_rsversion"
         $os_arch = "x64"
         $os_lang = "zh-cn"
-        try {
-            $osurl = ((Invoke-WebRequest -Uri "https://api.gravesoft.dev/msdl/proxy?product_id=2936&sku_id=17435").Links | Where-Object {$_.outerHTML -like "*Isox64 Download*"})[0].href
-            $osfile = "Win11_23H2_China_GGK_Chinese_Simplified_x64v2.iso"
-        }
-        catch {
-            $ospath = "/系统/MSDN/NT10.0_Win11/22631_23H2/2861_202312/Win11_23H2_China_GGK_Chinese_Simplified_x64v2.iso"
-        }
+        $ospath = "/系统/MSDN/NT10.0_Win11/22631_23H2/2861_202312/Win11_23H2_China_GGK_Chinese_Simplified_x64v2.iso"
         if ($true -eq $UpdateFromUUP) {
             $uupid = ((Invoke-WebRequest -Uri "https://uupdump.net/known.php?q=category:w11-23h2").Links | Where-Object {$_.href -like "selectlang.php?id=*"} | Where-Object {$_.outerHTML -like "*Windows 11*amd64*"})[0].href.replace("selectlang.php?id=","")
             $UUPScript = "https://uupdump.net/get.php?id=$uupid&pack=0&edition=updateOnly&aria2=2"
@@ -527,6 +521,15 @@ if ($null -ne $NETScript) {
     if (!$?) {Write-Error "NETScript Download Failed!"}
     .\bin\aria2c.exe -c -R --retry-wait=5 --check-certificate=false -x16 -s16 -j5 -d ".\patch" -M ".\temp\NETScript.meta4" --metalink-language="zh-CN"
     if (!$?) {Write-Error "NETScript Download Failed!"}
+}
+# Convert WIM+PSF to msu
+# Link: https://github.com/abbodi1406/BatUtil/issues/49
+if (Test-Path ".\patch\Windows*.wim") {
+    $patchPath = Resolve-Path ".\patch"
+    Write-Host "Making MSU ($patchPath)..."
+    Invoke-WebRequest -Uri 'https://github.com/abbodi1406/WHD/raw/refs/heads/master/scripts/PSFX_MSU_5.zip' -outfile .\temp\PSFX_MSU.zip
+    Expand-Archive -Path .\temp\PSFX_MSU.zip -DestinationPath .\temp\PSFX_MSU -Force
+    . ".\temp\PSFX_MSU\PSFX2MSU.cmd" "$patchPath"
 }
 
 # get fod
