@@ -524,13 +524,13 @@ if ($null -ne $NETScript) {
 }
 # Convert WIM+PSF to msu
 # Link: https://github.com/abbodi1406/BatUtil/issues/49
-if (Test-Path ".\patch\Windows*.wim") {
-    $patchPath = Resolve-Path ".\patch"
-    Write-Host "Making MSU ($patchPath)..."
-    Invoke-WebRequest -Uri 'https://github.com/abbodi1406/WHD/raw/refs/heads/master/scripts/PSFX_MSU_5.zip' -outfile .\temp\PSFX_MSU.zip
-    Expand-Archive -Path .\temp\PSFX_MSU.zip -DestinationPath .\temp\PSFX_MSU -Force
-    . ".\temp\PSFX_MSU\PSFX2MSU.cmd" "$patchPath"
-}
+# if (Test-Path ".\patch\Windows*.wim") {
+#     $patchPath = Resolve-Path ".\patch"
+#     Write-Host "Making MSU ($patchPath)..."
+#     Invoke-WebRequest -Uri 'https://github.com/abbodi1406/WHD/raw/refs/heads/master/scripts/PSFX_MSU_5.zip' -outfile .\temp\PSFX_MSU.zip
+#     Expand-Archive -Path .\temp\PSFX_MSU.zip -DestinationPath .\temp\PSFX_MSU -Force
+#     . ".\temp\PSFX_MSU\PSFX2MSU.cmd" "$patchPath"
+# }
 
 # get fod
 if ($null -ne $Miracast) {
