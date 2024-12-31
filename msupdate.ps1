@@ -34,7 +34,7 @@ function Get-Appx($Name) {
             foreach ($link in $obj.Links) {
                 if ($link.outerHTML -match '(?<=<a\b[^>]*>).*?(?=</a>)') {
                     $linkText = $Matches[0]
-                    if ($linkText -match '(x64|x86|neutral).*\.(appx|appxbundle|msixbundle)\b') {
+                    if ($linkText -match '(arm64|x64|x86|neutral).*\.(appx|appxbundle|msixbundle)\b') {
                         Write-Debug "$linkText : $($link.href)"
                         if (Test-Path -Path $linkText) {
                             Write-Warning "Already exists, skiping $linkText"
