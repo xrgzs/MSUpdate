@@ -574,7 +574,7 @@ $MSStoreScript = "echo nostore"
 if ($true -eq $msstore) {
     Remove-Item -Path "$PSScriptRoot\msstore" -Force -ErrorAction SilentlyContinue
     New-Item -ItemType Directory -Path "$PSScriptRoot\msstore" -ErrorAction SilentlyContinue
-    if ($os_edition -like "*LTSC*") {
+    if ($os_edition -like "*LTS*") {
         Get-Appx 'Microsoft.VCLibs.140.00'
     } else {
         Get-Appx 'Microsoft.DesktopAppInstaller'
