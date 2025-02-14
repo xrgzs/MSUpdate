@@ -221,12 +221,12 @@ switch ($MakeVersion) {
             Start-Sleep -Seconds 3
         } else {
             $WUScript = "https://raw.githubusercontent.com/adavak/Win_ISO_Patching_Scripts/master/Scripts/script_22621_x64.meta4"
-            $Miracast = "https://alist.xrgzs.top/d/pxy/System/Windows/Win10/Res/22621/amd64/Microsoft-Windows-WirelessDisplay-FOD-Package~31bf3856ad364e35~amd64~~.cab"
-            $MiracastLP = "https://alist.xrgzs.top/d/pxy/System/Windows/Win10/Res/22621/amd64/Microsoft-Windows-WirelessDisplay-FOD-Package~31bf3856ad364e35~amd64~zh-CN~.cab"
-            $iexplorer = "https://alist.xrgzs.top/d/pxy/System/Windows/Win10/Res/22621/amd64/Microsoft-Windows-InternetExplorer-Optional-Package~31bf3856ad364e35~amd64~~.cab"
-            $iexplorerLP = "https://alist.xrgzs.top/d/pxy/System/Windows/Win10/Res/22621/amd64/Microsoft-Windows-InternetExplorer-Optional-Package~31bf3856ad364e35~amd64~zh-CN~.cab"
-            $entgpack = "https://alist.xrgzs.top/d/pxy/System/Windows/Win10/Res/22621/amd64/Microsoft-Windows-EditionSpecific-EnterpriseG-Package.ESD"
-            $entgLP = "https://alist.xrgzs.top/d/pxy/System/Windows/Win10/Res/22621/amd64/Microsoft-Windows-Client-LanguagePack-Package_zh-cn-amd64-zh-cn.esd"
+            $Miracast = "https://dl.xrgzs.top/d/pxy/System/Windows/Win10/Res/22621/amd64/Microsoft-Windows-WirelessDisplay-FOD-Package~31bf3856ad364e35~amd64~~.cab"
+            $MiracastLP = "https://dl.xrgzs.top/d/pxy/System/Windows/Win10/Res/22621/amd64/Microsoft-Windows-WirelessDisplay-FOD-Package~31bf3856ad364e35~amd64~zh-CN~.cab"
+            $iexplorer = "https://dl.xrgzs.top/d/pxy/System/Windows/Win10/Res/22621/amd64/Microsoft-Windows-InternetExplorer-Optional-Package~31bf3856ad364e35~amd64~~.cab"
+            $iexplorerLP = "https://dl.xrgzs.top/d/pxy/System/Windows/Win10/Res/22621/amd64/Microsoft-Windows-InternetExplorer-Optional-Package~31bf3856ad364e35~amd64~zh-CN~.cab"
+            $entgpack = "https://dl.xrgzs.top/d/pxy/System/Windows/Win10/Res/22621/amd64/Microsoft-Windows-EditionSpecific-EnterpriseG-Package.ESD"
+            $entgLP = "https://dl.xrgzs.top/d/pxy/System/Windows/Win10/Res/22621/amd64/Microsoft-Windows-Client-LanguagePack-Package_zh-cn-amd64-zh-cn.esd"
         }
         $msstore = $true
     }
@@ -284,10 +284,10 @@ switch ($MakeVersion) {
             Start-Sleep -Seconds 3
         } else {
             $WUScript = "https://raw.githubusercontent.com/adavak/Win_ISO_Patching_Scripts/master/Scripts/script_19041_x64.meta4"
-            $Miracast = "https://alist.xrgzs.top/d/pxy/System/Windows/Win10/Res/19041/amd64/Microsoft-Windows-WirelessDisplay-FOD-Package~31bf3856ad364e35~amd64~~.cab"
-            $MiracastLP = "https://alist.xrgzs.top/d/pxy/System/Windows/Win10/Res/19041/amd64/Microsoft-Windows-WirelessDisplay-FOD-Package~31bf3856ad364e35~amd64~zh-CN~.cab"
-            $entgpack = "https://alist.xrgzs.top/d/pxy/System/Windows/Win10/Res/19041/amd64/Microsoft-Windows-EditionSpecific-EnterpriseG-Package.ESD"
-            $entgLP = "https://alist.xrgzs.top/d/pxy/System/Windows/Win10/Res/19041/amd64/Microsoft-Windows-Client-LanguagePack-Package_zh-cn-amd64-zh-cn.esd"
+            $Miracast = "https://dl.xrgzs.top/d/pxy/System/Windows/Win10/Res/19041/amd64/Microsoft-Windows-WirelessDisplay-FOD-Package~31bf3856ad364e35~amd64~~.cab"
+            $MiracastLP = "https://dl.xrgzs.top/d/pxy/System/Windows/Win10/Res/19041/amd64/Microsoft-Windows-WirelessDisplay-FOD-Package~31bf3856ad364e35~amd64~zh-CN~.cab"
+            $entgpack = "https://dl.xrgzs.top/d/pxy/System/Windows/Win10/Res/19041/amd64/Microsoft-Windows-EditionSpecific-EnterpriseG-Package.ESD"
+            $entgLP = "https://dl.xrgzs.top/d/pxy/System/Windows/Win10/Res/19041/amd64/Microsoft-Windows-Client-LanguagePack-Package_zh-cn-amd64-zh-cn.esd"
         }
         $NETScript = "https://raw.githubusercontent.com/adavak/Win_ISO_Patching_Scripts/master/Scripts/netfx4.8.1/script_netfx4.8.1_19041_x64.meta4"
         $msstore = $true
@@ -322,10 +322,10 @@ switch ($MakeVersion) {
             Start-Sleep -Seconds 3
         } else {
             $WUScript = "https://raw.githubusercontent.com/adavak/Win_ISO_Patching_Scripts/master/Scripts/script_19041_x86.meta4"
-            $Miracast = "https://alist.xrgzs.top/d/pxy/System/Windows/Win10/Res/19041/x86/Microsoft-Windows-WirelessDisplay-FOD-Package~31bf3856ad364e35~x86~~.cab"
-            $MiracastLP = "https://alist.xrgzs.top/d/pxy/System/Windows/Win10/Res/19041/x86/Microsoft-Windows-WirelessDisplay-FOD-Package~31bf3856ad364e35~x86~zh-CN~.cab"
-            $entgpack = "https://alist.xrgzs.top/d/pxy/System/Windows/Win10/Res/19041/x86/Microsoft-Windows-EditionSpecific-EnterpriseG-Package.ESD"
-            $entgLP = "https://alist.xrgzs.top/d/pxy/System/Windows/Win10/Res/19041/x86/Microsoft-Windows-Client-LanguagePack-Package_zh-cn-x86-zh-cn.esd"
+            $Miracast = "https://dl.xrgzs.top/d/pxy/System/Windows/Win10/Res/19041/x86/Microsoft-Windows-WirelessDisplay-FOD-Package~31bf3856ad364e35~x86~~.cab"
+            $MiracastLP = "https://dl.xrgzs.top/d/pxy/System/Windows/Win10/Res/19041/x86/Microsoft-Windows-WirelessDisplay-FOD-Package~31bf3856ad364e35~x86~zh-CN~.cab"
+            $entgpack = "https://dl.xrgzs.top/d/pxy/System/Windows/Win10/Res/19041/x86/Microsoft-Windows-EditionSpecific-EnterpriseG-Package.ESD"
+            $entgLP = "https://dl.xrgzs.top/d/pxy/System/Windows/Win10/Res/19041/x86/Microsoft-Windows-Client-LanguagePack-Package_zh-cn-x86-zh-cn.esd"
         }
         $NETScript = "https://raw.githubusercontent.com/adavak/Win_ISO_Patching_Scripts/master/Scripts/netfx4.8.1/script_netfx4.8.1_19041_x86.meta4"
         $msstore = $true
@@ -916,7 +916,7 @@ $W10UI = ""
 # get osimage
 # get original system direct link
 if ($null -ne $ospath) {
-    $obj = (Invoke-WebRequest -UseBasicParsing -Uri "https://alist.xrgzs.top/api/fs/get" `
+    $obj = (Invoke-WebRequest -UseBasicParsing -Uri "https://dl.xrgzs.top/api/fs/get" `
     -Method "POST" `
     -ContentType "application/json;charset=UTF-8" `
     -Body (@{
