@@ -81,5 +81,5 @@ jobs:
         shell: pwsh
         run: |
           git add State.yml
-          git commit -m "Update State.yml"
+          git commit -m "Update State.yml $(Get-Date -Format 'yyyy-MM-dd HH:mm:ss')"
           git push
