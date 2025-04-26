@@ -1095,15 +1095,21 @@ $W10UI = ""
 # get osimage
 # get original system direct link
 if ($null -ne $ospath) {
-    $obj = (Invoke-WebRequest -UseBasicParsing -Uri "https://alist.xrgzs.top/api/fs/get" `
-            -Method "POST" `
-            -ContentType "application/json;charset=UTF-8" `
-            -Body (@{
-                path     = $ospath
-                password = ""
-            } | Convertto-Json)).Content | ConvertFrom-Json
-    $osurl = $obj.data.raw_url
-    $osfile = $obj.data.name
+    Write-Host "Get Original System Image Link for $ospath..."
+    $obj = Invoke-RestMethod -Uri "https://alist.xrgzs.top/api/fs/get" `
+        -Method "POST" `
+        -ContentType "application/json;charset=UTF-8" `
+        -Body (@{
+            path     = $ospath
+            password = ""
+        } | Convertto-Json)
+    if ($obj.data.name -and $obj.data.raw_url) {
+        Write-Host "Get $($obj.data.name): $($obj.data.raw_url)"
+        $osfile = $obj.data.name
+        $osurl = $obj.data.raw_url
+    } else {
+        Write-Error "Get Original System Image Failed! $($obj | ConvertTo-Json)"
+    }
 }
 Write-Host "Original system file: $osfile
 Original system download link: $osurl
