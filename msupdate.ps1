@@ -147,7 +147,7 @@ switch ($MakeVersion) {
         $os_arch = "arm64"
         $os_lang = "zh-cn"
         try {
-            $osurl = ((Invoke-WebRequest -Uri "https://api.gravesoft.dev/msdl/proxy?product_id=3132&sku_id=18616").Links | Where-Object { $_.outerHTML -like "*Unknown Download*" })[0].href
+            $osurl = (Invoke-RestMethod -Uri "https://api.gravesoft.dev/msdl/proxy?product_id=3132&sku_id=18616").ProductDownloadOptions[0].Uri
             $osfile = "Win11_24H2_China_GGK_Chinese_Simplified_Arm64.iso"
         } catch {
             $ospath = "/系统/MSDN/NT10.0_Win11/26100_24H2/1742_OEM/X23-81947_26100.1742.240906-0331.ge_release_svc_refresh_CLIENTCHINA_OEM_A64FRE_zh-cn.iso"
@@ -196,7 +196,7 @@ switch ($MakeVersion) {
         $os_arch = "x64"
         $os_lang = "zh-cn"
         try {
-            $osurl = ((Invoke-WebRequest -Uri "https://api.gravesoft.dev/msdl/proxy?product_id=3114&sku_id=18472").Links | Where-Object { $_.outerHTML -like "*Isox64 Download*" })[0].href
+            $osurl = (Invoke-RestMethod -Uri "https://api.gravesoft.dev/msdl/proxy?product_id=3114&sku_id=18472").ProductDownloadOptions[0].Uri
             $osfile = "Win11_24H2_China_GGK_Chinese_Simplified_x64.iso"
         } catch {
             $ospath = "/系统/MSDN/NT10.0_Win11/26100_24H2/1742_OEM/X23-81948_26100.1742.240906-0331.ge_release_svc_refresh_CLIENTCHINA_OEM_x64FRE_zh-cn.iso"
@@ -430,7 +430,7 @@ switch ($MakeVersion) {
         $os_arch = "x64"
         $os_lang = "zh-cn"
         try {
-            $osurl = ((Invoke-WebRequest -Uri "https://api.gravesoft.dev/msdl/proxy?product_id=2378&sku_id=15004").Links | Where-Object { $_.outerHTML -like "*Isox64 Download*" })[0].href
+            $osurl = (Invoke-RestMethod -Uri "https://api.gravesoft.dev/msdl/proxy?product_id=2378&sku_id=15004").ProductDownloadOptions[0].Uri
             $osfile = "Win10_22H2_China_GGK_Chinese_Simplified_x64.iso"
         } catch {
             $ospath = "/系统/MSDN/NT10.0_Win10/19045_22H2/2006_RTM/Win10_22H2_China_GGK_Chinese_Simplified_x64.iso"
@@ -478,7 +478,7 @@ switch ($MakeVersion) {
         $os_arch = "x86"
         $os_lang = "zh-cn"
         try {
-            $osurl = ((Invoke-WebRequest -Uri "https://api.gravesoft.dev/msdl/proxy?product_id=2378&sku_id=15004").Links | Where-Object { $_.outerHTML -like "*Isox86 Download*" })[0].href
+            $osurl = (Invoke-RestMethod -Uri "https://api.gravesoft.dev/msdl/proxy?product_id=2378&sku_id=15004").ProductDownloadOptions[1].Uri
             $osfile = "Win10_22H2_China_GGK_Chinese_Simplified_x32.iso"
         } catch {
             $ospath = "/系统/MSDN/NT10.0_Win10/19045_22H2/2006_RTM/Win10_22H2_China_GGK_Chinese_Simplified_x32.iso"
