@@ -125,7 +125,7 @@ switch ($MakeVersion) {
     "w1125h2a64" {
         # make 11 25h2 arm64
         $os_ver = "11"
-        $os_rsversion = "24H2"
+        $os_rsversion = "25H2"
         $os_build = "26200"
         $os_edition = "CoreCountrySpecific"
         $os_display = "Windows $os_ver $os_rsversion"
