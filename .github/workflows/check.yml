@@ -4,11 +4,11 @@ run-name: Check UUPDUMP ${{ inputs.DatabaseOnly == true && '(DatabaseOnly)' || '
 on:
   schedule:
     # Runs at 20 minutes past the hour, every 12 hours, starting at 04:00.
-    - cron: '20 4/12 * * *'
+    - cron: "20 4/12 * * *"
   workflow_dispatch:
     inputs:
       DatabaseOnly:
-        description: '仅更新数据'
+        description: "仅更新数据"
         required: false
         default: false
         type: boolean
@@ -52,7 +52,7 @@ jobs:
       #             break
       #         }
       #         Start-Sleep -Seconds 5  # Wait for 5 seconds before checking again
-      #     } 
+      #     }
       #     if ($attemptCount -eq 10) {
       #         Write-Host "Failed to connect after 10 attempts."
       #         exit 1  # Exit with an error code
@@ -76,7 +76,7 @@ jobs:
       #               Write-Warning "Failed to disconnect Cloudflare WARP"
       #           }
       #       }
-          
+
       - name: Commit and Push Changes
         shell: pwsh
         run: |

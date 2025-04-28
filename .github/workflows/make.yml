@@ -4,10 +4,12 @@ on:
   workflow_dispatch:
     inputs:
       makeversion:
-        description: '选择制作的系统版本'
+        description: "选择制作的系统版本"
         required: true
         type: choice
         options:
+          - w1125h264
+          - w1125h2a64
           - w1124h264
           - w1124h2a64
           - w1123h264
@@ -24,17 +26,17 @@ on:
           - w10lt1664
           - w10lt1632
       UpdateFromUUP:
-        description: '从UUPDUMP获取更新(1809+)'
+        description: "从UUPDUMP获取更新(1809+)"
         required: false
         default: true
         type: boolean
       MultiEdition:
-        description: '转换多版本(LTSC勿选)'
+        description: "转换多版本(LTSC勿选)"
         required: false
         default: true
         type: boolean
       SkipCheck:
-        description: '跳过硬件检测(Win11)'
+        description: "跳过硬件检测(Win11)"
         required: false
         default: false
         type: boolean
@@ -73,7 +75,7 @@ jobs:
       #             break
       #         }
       #         Start-Sleep -Seconds 5  # Wait for 5 seconds before checking again
-      #     } 
+      #     }
       #     if ($attemptCount -eq 10) {
       #         Write-Host "Failed to connect after 10 attempts."
       #         exit 1  # Exit with an error code

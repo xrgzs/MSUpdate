@@ -122,6 +122,104 @@ function Invoke-UUPWebRequestLink {
 
 # set system info
 switch ($MakeVersion) {
+    "w1125h2a64" {
+        # make 11 25h2 arm64
+        $os_ver = "11"
+        $os_rsversion = "24H2"
+        $os_build = "26200"
+        $os_edition = "CoreCountrySpecific"
+        $os_display = "Windows $os_ver $os_rsversion"
+        $os_arch = "arm64"
+        $os_lang = "zh-cn"
+        try {
+            $osurl = (Invoke-RestMethod -Uri "https://api.gravesoft.dev/msdl/proxy?product_id=3132&sku_id=18616").ProductDownloadOptions[0].Uri
+            $osfile = "Win11_24H2_China_GGK_Chinese_Simplified_Arm64.iso"
+        } catch {
+            $ospath = "/系统/MSDN/NT10.0_Win11/26100_24H2/1742_OEM/X23-81947_26100.1742.240906-0331.ge_release_svc_refresh_CLIENTCHINA_OEM_A64FRE_zh-cn.iso"
+            # $ospath = "/系统/MSDN/NT10.0_Win11/26100_24H2/1742_RTM/Win11_24H2_China_GGK_Chinese_Simplified_Arm64.iso"
+        }
+        $UpdateFromUUP = $true
+        $uupid = (Invoke-UUPWebRequestLink `
+                -Url "known.php?q=category:w11-25h2-dev" `
+                -LinkFilter @("selectlang.php?id=*") `
+                -ContentFilter @("*Windows 11*arm64*") `
+                -FirstLink
+        ).Replace("selectlang.php?id=", "")
+        $Miracast = Invoke-UUPWebRequestLink `
+            -Url "getfile.php?id=$uupid&file=Microsoft-Windows-WirelessDisplay-FOD-Package-arm64.cab" `
+            -ContentFilter @("*mp.microsoft.com*") `
+            -FirstLink
+        $MiracastLP = Invoke-UUPWebRequestLink `
+            -Url "getfile.php?id=$uupid&file=Microsoft-Windows-WirelessDisplay-FOD-Package-arm64-zh-CN.cab" `
+            -ContentFilter @("*mp.microsoft.com*") `
+            -FirstLink
+        $iexplorer = Invoke-UUPWebRequestLink `
+            -Url "getfile.php?id=$uupid&file=Microsoft-Windows-InternetExplorer-Optional-Package-arm64.cab" `
+            -ContentFilter @("*mp.microsoft.com*") `
+            -FirstLink
+        $iexplorerLP = Invoke-UUPWebRequestLink `
+            -Url "getfile.php?id=$uupid&file=Microsoft-Windows-WirelessDisplay-FOD-Package-arm64-zh-CN.cab" `
+            -ContentFilter @("*mp.microsoft.com*") `
+            -FirstLink
+        $entgpack = Invoke-UUPWebRequestLink `
+            -Url "getfile.php?id=$uupid&file=Microsoft-Windows-EditionSpecific-EnterpriseG-Package.ESD" `
+            -ContentFilter @("*mp.microsoft.com*") `
+            -FirstLink
+        $entgLP = Invoke-UUPWebRequestLink `
+            -Url "getfile.php?id=$uupid&file=Microsoft-Windows-Client-LanguagePack-Package-arm64-zh-CN.esd" `
+            -ContentFilter @("*mp.microsoft.com*") `
+            -FirstLink
+        $msstore = $true
+    }
+    "w1125h264" {
+        # make 11 25h2 x64
+        $os_ver = "11"
+        $os_rsversion = "25H2"
+        $os_build = "26200"
+        $os_edition = "CoreCountrySpecific"
+        $os_display = "Windows $os_ver $os_rsversion"
+        $os_arch = "x64"
+        $os_lang = "zh-cn"
+        try {
+            $osurl = (Invoke-RestMethod -Uri "https://api.gravesoft.dev/msdl/proxy?product_id=3114&sku_id=18472").ProductDownloadOptions[0].Uri
+            $osfile = "Win11_24H2_China_GGK_Chinese_Simplified_x64.iso"
+        } catch {
+            $ospath = "/系统/MSDN/NT10.0_Win11/26100_24H2/1742_OEM/X23-81948_26100.1742.240906-0331.ge_release_svc_refresh_CLIENTCHINA_OEM_x64FRE_zh-cn.iso"
+            # $ospath = "/系统/MSDN/NT10.0_Win11/26100_24H2/1742_RTM/Win11_24H2_China_GGK_Chinese_Simplified_x64.iso"
+        }
+        $UpdateFromUUP = $true
+        $uupid = (Invoke-UUPWebRequestLink `
+                -Url "known.php?q=category:w11-25h2-dev" `
+                -LinkFilter @("selectlang.php?id=*") `
+                -ContentFilter @("*Windows 11*amd64*") `
+                -FirstLink
+        ).Replace("selectlang.php?id=", "")
+        $Miracast = Invoke-UUPWebRequestLink `
+            -Url "getfile.php?id=$uupid&file=Microsoft-Windows-WirelessDisplay-FOD-Package-amd64.cab" `
+            -ContentFilter @("*mp.microsoft.com*") `
+            -FirstLink
+        $MiracastLP = Invoke-UUPWebRequestLink `
+            -Url "getfile.php?id=$uupid&file=Microsoft-Windows-WirelessDisplay-FOD-Package-amd64-zh-CN.cab" `
+            -ContentFilter @("*mp.microsoft.com*") `
+            -FirstLink
+        $iexplorer = Invoke-UUPWebRequestLink `
+            -Url "getfile.php?id=$uupid&file=Microsoft-Windows-InternetExplorer-Optional-Package-amd64.cab" `
+            -ContentFilter @("*mp.microsoft.com*") `
+            -FirstLink
+        $iexplorerLP = Invoke-UUPWebRequestLink `
+            -Url "getfile.php?id=$uupid&file=Microsoft-Windows-WirelessDisplay-FOD-Package-amd64-zh-CN.cab" `
+            -ContentFilter @("*mp.microsoft.com*") `
+            -FirstLink
+        $entgpack = Invoke-UUPWebRequestLink `
+            -Url "getfile.php?id=$uupid&file=Microsoft-Windows-EditionSpecific-EnterpriseG-Package.ESD" `
+            -ContentFilter @("*mp.microsoft.com*") `
+            -FirstLink
+        $entgLP = Invoke-UUPWebRequestLink `
+            -Url "getfile.php?id=$uupid&file=Microsoft-Windows-Client-LanguagePack-Package-amd64-zh-CN.esd" `
+            -ContentFilter @("*mp.microsoft.com*") `
+            -FirstLink
+        $msstore = $true
+    }
     "w1124h2a64" {
         # make 11 24h2 arm64
         $os_ver = "11"

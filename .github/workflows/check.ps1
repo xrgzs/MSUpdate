@@ -8,18 +8,24 @@ function Request-Update {
         [string]
         $Category
     )
+    $WebRequest = Invoke-WebRequest -Uri "https://uupdump.net/known.php?q=category:$Category"
+    $AllLinks = $WebRequest.Links | Where-Object { $_.href -like "selectlang.php?id=*" -and $_.outerHTML -match 'amd64' }
+    Write-Host "Retrieved all known links: $AllLinks"
 
-    $match = ((Invoke-WebRequest -Uri "https://uupdump.net/known.php?q=category:$Category").Links | 
-              Where-Object { $_.href -like "selectlang.php?id=*" } | 
-              Where-Object { $_.outerHTML -like "*amd64*" -and $_.outerHTML -match '\((\d+\.\d+)\)' })[0].outerHTML -match '\((\d+\.\d+)\)'
-
-    if ($match) {
+    $Link = $AllLinks | Where-Object { $_.outerHTML -match '\((\d+\.\d+)\)' } | Select-Object -First 1
+    if ($Link -and $Link.outerHTML -match '\((\d+\.\d+)\)') {
         $LatestVersion = $Matches[1]
         Write-Host -ForegroundColor Green "The latest version of $Category is $LatestVersion"
         return $LatestVersion
-    } else {
-        Write-Host -ForegroundColor Red "Failed to get the latest version"
     }
+
+    $Link = $AllLinks | Where-Object { $_.outerHTML -match '10\.0\.(\d+\.\d+)' } | Select-Object -First 1
+    if ($Link -and $Link.outerHTML -match '10\.0\.(\d+\.\d+)') {
+        $LatestVersion = $Matches[1]
+        Write-Host -ForegroundColor Green "The latest version of $Category is $LatestVersion"
+        return $LatestVersion
+    }
+    Write-Host -ForegroundColor Red "Failed to get the latest version"
 }
 
 if (-not (Get-Module -ListAvailable -Name powershell-yaml)) {
@@ -38,7 +44,7 @@ foreach ($Category in $CurrentState.Keys) {
     Write-Host -ForegroundColor Yellow "Current version of $Category is $CurrentVersion"
     $LatestVersion = Request-Update -Category $Category
 
-    if ($LatestVersion -ne $CurrentVersion) {
+    if ($LatestVersion -and $LatestVersion -ne $CurrentVersion) {
         Write-Host -ForegroundColor Green "New version of $Category is available: $LatestVersion"
         $CurrentState.$Category.Version = $LatestVersion
 
