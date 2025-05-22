@@ -1284,8 +1284,15 @@ if (Test-Path "C:\Program Files\Cloudflare\Cloudflare WARP\warp-cli.exe") {
 # execute W10UI script
 .\bin\NSudoLC.exe -Wait -U:T -P:E -CurrentDirectory:. -UseCurrentConsole .\W10UI.cmd
 
+# ensure iso exists
+$isoFiles = Get-ChildItem -Path ".\*.iso" -File
+if (-not $isoFiles) {
+    Write-Error "No ISO files found in the directory. Please ensure the script has generated the ISO files correctly."
+    exit 1
+}
+
 # rename
-Get-ChildItem -Path ".\*.iso" -File | ForEach-Object {
+$isoFiles | ForEach-Object {
     $NewName = $_.Name
     if ($os_edition -like "*LTS*") {
         $NewName = $NewName -replace "_CLIENT_", "_CLIENT_ENTERPRISES_"
