@@ -250,11 +250,11 @@ switch ($MakeVersion) {
         $os_arch = "arm64"
         $os_lang = "zh-cn"
         try {
-            $osurl = (Invoke-RestMethod -Uri "https://api.gravesoft.dev/msdl/proxy?product_id=3132&sku_id=18616").ProductDownloadOptions[0].Uri
-            $osfile = "Win11_24H2_China_GGK_Chinese_Simplified_Arm64.iso"
+            $os_url = (Invoke-RestMethod -Uri "https://api.gravesoft.dev/msdl/proxy?product_id=3132&sku_id=18616").ProductDownloadOptions[0].Uri
+            $os_file = "Win11_24H2_China_GGK_Chinese_Simplified_Arm64.iso"
         } catch {
-            $ospath = "/系统/MSDN/NT10.0_Win11/26100_24H2/1742_OEM/X23-81947_26100.1742.240906-0331.ge_release_svc_refresh_CLIENTCHINA_OEM_A64FRE_zh-cn.iso"
-            # $ospath = "/系统/MSDN/NT10.0_Win11/26100_24H2/1742_RTM/Win11_24H2_China_GGK_Chinese_Simplified_Arm64.iso"
+            $os_path = "/系统/MSDN/NT10.0_Win11/26100_24H2/1742_OEM/X23-81947_26100.1742.240906-0331.ge_release_svc_refresh_CLIENTCHINA_OEM_A64FRE_zh-cn.iso"
+            # $os_path = "/系统/MSDN/NT10.0_Win11/26100_24H2/1742_RTM/Win11_24H2_China_GGK_Chinese_Simplified_Arm64.iso"
         }
         $UpdateFromUUP = $true
         $uupid = (Invoke-UUPWebRequestLink `
@@ -299,11 +299,11 @@ switch ($MakeVersion) {
         $os_arch = "x64"
         $os_lang = "zh-cn"
         try {
-            $osurl = (Invoke-RestMethod -Uri "https://api.gravesoft.dev/msdl/proxy?product_id=3114&sku_id=18472").ProductDownloadOptions[0].Uri
-            $osfile = "Win11_24H2_China_GGK_Chinese_Simplified_x64.iso"
+            $os_url = (Invoke-RestMethod -Uri "https://api.gravesoft.dev/msdl/proxy?product_id=3114&sku_id=18472").ProductDownloadOptions[0].Uri
+            $os_file = "Win11_24H2_China_GGK_Chinese_Simplified_x64.iso"
         } catch {
-            $ospath = "/系统/MSDN/NT10.0_Win11/26100_24H2/1742_OEM/X23-81948_26100.1742.240906-0331.ge_release_svc_refresh_CLIENTCHINA_OEM_x64FRE_zh-cn.iso"
-            # $ospath = "/系统/MSDN/NT10.0_Win11/26100_24H2/1742_RTM/Win11_24H2_China_GGK_Chinese_Simplified_x64.iso"
+            $os_path = "/系统/MSDN/NT10.0_Win11/26100_24H2/1742_OEM/X23-81948_26100.1742.240906-0331.ge_release_svc_refresh_CLIENTCHINA_OEM_x64FRE_zh-cn.iso"
+            # $os_path = "/系统/MSDN/NT10.0_Win11/26100_24H2/1742_RTM/Win11_24H2_China_GGK_Chinese_Simplified_x64.iso"
         }
         $UpdateFromUUP = $true
         $uupid = (Invoke-UUPWebRequestLink `
@@ -348,11 +348,11 @@ switch ($MakeVersion) {
         $os_arch = "arm64"
         $os_lang = "zh-cn"
         try {
-            $osurl = (Invoke-RestMethod -Uri "https://api.gravesoft.dev/msdl/proxy?product_id=3132&sku_id=18616").ProductDownloadOptions[0].Uri
-            $osfile = "Win11_24H2_China_GGK_Chinese_Simplified_Arm64.iso"
+            $os_url = (Invoke-RestMethod -Uri "https://api.gravesoft.dev/msdl/proxy?product_id=3132&sku_id=18616").ProductDownloadOptions[0].Uri
+            $os_file = "Win11_24H2_China_GGK_Chinese_Simplified_Arm64.iso"
         } catch {
-            $ospath = "/系统/MSDN/NT10.0_Win11/26100_24H2/1742_OEM/X23-81947_26100.1742.240906-0331.ge_release_svc_refresh_CLIENTCHINA_OEM_A64FRE_zh-cn.iso"
-            # $ospath = "/系统/MSDN/NT10.0_Win11/26100_24H2/1742_RTM/Win11_24H2_China_GGK_Chinese_Simplified_Arm64.iso"
+            $os_path = "/系统/MSDN/NT10.0_Win11/26100_24H2/1742_OEM/X23-81947_26100.1742.240906-0331.ge_release_svc_refresh_CLIENTCHINA_OEM_A64FRE_zh-cn.iso"
+            # $os_path = "/系统/MSDN/NT10.0_Win11/26100_24H2/1742_RTM/Win11_24H2_China_GGK_Chinese_Simplified_Arm64.iso"
         }
         $UpdateFromUUP = $true
         $uupid = (Invoke-UUPWebRequestLink `
@@ -397,11 +397,11 @@ switch ($MakeVersion) {
         $os_arch = "x64"
         $os_lang = "zh-cn"
         try {
-            $osurl = (Invoke-RestMethod -Uri "https://api.gravesoft.dev/msdl/proxy?product_id=3114&sku_id=18472").ProductDownloadOptions[0].Uri
-            $osfile = "Win11_24H2_China_GGK_Chinese_Simplified_x64.iso"
+            $os_url = (Invoke-RestMethod -Uri "https://api.gravesoft.dev/msdl/proxy?product_id=3114&sku_id=18472").ProductDownloadOptions[0].Uri
+            $os_file = "Win11_24H2_China_GGK_Chinese_Simplified_x64.iso"
         } catch {
-            $ospath = "/系统/MSDN/NT10.0_Win11/26100_24H2/1742_OEM/X23-81948_26100.1742.240906-0331.ge_release_svc_refresh_CLIENTCHINA_OEM_x64FRE_zh-cn.iso"
-            # $ospath = "/系统/MSDN/NT10.0_Win11/26100_24H2/1742_RTM/Win11_24H2_China_GGK_Chinese_Simplified_x64.iso"
+            $os_path = "/系统/MSDN/NT10.0_Win11/26100_24H2/1742_OEM/X23-81948_26100.1742.240906-0331.ge_release_svc_refresh_CLIENTCHINA_OEM_x64FRE_zh-cn.iso"
+            # $os_path = "/系统/MSDN/NT10.0_Win11/26100_24H2/1742_RTM/Win11_24H2_China_GGK_Chinese_Simplified_x64.iso"
         }
         $UpdateFromUUP = $true
         $uupid = (Invoke-UUPWebRequestLink `
@@ -445,7 +445,7 @@ switch ($MakeVersion) {
         $os_display = "Windows $os_ver LTSC 2024"
         $os_arch = "arm64"
         $os_lang = "zh-cn"
-        $ospath = "/系统/Windows/Win10/Res/26100/arm64/26100.1742.240906-0331.ge_release_svc_refresh_CLIENT_ENTERPRISES_OEM_A64FRE_zh-cn.iso"
+        $os_path = "/系统/Windows/Win10/Res/26100/arm64/26100.1742.240906-0331.ge_release_svc_refresh_CLIENT_ENTERPRISES_OEM_A64FRE_zh-cn.iso"
         $UpdateFromUUP = $true
         $uupid = (Invoke-UUPWebRequestLink `
                 -Url "known.php?q=category:w11-24h2" `
@@ -472,7 +472,7 @@ switch ($MakeVersion) {
         $os_display = "Windows $os_ver LTSC 2024"
         $os_arch = "x64"
         $os_lang = "zh-cn"
-        $ospath = "/系统/MSDN/NT10.0_Win11/26100_LTSC2024/1742_RTM/zh-cn_windows_11_enterprise_ltsc_2024_x64_dvd_cff9cd2d.iso"
+        $os_path = "/系统/MSDN/NT10.0_Win11/26100_LTSC2024/1742_RTM/zh-cn_windows_11_enterprise_ltsc_2024_x64_dvd_cff9cd2d.iso"
         $UpdateFromUUP = $true
         $uupid = (Invoke-UUPWebRequestLink `
                 -Url "known.php?q=category:w11-24h2" `
@@ -499,7 +499,7 @@ switch ($MakeVersion) {
         $os_display = "Windows $os_ver $os_rsversion"
         $os_arch = "arm64"
         $os_lang = "zh-cn"
-        $ospath = "/系统/Windows/Win10/Res/22621/22621.1.220506-1250.NI_RELEASE_CLIENTCHINA_OEM_A64FRE_ZH-CN.ISO"
+        $os_path = "/系统/Windows/Win10/Res/22621/22621.1.220506-1250.NI_RELEASE_CLIENTCHINA_OEM_A64FRE_ZH-CN.ISO"
         $uupid = (Invoke-UUPWebRequestLink `
                 -Url "known.php?q=category:w11-23h2" `
                 -LinkFilter @("selectlang.php?id=*") `
@@ -541,7 +541,7 @@ switch ($MakeVersion) {
         $os_display = "Windows $os_ver $os_rsversion"
         $os_arch = "x64"
         $os_lang = "zh-cn"
-        $ospath = "/系统/MSDN/NT10.0_Win11/22631_23H2/2861_202312/Win11_23H2_China_GGK_Chinese_Simplified_x64v2.iso"
+        $os_path = "/系统/MSDN/NT10.0_Win11/22631_23H2/2861_202312/Win11_23H2_China_GGK_Chinese_Simplified_x64v2.iso"
         if ($true -eq $UpdateFromUUP) {
             $uupid = (Invoke-UUPWebRequestLink `
                     -Url "known.php?q=category:w11-23h2" `
@@ -593,7 +593,7 @@ switch ($MakeVersion) {
         $os_display = "Windows $os_ver $os_rsversion"
         $os_arch = "arm64"
         $os_lang = "zh-cn"
-        $ospath = "/系统/Windows/Win10/Res/19041/arm64/19041.1.191206-1406.VB_RELEASE_CLIENTCHINA_OEM_A64FRE_ZH-CN.ISO"
+        $os_path = "/系统/Windows/Win10/Res/19041/arm64/19041.1.191206-1406.VB_RELEASE_CLIENTCHINA_OEM_A64FRE_ZH-CN.ISO"
         $UpdateFromUUP = $true
         $uupid = (Invoke-UUPWebRequestLink `
                 -Url "known.php?q=category:w10-22h2" `
@@ -631,10 +631,10 @@ switch ($MakeVersion) {
         $os_arch = "x64"
         $os_lang = "zh-cn"
         try {
-            $osurl = (Invoke-RestMethod -Uri "https://api.gravesoft.dev/msdl/proxy?product_id=2378&sku_id=15004").ProductDownloadOptions[0].Uri
-            $osfile = "Win10_22H2_China_GGK_Chinese_Simplified_x64.iso"
+            $os_url = (Invoke-RestMethod -Uri "https://api.gravesoft.dev/msdl/proxy?product_id=2378&sku_id=15004").ProductDownloadOptions[0].Uri
+            $os_file = "Win10_22H2_China_GGK_Chinese_Simplified_x64.iso"
         } catch {
-            $ospath = "/系统/MSDN/NT10.0_Win10/19045_22H2/2006_RTM/Win10_22H2_China_GGK_Chinese_Simplified_x64.iso"
+            $os_path = "/系统/MSDN/NT10.0_Win10/19045_22H2/2006_RTM/Win10_22H2_China_GGK_Chinese_Simplified_x64.iso"
         }
         if ($true -eq $UpdateFromUUP) {
             $uupid = (Invoke-UUPWebRequestLink `
@@ -679,10 +679,10 @@ switch ($MakeVersion) {
         $os_arch = "x86"
         $os_lang = "zh-cn"
         try {
-            $osurl = (Invoke-RestMethod -Uri "https://api.gravesoft.dev/msdl/proxy?product_id=2378&sku_id=15004").ProductDownloadOptions[1].Uri
-            $osfile = "Win10_22H2_China_GGK_Chinese_Simplified_x32.iso"
+            $os_url = (Invoke-RestMethod -Uri "https://api.gravesoft.dev/msdl/proxy?product_id=2378&sku_id=15004").ProductDownloadOptions[1].Uri
+            $os_file = "Win10_22H2_China_GGK_Chinese_Simplified_x32.iso"
         } catch {
-            $ospath = "/系统/MSDN/NT10.0_Win10/19045_22H2/2006_RTM/Win10_22H2_China_GGK_Chinese_Simplified_x32.iso"
+            $os_path = "/系统/MSDN/NT10.0_Win10/19045_22H2/2006_RTM/Win10_22H2_China_GGK_Chinese_Simplified_x32.iso"
         }
         if ($true -eq $UpdateFromUUP) {
             $uupid = (Invoke-UUPWebRequestLink `
@@ -726,7 +726,7 @@ switch ($MakeVersion) {
         $os_display = "Windows $os_ver LTSC 2021"
         $os_arch = "x64"
         $os_lang = "zh-cn"
-        $ospath = "/系统/MSDN/NT10.0_Win10/19044_LTSC2021/zh-cn_windows_10_enterprise_ltsc_2021_x64_dvd_033b7312.iso"
+        $os_path = "/系统/MSDN/NT10.0_Win10/19044_LTSC2021/zh-cn_windows_10_enterprise_ltsc_2021_x64_dvd_033b7312.iso"
         if ($true -eq $UpdateFromUUP) {
             $uupid = (Invoke-UUPWebRequestLink `
                     -Url "known.php?q=category:w10-21h2" `
@@ -748,7 +748,7 @@ switch ($MakeVersion) {
         $os_display = "Windows $os_ver LTSC 2021"
         $os_arch = "x86"
         $os_lang = "zh-cn"
-        $ospath = "/系统/MSDN/NT10.0_Win10/19044_LTSC2021/zh-cn_windows_10_enterprise_ltsc_2021_x86_dvd_30600d9c.iso"
+        $os_path = "/系统/MSDN/NT10.0_Win10/19044_LTSC2021/zh-cn_windows_10_enterprise_ltsc_2021_x86_dvd_30600d9c.iso"
         if ($true -eq $UpdateFromUUP) {
             $uupid = (Invoke-UUPWebRequestLink `
                     -Url "known.php?q=category:w10-21h2" `
@@ -770,7 +770,7 @@ switch ($MakeVersion) {
         $os_display = "Windows $os_ver LTSC 2019"
         $os_arch = "x64"
         $os_lang = "zh-cn"
-        $ospath = "/系统/MSDN/NT10.0_Win10/17763_LTSC2019/1_RTM/cn_windows_10_enterprise_ltsc_2019_x64_dvd_2efc9ac2.iso"
+        $os_path = "/系统/MSDN/NT10.0_Win10/17763_LTSC2019/1_RTM/cn_windows_10_enterprise_ltsc_2019_x64_dvd_2efc9ac2.iso"
         if ($true -eq $UpdateFromUUP) {
             $uupid = (Invoke-UUPWebRequestLink `
                     -Url "known.php?q=category:w10-1809" `
@@ -792,7 +792,7 @@ switch ($MakeVersion) {
         $os_display = "Windows $os_ver LTSC 2019"
         $os_arch = "x86"
         $os_lang = "zh-cn"
-        $ospath = "/系统/MSDN/NT10.0_Win10/17763_LTSC2019/1_RTM/cn_windows_10_enterprise_ltsc_2019_x86_dvd_2908ee10.iso"
+        $os_path = "/系统/MSDN/NT10.0_Win10/17763_LTSC2019/1_RTM/cn_windows_10_enterprise_ltsc_2019_x86_dvd_2908ee10.iso"
         if ($true -eq $UpdateFromUUP) {
             $uupid = (Invoke-UUPWebRequestLink `
                     -Url "known.php?q=category:w10-1809" `
@@ -814,7 +814,7 @@ switch ($MakeVersion) {
         $os_display = "Windows $os_ver LTSB 2016"
         $os_arch = "x64"
         $os_lang = "zh-cn"
-        $ospath = "/系统/MSDN/NT10.0_Win10/14393_LTSB2016/cn_windows_10_enterprise_2016_ltsb_x64_dvd_9060409.iso"
+        $os_path = "/系统/MSDN/NT10.0_Win10/14393_LTSB2016/cn_windows_10_enterprise_2016_ltsb_x64_dvd_9060409.iso"
         $WUScript = "https://raw.githubusercontent.com/adavak/Win_ISO_Patching_Scripts/master/Scripts/script_14393_x64.meta4"
         $NETScript = "https://raw.githubusercontent.com/adavak/Win_ISO_Patching_Scripts/master/Scripts/netfx4.8/script_netfx4.8_14393_x64.meta4"
         $MultiEdition = $false
@@ -828,8 +828,8 @@ switch ($MakeVersion) {
         $os_display = "Windows $os_ver LTSB 2016"
         $os_arch = "x86"
         $os_lang = "zh-cn"
-        # $ospath = "/系统/MSDN/NT10.0_Win10/14393_LTSB2016/cn_windows_10_enterprise_2016_ltsb_x86_dvd_9057089.iso"
-        $ospath = "/系统/Windows/Win10/LTSB2016/cn_windows_10_enterprise_2016_ltsb_x86_dvd_9057089_FixSSShim.iso"
+        # $os_path = "/系统/MSDN/NT10.0_Win10/14393_LTSB2016/cn_windows_10_enterprise_2016_ltsb_x86_dvd_9057089.iso"
+        $os_path = "/系统/Windows/Win10/LTSB2016/cn_windows_10_enterprise_2016_ltsb_x86_dvd_9057089_FixSSShim.iso"
         $WUScript = "https://raw.githubusercontent.com/adavak/Win_ISO_Patching_Scripts/master/Scripts/script_14393_x86.meta4"
         $NETScript = "https://raw.githubusercontent.com/adavak/Win_ISO_Patching_Scripts/master/Scripts/netfx4.8/script_netfx4.8_14393_x86.meta4"
         $MultiEdition = $false
@@ -1304,34 +1304,31 @@ $W10UI = ""
 
 # get osimage
 # get original system direct link
-if ($null -ne $ospath) {
-    Write-Host "Get Original System Image Link for $ospath..."
+if ($null -ne $os_path) {
+    Write-Host "Get Original System Image Link for $os_path..."
     $obj = Invoke-RestMethod -Uri "https://alist.xrgzs.top/api/fs/get" `
         -Method "POST" `
         -ContentType "application/json;charset=UTF-8" `
         -Body (@{
-            path     = $ospath
+            path     = $os_path
             password = ""
         } | Convertto-Json)
     if ($obj.data.name -and $obj.data.raw_url) {
         Write-Host "Get $($obj.data.name): $($obj.data.raw_url)"
-        $osfile = $obj.data.name
-        $osurl = $obj.data.raw_url
+        $os_file = $obj.data.name
+        $os_url = $obj.data.raw_url
     } else {
         Write-Error "Get Original System Image Failed! $($obj | ConvertTo-Json)"
     }
 }
-Write-Host "Original system file: $osfile
-Original system download link: $osurl
+Write-Host "Original system file: $os_file
+Original system download link: $os_url
 "
 
-Write-Host "Downloading original system image..."
-Invoke-Aria2Download -Uri $osurl -Destination ".\temp\" -Name $osfile -Big
-
-# $isopath = Resolve-Path -Path ".\temp\$osfile"
+# $isopath = Resolve-Path -Path ".\temp\$os_file"
 # $isomount = (Mount-DiskImage -ImagePath $isopath -PassThru | Get-Volume).DriveLetter
 # Target        =${isomount}:
-."C:\Program Files\7-Zip\7z.exe" x ".\temp\$osfile" -o".\ISO" -r
+."C:\Program Files\7-Zip\7z.exe" x ".\temp\$os_file" -o".\ISO" -r
 
 # select 1 edition only
 # if ($null -ne $SelectEdition) {
@@ -1465,6 +1462,6 @@ Get-ChildItem -Path ".\*.iso" -File | ForEach-Object {
     $FileInfo.msupdate.addunattend = $AddUnattend
     $FileInfo.msupdate.skipcheck = $SkipCheck
     $FileInfo.msupdate.cleanup = $Cleanup
-    $FileInfo.msupdate.makefrom = $osfile
+    $FileInfo.msupdate.makefrom = $os_file
     $FileInfo | ConvertTo-Json | Out-File -FilePath ".\$($_.Name).json" -Encoding utf8
 }
