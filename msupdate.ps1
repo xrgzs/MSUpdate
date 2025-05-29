@@ -249,13 +249,8 @@ switch ($MakeVersion) {
         $os_display = "Windows $os_ver $os_rsversion"
         $os_arch = "arm64"
         $os_lang = "zh-cn"
-        try {
-            $os_url = (Invoke-RestMethod -Uri "https://api.gravesoft.dev/msdl/proxy?product_id=3132&sku_id=18616").ProductDownloadOptions[0].Uri
-            $os_file = "Win11_24H2_China_GGK_Chinese_Simplified_Arm64.iso"
-        } catch {
-            $os_path = "/系统/MSDN/NT10.0_Win11/26100_24H2/1742_OEM/X23-81947_26100.1742.240906-0331.ge_release_svc_refresh_CLIENTCHINA_OEM_A64FRE_zh-cn.iso"
-            # $os_path = "/系统/MSDN/NT10.0_Win11/26100_24H2/1742_RTM/Win11_24H2_China_GGK_Chinese_Simplified_Arm64.iso"
-        }
+        $os_path = "/系统/MSDN/NT10.0_Win11/26100_24H2/1742_OEM/X23-81947_26100.1742.240906-0331.ge_release_svc_refresh_CLIENTCHINA_OEM_A64FRE_zh-cn.iso"
+        # $os_path = "/系统/MSDN/NT10.0_Win11/26100_24H2/1742_RTM/Win11_24H2_China_GGK_Chinese_Simplified_Arm64.iso"
         $os_md5 = "8cc8080e1c4b08ccd0ad4435ac0f2e5c"
         $UpdateFromUUP = $true
         $uupid = (Invoke-UUPWebRequestLink `
@@ -299,13 +294,8 @@ switch ($MakeVersion) {
         $os_display = "Windows $os_ver $os_rsversion"
         $os_arch = "x64"
         $os_lang = "zh-cn"
-        try {
-            $os_url = (Invoke-RestMethod -Uri "https://api.gravesoft.dev/msdl/proxy?product_id=3114&sku_id=18472").ProductDownloadOptions[0].Uri
-            $os_file = "Win11_24H2_China_GGK_Chinese_Simplified_x64.iso"
-        } catch {
-            $os_path = "/系统/MSDN/NT10.0_Win11/26100_24H2/1742_OEM/X23-81948_26100.1742.240906-0331.ge_release_svc_refresh_CLIENTCHINA_OEM_x64FRE_zh-cn.iso"
-            # $os_path = "/系统/MSDN/NT10.0_Win11/26100_24H2/1742_RTM/Win11_24H2_China_GGK_Chinese_Simplified_x64.iso"
-        }
+        $os_path = "/系统/MSDN/NT10.0_Win11/26100_24H2/1742_OEM/X23-81948_26100.1742.240906-0331.ge_release_svc_refresh_CLIENTCHINA_OEM_x64FRE_zh-cn.iso"
+        # $os_path = "/系统/MSDN/NT10.0_Win11/26100_24H2/1742_RTM/Win11_24H2_China_GGK_Chinese_Simplified_x64.iso"
         $os_md5 = "e5c05b0215d3e4af2f2fd4ea16252f91"
         $UpdateFromUUP = $true
         $uupid = (Invoke-UUPWebRequestLink `
@@ -349,13 +339,8 @@ switch ($MakeVersion) {
         $os_display = "Windows $os_ver $os_rsversion"
         $os_arch = "arm64"
         $os_lang = "zh-cn"
-        try {
-            $os_url = (Invoke-RestMethod -Uri "https://api.gravesoft.dev/msdl/proxy?product_id=3132&sku_id=18616").ProductDownloadOptions[0].Uri
-            $os_file = "Win11_24H2_China_GGK_Chinese_Simplified_Arm64.iso"
-        } catch {
-            $os_path = "/系统/MSDN/NT10.0_Win11/26100_24H2/1742_OEM/X23-81947_26100.1742.240906-0331.ge_release_svc_refresh_CLIENTCHINA_OEM_A64FRE_zh-cn.iso"
-            # $os_path = "/系统/MSDN/NT10.0_Win11/26100_24H2/1742_RTM/Win11_24H2_China_GGK_Chinese_Simplified_Arm64.iso"
-        }
+        $os_path = "/系统/MSDN/NT10.0_Win11/26100_24H2/1742_OEM/X23-81947_26100.1742.240906-0331.ge_release_svc_refresh_CLIENTCHINA_OEM_A64FRE_zh-cn.iso"
+        # $os_path = "/系统/MSDN/NT10.0_Win11/26100_24H2/1742_RTM/Win11_24H2_China_GGK_Chinese_Simplified_Arm64.iso"
         $os_md5 = "8cc8080e1c4b08ccd0ad4435ac0f2e5c"
         $UpdateFromUUP = $true
         $uupid = (Invoke-UUPWebRequestLink `
@@ -399,13 +384,8 @@ switch ($MakeVersion) {
         $os_display = "Windows $os_ver $os_rsversion"
         $os_arch = "x64"
         $os_lang = "zh-cn"
-        try {
-            $os_url = (Invoke-RestMethod -Uri "https://api.gravesoft.dev/msdl/proxy?product_id=3114&sku_id=18472").ProductDownloadOptions[0].Uri
-            $os_file = "Win11_24H2_China_GGK_Chinese_Simplified_x64.iso"
-        } catch {
-            $os_path = "/系统/MSDN/NT10.0_Win11/26100_24H2/1742_OEM/X23-81948_26100.1742.240906-0331.ge_release_svc_refresh_CLIENTCHINA_OEM_x64FRE_zh-cn.iso"
-            # $os_path = "/系统/MSDN/NT10.0_Win11/26100_24H2/1742_RTM/Win11_24H2_China_GGK_Chinese_Simplified_x64.iso"
-        }
+        $os_path = "/系统/MSDN/NT10.0_Win11/26100_24H2/1742_OEM/X23-81948_26100.1742.240906-0331.ge_release_svc_refresh_CLIENTCHINA_OEM_x64FRE_zh-cn.iso"
+        # $os_path = "/系统/MSDN/NT10.0_Win11/26100_24H2/1742_RTM/Win11_24H2_China_GGK_Chinese_Simplified_x64.iso"
         $os_md5 = "e5c05b0215d3e4af2f2fd4ea16252f91"
         $UpdateFromUUP = $true
         $uupid = (Invoke-UUPWebRequestLink `
@@ -639,12 +619,7 @@ switch ($MakeVersion) {
         $os_display = "Windows $os_ver $os_rsversion"
         $os_arch = "x64"
         $os_lang = "zh-cn"
-        try {
-            $os_url = (Invoke-RestMethod -Uri "https://api.gravesoft.dev/msdl/proxy?product_id=2378&sku_id=15004").ProductDownloadOptions[0].Uri
-            $os_file = "Win10_22H2_China_GGK_Chinese_Simplified_x64.iso"
-        } catch {
-            $os_path = "/系统/MSDN/NT10.0_Win10/19045_22H2/2006_RTM/Win10_22H2_China_GGK_Chinese_Simplified_x64.iso"
-        }
+        $os_path = "/系统/MSDN/NT10.0_Win10/19045_22H2/2006_RTM/Win10_22H2_China_GGK_Chinese_Simplified_x64.iso"
         $os_md5 = "67615f768a49392d5e080e25a0036975"
         if ($true -eq $UpdateFromUUP) {
             $uupid = (Invoke-UUPWebRequestLink `
@@ -688,12 +663,7 @@ switch ($MakeVersion) {
         $os_display = "Windows $os_ver $os_rsversion"
         $os_arch = "x86"
         $os_lang = "zh-cn"
-        try {
-            $os_url = (Invoke-RestMethod -Uri "https://api.gravesoft.dev/msdl/proxy?product_id=2378&sku_id=15004").ProductDownloadOptions[1].Uri
-            $os_file = "Win10_22H2_China_GGK_Chinese_Simplified_x32.iso"
-        } catch {
-            $os_path = "/系统/MSDN/NT10.0_Win10/19045_22H2/2006_RTM/Win10_22H2_China_GGK_Chinese_Simplified_x32.iso"
-        }
+        $os_path = "/系统/MSDN/NT10.0_Win10/19045_22H2/2006_RTM/Win10_22H2_China_GGK_Chinese_Simplified_x32.iso"
         $os_md5 = "e85fc523e95410fb49901afab1e02876"
         if ($true -eq $UpdateFromUUP) {
             $uupid = (Invoke-UUPWebRequestLink `
