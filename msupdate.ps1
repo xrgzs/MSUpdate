@@ -256,6 +256,7 @@ switch ($MakeVersion) {
             $os_path = "/系统/MSDN/NT10.0_Win11/26100_24H2/1742_OEM/X23-81947_26100.1742.240906-0331.ge_release_svc_refresh_CLIENTCHINA_OEM_A64FRE_zh-cn.iso"
             # $os_path = "/系统/MSDN/NT10.0_Win11/26100_24H2/1742_RTM/Win11_24H2_China_GGK_Chinese_Simplified_Arm64.iso"
         }
+        $os_md5 = "8cc8080e1c4b08ccd0ad4435ac0f2e5c"
         $UpdateFromUUP = $true
         $uupid = (Invoke-UUPWebRequestLink `
                 -Url "known.php?q=category:w11-25h2-dev" `
@@ -305,6 +306,7 @@ switch ($MakeVersion) {
             $os_path = "/系统/MSDN/NT10.0_Win11/26100_24H2/1742_OEM/X23-81948_26100.1742.240906-0331.ge_release_svc_refresh_CLIENTCHINA_OEM_x64FRE_zh-cn.iso"
             # $os_path = "/系统/MSDN/NT10.0_Win11/26100_24H2/1742_RTM/Win11_24H2_China_GGK_Chinese_Simplified_x64.iso"
         }
+        $os_md5 = "e5c05b0215d3e4af2f2fd4ea16252f91"
         $UpdateFromUUP = $true
         $uupid = (Invoke-UUPWebRequestLink `
                 -Url "known.php?q=category:w11-25h2-dev" `
@@ -354,6 +356,7 @@ switch ($MakeVersion) {
             $os_path = "/系统/MSDN/NT10.0_Win11/26100_24H2/1742_OEM/X23-81947_26100.1742.240906-0331.ge_release_svc_refresh_CLIENTCHINA_OEM_A64FRE_zh-cn.iso"
             # $os_path = "/系统/MSDN/NT10.0_Win11/26100_24H2/1742_RTM/Win11_24H2_China_GGK_Chinese_Simplified_Arm64.iso"
         }
+        $os_md5 = "8cc8080e1c4b08ccd0ad4435ac0f2e5c"
         $UpdateFromUUP = $true
         $uupid = (Invoke-UUPWebRequestLink `
                 -Url "known.php?q=category:w11-24h2" `
@@ -403,6 +406,7 @@ switch ($MakeVersion) {
             $os_path = "/系统/MSDN/NT10.0_Win11/26100_24H2/1742_OEM/X23-81948_26100.1742.240906-0331.ge_release_svc_refresh_CLIENTCHINA_OEM_x64FRE_zh-cn.iso"
             # $os_path = "/系统/MSDN/NT10.0_Win11/26100_24H2/1742_RTM/Win11_24H2_China_GGK_Chinese_Simplified_x64.iso"
         }
+        $os_md5 = "e5c05b0215d3e4af2f2fd4ea16252f91"
         $UpdateFromUUP = $true
         $uupid = (Invoke-UUPWebRequestLink `
                 -Url "known.php?q=category:w11-24h2" `
@@ -446,6 +450,7 @@ switch ($MakeVersion) {
         $os_arch = "arm64"
         $os_lang = "zh-cn"
         $os_path = "/系统/Windows/Win10/Res/26100/arm64/26100.1742.240906-0331.ge_release_svc_refresh_CLIENT_ENTERPRISES_OEM_A64FRE_zh-cn.iso"
+        $os_md5 = "53ec7752fceea6f95329a06955c3ff59"
         $UpdateFromUUP = $true
         $uupid = (Invoke-UUPWebRequestLink `
                 -Url "known.php?q=category:w11-24h2" `
@@ -473,6 +478,7 @@ switch ($MakeVersion) {
         $os_arch = "x64"
         $os_lang = "zh-cn"
         $os_path = "/系统/MSDN/NT10.0_Win11/26100_LTSC2024/1742_RTM/zh-cn_windows_11_enterprise_ltsc_2024_x64_dvd_cff9cd2d.iso"
+        $os_md5 = "1a13ade0178082432f90df951a88842f"
         $UpdateFromUUP = $true
         $uupid = (Invoke-UUPWebRequestLink `
                 -Url "known.php?q=category:w11-24h2" `
@@ -500,6 +506,7 @@ switch ($MakeVersion) {
         $os_arch = "arm64"
         $os_lang = "zh-cn"
         $os_path = "/系统/Windows/Win10/Res/22621/22621.1.220506-1250.NI_RELEASE_CLIENTCHINA_OEM_A64FRE_ZH-CN.ISO"
+        $os_md5 = "6ef5a0a8eb488a8064d8ca33f64ff835"
         $uupid = (Invoke-UUPWebRequestLink `
                 -Url "known.php?q=category:w11-23h2" `
                 -LinkFilter @("selectlang.php?id=*") `
@@ -542,6 +549,7 @@ switch ($MakeVersion) {
         $os_arch = "x64"
         $os_lang = "zh-cn"
         $os_path = "/系统/MSDN/NT10.0_Win11/22631_23H2/2861_202312/Win11_23H2_China_GGK_Chinese_Simplified_x64v2.iso"
+        $os_md5 = "99835f9f2efee5f30d0348f749484a88"
         if ($true -eq $UpdateFromUUP) {
             $uupid = (Invoke-UUPWebRequestLink `
                     -Url "known.php?q=category:w11-23h2" `
@@ -594,6 +602,7 @@ switch ($MakeVersion) {
         $os_arch = "arm64"
         $os_lang = "zh-cn"
         $os_path = "/系统/Windows/Win10/Res/19041/arm64/19041.1.191206-1406.VB_RELEASE_CLIENTCHINA_OEM_A64FRE_ZH-CN.ISO"
+        $os_md5 = "d84ddb4150d7c699a5dabf91a1430786"
         $UpdateFromUUP = $true
         $uupid = (Invoke-UUPWebRequestLink `
                 -Url "known.php?q=category:w10-22h2" `
@@ -636,6 +645,7 @@ switch ($MakeVersion) {
         } catch {
             $os_path = "/系统/MSDN/NT10.0_Win10/19045_22H2/2006_RTM/Win10_22H2_China_GGK_Chinese_Simplified_x64.iso"
         }
+        $os_md5 = "67615f768a49392d5e080e25a0036975"
         if ($true -eq $UpdateFromUUP) {
             $uupid = (Invoke-UUPWebRequestLink `
                     -Url "known.php?q=category:w10-22h2" `
@@ -684,6 +694,7 @@ switch ($MakeVersion) {
         } catch {
             $os_path = "/系统/MSDN/NT10.0_Win10/19045_22H2/2006_RTM/Win10_22H2_China_GGK_Chinese_Simplified_x32.iso"
         }
+        $os_md5 = "e85fc523e95410fb49901afab1e02876"
         if ($true -eq $UpdateFromUUP) {
             $uupid = (Invoke-UUPWebRequestLink `
                     -Url "known.php?q=category:w10-22h2" `
@@ -727,6 +738,7 @@ switch ($MakeVersion) {
         $os_arch = "x64"
         $os_lang = "zh-cn"
         $os_path = "/系统/MSDN/NT10.0_Win10/19044_LTSC2021/zh-cn_windows_10_enterprise_ltsc_2021_x64_dvd_033b7312.iso"
+        $os_md5 = "2579b3865c0591ead3a2b45af3cabeee"
         if ($true -eq $UpdateFromUUP) {
             $uupid = (Invoke-UUPWebRequestLink `
                     -Url "known.php?q=category:w10-21h2" `
@@ -749,6 +761,7 @@ switch ($MakeVersion) {
         $os_arch = "x86"
         $os_lang = "zh-cn"
         $os_path = "/系统/MSDN/NT10.0_Win10/19044_LTSC2021/zh-cn_windows_10_enterprise_ltsc_2021_x86_dvd_30600d9c.iso"
+        $os_md5 = "a4f6f8f67d9a59ad462ff51506c5cd3a"
         if ($true -eq $UpdateFromUUP) {
             $uupid = (Invoke-UUPWebRequestLink `
                     -Url "known.php?q=category:w10-21h2" `
@@ -771,6 +784,7 @@ switch ($MakeVersion) {
         $os_arch = "x64"
         $os_lang = "zh-cn"
         $os_path = "/系统/MSDN/NT10.0_Win10/17763_LTSC2019/1_RTM/cn_windows_10_enterprise_ltsc_2019_x64_dvd_2efc9ac2.iso"
+        $os_md5 = "2eb4d2bf684f3852458991c654907d12"
         if ($true -eq $UpdateFromUUP) {
             $uupid = (Invoke-UUPWebRequestLink `
                     -Url "known.php?q=category:w10-1809" `
@@ -793,6 +807,7 @@ switch ($MakeVersion) {
         $os_arch = "x86"
         $os_lang = "zh-cn"
         $os_path = "/系统/MSDN/NT10.0_Win10/17763_LTSC2019/1_RTM/cn_windows_10_enterprise_ltsc_2019_x86_dvd_2908ee10.iso"
+        $os_md5 = "c5d58f64093ed0693aa770e3f7b98e13"
         if ($true -eq $UpdateFromUUP) {
             $uupid = (Invoke-UUPWebRequestLink `
                     -Url "known.php?q=category:w10-1809" `
@@ -815,6 +830,7 @@ switch ($MakeVersion) {
         $os_arch = "x64"
         $os_lang = "zh-cn"
         $os_path = "/系统/MSDN/NT10.0_Win10/14393_LTSB2016/cn_windows_10_enterprise_2016_ltsb_x64_dvd_9060409.iso"
+        $os_md5 = "0343dc55184a406af9a8ab0d964cccc6"
         $WUScript = "https://raw.githubusercontent.com/adavak/Win_ISO_Patching_Scripts/master/Scripts/script_14393_x64.meta4"
         $NETScript = "https://raw.githubusercontent.com/adavak/Win_ISO_Patching_Scripts/master/Scripts/netfx4.8/script_netfx4.8_14393_x64.meta4"
         $MultiEdition = $false
@@ -829,7 +845,9 @@ switch ($MakeVersion) {
         $os_arch = "x86"
         $os_lang = "zh-cn"
         # $os_path = "/系统/MSDN/NT10.0_Win10/14393_LTSB2016/cn_windows_10_enterprise_2016_ltsb_x86_dvd_9057089.iso"
+        # $os_md5 = "e628fac2494476612967fdd86ae1b547"
         $os_path = "/系统/Windows/Win10/LTSB2016/cn_windows_10_enterprise_2016_ltsb_x86_dvd_9057089_FixSSShim.iso"
+        $os_md5 = "dd23b8a175d76564c257b189fa7a3916"
         $WUScript = "https://raw.githubusercontent.com/adavak/Win_ISO_Patching_Scripts/master/Scripts/script_14393_x86.meta4"
         $NETScript = "https://raw.githubusercontent.com/adavak/Win_ISO_Patching_Scripts/master/Scripts/netfx4.8/script_netfx4.8_14393_x86.meta4"
         $MultiEdition = $false
@@ -1324,6 +1342,22 @@ if ($null -ne $os_path) {
 Write-Host "Original system file: $os_file
 Original system download link: $os_url
 "
+
+Write-Host "Downloading original system image..."
+Invoke-Aria2Download -Uri $os_url -Destination ".\temp\" -Name $os_file -Big
+
+Write-Host "Verifying hash of original system image..."
+
+if ($os_md5) {
+    $downloadedMd5 = Get-FileHash -Path ".\temp\$os_file" -Algorithm MD5 | Select-Object -ExpandProperty Hash
+    Write-Host "Expected MD5: $os_md5"
+    Write-Host "Actual   MD5: $downloadedMd5"
+    if ($downloadedMd5 -ne $os_md5) {
+        Write-Error "MD5 check failed, the file may be corrupted."
+    } else {
+        Write-Host "MD5 check passed."
+    }
+}
 
 # $isopath = Resolve-Path -Path ".\temp\$os_file"
 # $isomount = (Mount-DiskImage -ImagePath $isopath -PassThru | Get-Volume).DriveLetter
