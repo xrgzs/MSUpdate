@@ -1,5 +1,4 @@
 function Invoke-UUPWebRequest {
-    [OutputType([Microsoft.PowerShell.Commands.BasicHtmlWebResponseObject])]
     param (
         [string]$Url
     )
