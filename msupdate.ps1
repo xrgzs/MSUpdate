@@ -793,12 +793,15 @@ if ($true -eq $SkipCheck) {
     Invoke-WebRequest -Uri "https://github.com/user-attachments/files/17200856/appraiserres.zip" -OutFile ".\temp\appraiserres.zip"
     Expand-Archive -Path ".\temp\appraiserres.zip" -DestinationPath ".\temp"
 }
+if ($null -eq $Cleanup) { $Cleanup = $true }
 
 # abbodi1406/W10UI, auto inject hook
 $W10UI = "@chcp 65001`n"
 $W10UI += (Invoke-WebRequest -Uri "https://raw.githubusercontent.com/abbodi1406/BatUtil/master/W10UI/W10UI.cmd").Content
 $W10UI = $W10UI.Replace("if %AddDrivers%==1 call :doDrv", "call %~dp0hook_beforewim.cmd`nif %AddDrivers%==1 call :doDrv")
-
+if ($Cleanup) {
+    $W10UI = $W10UI.Replace("set Cleanup=0", "set Cleanup=1")
+}
 # write hook script
 @"
 echo.
@@ -1169,7 +1172,6 @@ if ($os_md5) {
 
 .\bin\wimlib-imagex.exe info ".\ISO\sources\install.wim" --extract-xml ".\temp\WIMInfo2.xml"
 Get-Content ".\temp\WIMInfo2.xml"
-if ($null -eq $Cleanup) { $Cleanup = $true }
 # write W10UI conf
 @"
 [W10UI-Configuration]
