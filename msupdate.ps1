@@ -242,7 +242,6 @@ switch ($MakeVersion) {
             -Url "getfile.php?id=$uupid&file=Microsoft-Windows-WirelessDisplay-FOD-Package-amd64-zh-CN.cab" `
             -ContentFilter @("*mp.microsoft.com*") `
             -FirstLink
-        $MultiEdition = $false
     }
     "w1123h2a64" {
         # make 11 23h2 arm64
