@@ -2,59 +2,9 @@ $ErrorActionPreference = 'Stop'
 
 Import-Module "$PSScriptRoot\Modules\request.psm1"
 Import-Module "$PSScriptRoot\Modules\aria2.psm1"
+Import-Module "$PSScriptRoot\Modules\msstore.psm1"
 
 # Define Helper Functions
-function Get-Appx($Name) {
-    $Body = @{
-        type = 'PackageFamilyName'
-        url  = $Name + '_8wekyb3d8bbwe'
-        ring = 'RP'
-        lang = 'zh-CN'
-    }
-    $msstoreApis = @(
-        "https://api.xrgzs.top/msstore/GetFiles",
-        "https://store.rg-adguard.net/api/GetFiles"
-    )
-    
-    while ($true) {
-        try {
-            foreach ($url in $msstoreApis) {
-                try {
-                    $obj = Invoke-WebRequest -Uri $url `
-                        -Method "POST" `
-                        -ContentType "application/x-www-form-urlencoded" `
-                        -Body $Body `
-                        -ConnectionTimeoutSeconds 5 -OperationTimeoutSeconds 5
-                    break
-                } catch {
-                    if ($url -eq $msstoreApis[-1]) {
-                        throw "All requests failed. $_"
-                    }
-                    Write-Warning "Request failed with $url, trying next url... ($_)"
-                    continue
-                }
-            }
-            foreach ($link in $obj.Links) {
-                if ($link.outerHTML -match '(?<=<a\b[^>]*>).*?(?=</a>)') {
-                    $linkText = $Matches[0]
-                    if ($linkText -match '(arm64|x64|x86|neutral).*\.(appx|appxbundle|msixbundle)\b') {
-                        Write-Debug "$linkText : $($link.href)"
-                        if (Test-Path -Path $linkText) {
-                            Write-Warning "Already exists, skiping $linkText"
-                        } else {
-                            Write-Host "== $linkText ($($link.href))"
-                            Invoke-WebRequest -Uri $link.href -OutFile "$PSScriptRoot\msstore\$linkText"
-                        }
-                    }
-                }
-            }
-            break
-        } catch {
-            Write-Warning "Request failed, retrying in 3 seconds... ($_)"
-            Start-Sleep -Seconds 3
-        }
-    }
-}
 
 # set system info
 switch ($MakeVersion) {
@@ -770,21 +720,23 @@ if ($true -eq $msstore) {
     Remove-Item -Path "$PSScriptRoot\msstore" -Force -ErrorAction SilentlyContinue
     New-Item -ItemType Directory -Path "$PSScriptRoot\msstore" -ErrorAction SilentlyContinue
     if ($os_edition -like "*LTS*") {
-        Get-Appx 'Microsoft.VCLibs.140.00'
+        # Get-Appx 'Microsoft.VCLibs.140.00'
+        Invoke-Aria2Download -Uri "https://aka.ms/Microsoft.VCLibs.$os_arch.14.00.Desktop.appx" -Destination "$PSScriptRoot\msstore\Microsoft.VCLibs.140.00.msix"
     } else {
-        Get-Appx 'Microsoft.DesktopAppInstaller'
-        Get-Appx 'Microsoft.WindowsStore'
-        Get-Appx 'Microsoft.WindowsTerminal'
+        Get-Appx '9NBLGGH4NNS1' # 'Microsoft.DesktopAppInstaller'
+        Get-Appx '9WZDNCRFJBMP' # 'Microsoft.WindowsStore'
+        Get-Appx '9N0DX20HK701' # 'Microsoft.WindowsTerminal'
     }
     $MSStoreScript = @"
-for %%a in (%~dp0msstore\Microsoft.UI.Xaml.2.*_8wekyb3d8bbwe.Appx) do call :Add-ProvisionedAppxPackage "%%a"
-for %%a in (%~dp0msstore\Microsoft.VCLibs.140.00.UWPDesktop_14.0.*_8wekyb3d8bbwe.Appx) do call :Add-ProvisionedAppxPackage "%%a"
-for %%a in (%~dp0msstore\Microsoft.VCLibs.140.00_14.0.*_8wekyb3d8bbwe.Appx) do call :Add-ProvisionedAppxPackage "%%a"
-for %%a in (%~dp0msstore\Microsoft.NET.Native.Runtime.2.*_8wekyb3d8bbwe.Appx) do call :Add-ProvisionedAppxPackage "%%a"
-for %%a in (%~dp0msstore\Microsoft.NET.Native.Framework.2.*_8wekyb3d8bbwe.Appx) do call :Add-ProvisionedAppxPackage "%%a"
-for %%a in (%~dp0msstore\Microsoft.WindowsStore_*_8wekyb3d8bbwe.Msixbundle) do call :Add-ProvisionedAppxPackage "%%a"
-for %%a in (%~dp0msstore\Microsoft.DesktopAppInstaller_*_8wekyb3d8bbwe.Msixbundle) do call :Add-ProvisionedAppxPackage "%%a"
-for %%a in (%~dp0msstore\Microsoft.WindowsTerminal_*_8wekyb3d8bbwe.Msixbundle) do call :Add-ProvisionedAppxPackage "%%a"
+for %%a in (%~dp0msstore\Microsoft.VCLibs.140.00.UWPDesktop*.Appx) do call :Add-ProvisionedAppxPackage "%%a"
+for %%a in (%~dp0msstore\Microsoft.VCLibs.140.00*.Appx) do call :Add-ProvisionedAppxPackage "%%a"
+for %%a in (%~dp0msstore\Microsoft.VCLibs.140.00*.msix) do call :Add-ProvisionedAppxPackage "%%a"
+for %%a in (%~dp0msstore\Microsoft.UI.Xaml*.Appx) do call :Add-ProvisionedAppxPackage "%%a"
+for %%a in (%~dp0msstore\Microsoft.NET.Native.Runtime*.Appx) do call :Add-ProvisionedAppxPackage "%%a"
+for %%a in (%~dp0msstore\Microsoft.NET.Native.Framework*.Appx) do call :Add-ProvisionedAppxPackage "%%a"
+for %%a in (%~dp0msstore\Microsoft.WindowsStore*.Msixbundle) do call :Add-ProvisionedAppxPackage "%%a"
+for %%a in (%~dp0msstore\Microsoft.DesktopAppInstaller*.Msixbundle) do call :Add-ProvisionedAppxPackage "%%a"
+for %%a in (%~dp0msstore\Microsoft.WindowsTerminal*.Msixbundle) do call :Add-ProvisionedAppxPackage "%%a"
 "@
 }
 
