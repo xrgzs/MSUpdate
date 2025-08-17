@@ -275,7 +275,7 @@ function Get-Appx {
       # Extract filename from URL or use the ID
       $fileName = $item.FileName 
 
-      if ($fileName -notmatch '(arm64|x64|x86|neutral).*\.(appx|appxbundle|msixbundle)\b') {
+      if ($fileName -notmatch '(arm64|x64|x86|neutral).*\.(appx|appxbundle|msix|msixbundle)\b') {
         Write-Host "Invalid filename: $fileName" -ForegroundColor Red
         continue
       }
