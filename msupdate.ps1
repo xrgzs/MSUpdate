@@ -24,7 +24,7 @@ switch ($MakeVersion) {
         $uupid = (Invoke-UUPWebRequestLink `
                 -Url "known.php?q=category:w11-25h2-dev" `
                 -LinkFilter @("*selectlang.php?id=*") `
-                -ContentFilter @("*Windows 11*arm64*") `
+                -ContentFilter @("*Windows 11,*arm64*") `
                 -FirstLink
         ).Replace("selectlang.php?id=", "")
         $Miracast = Invoke-UUPWebRequestLink `
@@ -69,7 +69,7 @@ switch ($MakeVersion) {
         $uupid = (Invoke-UUPWebRequestLink `
                 -Url "known.php?q=category:w11-25h2-dev" `
                 -LinkFilter @("*selectlang.php?id=*") `
-                -ContentFilter @("*Windows 11*amd64*") `
+                -ContentFilter @("*Windows 11,*amd64*") `
                 -FirstLink
         ).Replace("selectlang.php?id=", "")
         $Miracast = Invoke-UUPWebRequestLink `
@@ -114,7 +114,7 @@ switch ($MakeVersion) {
         $uupid = (Invoke-UUPWebRequestLink `
                 -Url "known.php?q=category:w11-24h2" `
                 -LinkFilter @("*selectlang.php?id=*") `
-                -ContentFilter @("*Windows 11*arm64*") `
+                -ContentFilter @("*Windows 11,*arm64*") `
                 -FirstLink
         ).Replace("selectlang.php?id=", "")
         $Miracast = Invoke-UUPWebRequestLink `
@@ -159,7 +159,7 @@ switch ($MakeVersion) {
         $uupid = (Invoke-UUPWebRequestLink `
                 -Url "known.php?q=category:w11-24h2" `
                 -LinkFilter @("*selectlang.php?id=*") `
-                -ContentFilter @("*Windows 11*amd64*") `
+                -ContentFilter @("*Windows 11,*amd64*") `
                 -FirstLink
         ).Replace("selectlang.php?id=", "")
         $Miracast = Invoke-UUPWebRequestLink `
@@ -203,7 +203,7 @@ switch ($MakeVersion) {
         $uupid = (Invoke-UUPWebRequestLink `
                 -Url "known.php?q=category:w11-24h2" `
                 -LinkFilter @("*selectlang.php?id=*") `
-                -ContentFilter @("*Windows 11*arm64*") `
+                -ContentFilter @("*Windows 11,*arm64*") `
                 -FirstLink
         ).Replace("selectlang.php?id=", "")
         $iexplorer = Invoke-UUPWebRequestLink `
@@ -231,7 +231,7 @@ switch ($MakeVersion) {
         $uupid = (Invoke-UUPWebRequestLink `
                 -Url "known.php?q=category:w11-24h2" `
                 -LinkFilter @("*selectlang.php?id=*") `
-                -ContentFilter @("*Windows 11*amd64*") `
+                -ContentFilter @("*Windows 11,*amd64*") `
                 -FirstLink
         ).Replace("selectlang.php?id=", "")
         $iexplorer = Invoke-UUPWebRequestLink `
@@ -354,7 +354,7 @@ switch ($MakeVersion) {
         $uupid = (Invoke-UUPWebRequestLink `
                 -Url "known.php?q=category:w10-22h2" `
                 -LinkFilter @("*selectlang.php?id=*") `
-                -ContentFilter @("*Feature*Windows 10*arm64*") `
+                -ContentFilter @("*Windows 10,*arm64*") `
                 -FirstLink
         ).Replace("selectlang.php?id=", "")
         $Miracast = Invoke-UUPWebRequestLink `
@@ -392,7 +392,7 @@ switch ($MakeVersion) {
             $uupid = (Invoke-UUPWebRequestLink `
                     -Url "known.php?q=category:w10-22h2" `
                     -LinkFilter @("*selectlang.php?id=*") `
-                    -ContentFilter @("*Feature*Windows 10*amd64*") `
+                    -ContentFilter @("*Windows 10,*amd64*") `
                     -FirstLink
             ).Replace("selectlang.php?id=", "")
             $Miracast = Invoke-UUPWebRequestLink `
@@ -436,7 +436,7 @@ switch ($MakeVersion) {
             $uupid = (Invoke-UUPWebRequestLink `
                     -Url "known.php?q=category:w10-22h2" `
                     -LinkFilter @("*selectlang.php?id=*") `
-                    -ContentFilter @("*Feature*Windows 10*x86*") `
+                    -ContentFilter @("*Windows 10,*x86*") `
                     -FirstLink
             ).Replace("selectlang.php?id=", "")
             $Miracast = Invoke-UUPWebRequestLink `
@@ -480,7 +480,7 @@ switch ($MakeVersion) {
             $uupid = (Invoke-UUPWebRequestLink `
                     -Url "known.php?q=category:w10-21h2" `
                     -LinkFilter @("*selectlang.php?id=*") `
-                    -ContentFilter @("*Windows 10*amd64*") `
+                    -ContentFilter @("*Windows 10,*amd64*") `
                     -FirstLink
             ).Replace("selectlang.php?id=", "")
         } else {
@@ -503,7 +503,7 @@ switch ($MakeVersion) {
             $uupid = (Invoke-UUPWebRequestLink `
                     -Url "known.php?q=category:w10-21h2" `
                     -LinkFilter @("*selectlang.php?id=*") `
-                    -ContentFilter @("*Windows 10*x86*") `
+                    -ContentFilter @("*Windows 10,*x86*") `
                     -FirstLink
             ).Replace("selectlang.php?id=", "")
         } else {
