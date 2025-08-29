@@ -1,11 +1,11 @@
 w11-25h2-dev:
-  Version: "26200.5761"
+  Version: "26220.5770"
   Commands:
   - gh workflow run make.yml -f makeversion=w1125h2a64 -f UpdateFromUUP=true -f MultiEdition=true -f SkipCheck=false
   - gh workflow run make.yml -f makeversion=w1125h264 -f UpdateFromUUP=true -f MultiEdition=true -f SkipCheck=false
   - gh workflow run make.yml -f makeversion=w1125h264 -f UpdateFromUUP=true -f MultiEdition=true -f SkipCheck=true
 w11-24h2:
-  Version: "26100.5067"
+  Version: "26100.5074"
   Commands:
   - gh workflow run make.yml -f makeversion=w1124h2a64 -f UpdateFromUUP=true -f MultiEdition=true -f SkipCheck=false
   - gh workflow run make.yml -f makeversion=w1124h264 -f UpdateFromUUP=true -f MultiEdition=true -f SkipCheck=false
