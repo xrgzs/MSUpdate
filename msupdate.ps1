@@ -22,7 +22,7 @@ switch ($MakeVersion) {
         $os_md5 = "8cc8080e1c4b08ccd0ad4435ac0f2e5c"
         $UpdateFromUUP = $true
         $uupid = (Invoke-UUPWebRequestLink `
-                -Url "known.php?q=category:w11-25h2-dev" `
+                -Url "known.php?q=category:w11-25h2" `
                 -LinkFilter @("*selectlang.php?id=*") `
                 -ContentFilter @("*Windows 11,*arm64*") `
                 -FirstLink
@@ -67,7 +67,7 @@ switch ($MakeVersion) {
         $os_md5 = "e5c05b0215d3e4af2f2fd4ea16252f91"
         $UpdateFromUUP = $true
         $uupid = (Invoke-UUPWebRequestLink `
-                -Url "known.php?q=category:w11-25h2-dev" `
+                -Url "known.php?q=category:w11-25h2" `
                 -LinkFilter @("*selectlang.php?id=*") `
                 -ContentFilter @("*Windows 11,*amd64*") `
                 -FirstLink
