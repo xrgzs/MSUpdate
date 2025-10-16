@@ -239,7 +239,7 @@ function Get-Appx {
     [string]$ProductNumber,
         
     [Parameter(Mandatory = $false)]
-    [string]$OutputPath = "$PSScriptRoot\msstore\$linkText",
+    [string]$OutputPath = ".\msstore\$linkText",
         
     [switch]$Latest
   )
