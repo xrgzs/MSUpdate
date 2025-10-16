@@ -46,16 +46,16 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Change DNS Server
-        shell: pwsh
-        run: |
-          $newDnsServers = @('1.1.1.1', '8.8.8.8')
-          $networkAdapters = Get-NetAdapter | Where-Object { $_.Status -eq 'Up' }
-          foreach ($adapter in $networkAdapters) {
-              Set-DnsClientServerAddress -InterfaceIndex $adapter.ifIndex -ResetServerAddresses
-              Set-DnsClientServerAddress -InterfaceIndex $adapter.ifIndex -ServerAddresses $newDnsServers
-          }
-          ipconfig /flushdns
+      # - name: Change DNS Server
+      #   shell: pwsh
+      #   run: |
+      #     $newDnsServers = @('1.1.1.1', '8.8.8.8')
+      #     $networkAdapters = Get-NetAdapter | Where-Object { $_.Status -eq 'Up' }
+      #     foreach ($adapter in $networkAdapters) {
+      #         Set-DnsClientServerAddress -InterfaceIndex $adapter.ifIndex -ResetServerAddresses
+      #         Set-DnsClientServerAddress -InterfaceIndex $adapter.ifIndex -ServerAddresses $newDnsServers
+      #     }
+      #     ipconfig /flushdns
 
       # - name: Install Cloudflare WRAP
       #   shell: pwsh
