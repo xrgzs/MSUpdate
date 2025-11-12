@@ -225,4 +225,4 @@ function Get-UUPFileLink {
     return $file.url
 }
 
-Export-ModuleMember -Function Invoke-UUPWebRequest, Invoke-UUPWebRequestLink, Request-Update, Get-UUPFiles, Get-UUPFile, Invoke-UUPApiRequest
+Export-ModuleMember -Function Invoke-UUPWebRequest, Invoke-UUPWebRequestLink, Request-Update, Get-UUPFiles, Get-UUPFile, Get-UUPFileLink, Invoke-UUPApiRequest
