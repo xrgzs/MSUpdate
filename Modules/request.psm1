@@ -4,10 +4,10 @@ function Invoke-UUPWebRequest {
     )
     $RetryCount = 0
     while ($RetryCount -lt 10) {
-        if (($RetryCount) % 2 -eq 0) {
-            $Entrypoint = "https://uupdump.net"
-        } else {
-            $Entrypoint = "https://uup.xrgzs.top"
+        switch ($RetryCount % 3) {
+            0 { $Entrypoint = "https://uupdump.net" }
+            1 { $Entrypoint = "https://uup.xrgzs.top" }
+            2 { $Entrypoint = "https://uup.671001.xyz" }
         }
         $RequestUri = "$Entrypoint/$Url"
         Write-Host -ForegroundColor Yellow "Attempting request to $RequestUri (Attempt $($RetryCount + 1))..."
