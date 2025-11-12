@@ -27,30 +27,12 @@ switch ($MakeVersion) {
                 -ContentFilter @("*Windows 11,*arm64*") `
                 -FirstLink
         ).Replace("selectlang.php?id=", "")
-        $Miracast = Invoke-UUPWebRequestLink `
-            -Url "getfile.php?id=$uupid&file=Microsoft-Windows-WirelessDisplay-FOD-Package-arm64.cab" `
-            -ContentFilter @("*mp.microsoft.com*") `
-            -FirstLink
-        $MiracastLP = Invoke-UUPWebRequestLink `
-            -Url "getfile.php?id=$uupid&file=Microsoft-Windows-WirelessDisplay-FOD-Package-arm64-zh-CN.cab" `
-            -ContentFilter @("*mp.microsoft.com*") `
-            -FirstLink
-        $iexplorer = Invoke-UUPWebRequestLink `
-            -Url "getfile.php?id=$uupid&file=Microsoft-Windows-InternetExplorer-Optional-Package-arm64.cab" `
-            -ContentFilter @("*mp.microsoft.com*") `
-            -FirstLink
-        $iexplorerLP = Invoke-UUPWebRequestLink `
-            -Url "getfile.php?id=$uupid&file=Microsoft-Windows-WirelessDisplay-FOD-Package-arm64-zh-CN.cab" `
-            -ContentFilter @("*mp.microsoft.com*") `
-            -FirstLink
-        $entgpack = Invoke-UUPWebRequestLink `
-            -Url "getfile.php?id=$uupid&file=Microsoft-Windows-EditionSpecific-EnterpriseG-Package.ESD" `
-            -ContentFilter @("*mp.microsoft.com*") `
-            -FirstLink
-        $entgLP = Invoke-UUPWebRequestLink `
-            -Url "getfile.php?id=$uupid&file=Microsoft-Windows-Client-LanguagePack-Package-arm64-zh-CN.esd" `
-            -ContentFilter @("*mp.microsoft.com*") `
-            -FirstLink
+        $Miracast = Get-UUPFileLink -Id $uupid -FileName "Microsoft-Windows-WirelessDisplay-FOD-Package-arm64.cab"
+        $MiracastLP = Get-UUPFileLink -Id $uupid -FileName "Microsoft-Windows-WirelessDisplay-FOD-Package-arm64-zh-CN.cab"
+        $iexplorer = Get-UUPFileLink -Id $uupid -FileName "Microsoft-Windows-InternetExplorer-Optional-Package-arm64.cab"
+        $iexplorerLP = Get-UUPFileLink -Id $uupid -FileName "Microsoft-Windows-InternetExplorer-Optional-Package-arm64-zh-CN.cab"
+        $entgpack = Get-UUPFileLink -Id $uupid -FileName "Microsoft-Windows-EditionSpecific-EnterpriseG-Package.ESD"
+        $entgLP = Get-UUPFileLink -Id $uupid -FileName "Microsoft-Windows-Client-LanguagePack-Package-arm64-zh-CN.esd"
         $msstore = $true
     }
     "w1125h264" {
@@ -72,30 +54,12 @@ switch ($MakeVersion) {
                 -ContentFilter @("*Windows 11,*amd64*") `
                 -FirstLink
         ).Replace("selectlang.php?id=", "")
-        $Miracast = Invoke-UUPWebRequestLink `
-            -Url "getfile.php?id=$uupid&file=Microsoft-Windows-WirelessDisplay-FOD-Package-amd64.cab" `
-            -ContentFilter @("*mp.microsoft.com*") `
-            -FirstLink
-        $MiracastLP = Invoke-UUPWebRequestLink `
-            -Url "getfile.php?id=$uupid&file=Microsoft-Windows-WirelessDisplay-FOD-Package-amd64-zh-CN.cab" `
-            -ContentFilter @("*mp.microsoft.com*") `
-            -FirstLink
-        $iexplorer = Invoke-UUPWebRequestLink `
-            -Url "getfile.php?id=$uupid&file=Microsoft-Windows-InternetExplorer-Optional-Package-amd64.cab" `
-            -ContentFilter @("*mp.microsoft.com*") `
-            -FirstLink
-        $iexplorerLP = Invoke-UUPWebRequestLink `
-            -Url "getfile.php?id=$uupid&file=Microsoft-Windows-WirelessDisplay-FOD-Package-amd64-zh-CN.cab" `
-            -ContentFilter @("*mp.microsoft.com*") `
-            -FirstLink
-        $entgpack = Invoke-UUPWebRequestLink `
-            -Url "getfile.php?id=$uupid&file=Microsoft-Windows-EditionSpecific-EnterpriseG-Package.ESD" `
-            -ContentFilter @("*mp.microsoft.com*") `
-            -FirstLink
-        $entgLP = Invoke-UUPWebRequestLink `
-            -Url "getfile.php?id=$uupid&file=Microsoft-Windows-Client-LanguagePack-Package-amd64-zh-CN.esd" `
-            -ContentFilter @("*mp.microsoft.com*") `
-            -FirstLink
+        $Miracast = Get-UUPFileLink -Id $uupid -FileName "Microsoft-Windows-WirelessDisplay-FOD-Package-amd64.cab"
+        $MiracastLP = Get-UUPFileLink -Id $uupid -FileName "Microsoft-Windows-WirelessDisplay-FOD-Package-amd64-zh-CN.cab"
+        $iexplorer = Get-UUPFileLink -Id $uupid -FileName "Microsoft-Windows-InternetExplorer-Optional-Package-amd64.cab"
+        $iexplorerLP = Get-UUPFileLink -Id $uupid -FileName "Microsoft-Windows-InternetExplorer-Optional-Package-amd64-zh-CN.cab"
+        $entgpack = Get-UUPFileLink -Id $uupid -FileName "Microsoft-Windows-EditionSpecific-EnterpriseG-Package.ESD"
+        $entgLP = Get-UUPFileLink -Id $uupid -FileName "Microsoft-Windows-Client-LanguagePack-Package-amd64-zh-CN.esd"
         $msstore = $true
     }
     "w11lt24a64" {
@@ -116,14 +80,8 @@ switch ($MakeVersion) {
                 -ContentFilter @("*Windows 11,*arm64*") `
                 -FirstLink
         ).Replace("selectlang.php?id=", "")
-        $iexplorer = Invoke-UUPWebRequestLink `
-            -Url "getfile.php?id=$uupid&file=Microsoft-Windows-InternetExplorer-Optional-Package-arm64.cab" `
-            -ContentFilter @("*mp.microsoft.com*") `
-            -FirstLink
-        $iexplorerLP = Invoke-UUPWebRequestLink `
-            -Url "getfile.php?id=$uupid&file=Microsoft-Windows-WirelessDisplay-FOD-Package-arm64-zh-CN.cab" `
-            -ContentFilter @("*mp.microsoft.com*") `
-            -FirstLink
+        $iexplorer = Get-UUPFileLink -Id $uupid -FileName "Microsoft-Windows-InternetExplorer-Optional-Package-arm64.cab"
+        $iexplorerLP = Get-UUPFileLink -Id $uupid -FileName "Microsoft-Windows-InternetExplorer-Optional-Package-arm64-zh-CN.cab"
         $MultiEdition = $false
     }
     "w11lt2464" {
@@ -144,14 +102,8 @@ switch ($MakeVersion) {
                 -ContentFilter @("*Windows 11,*amd64*") `
                 -FirstLink
         ).Replace("selectlang.php?id=", "")
-        $iexplorer = Invoke-UUPWebRequestLink `
-            -Url "getfile.php?id=$uupid&file=Microsoft-Windows-InternetExplorer-Optional-Package-amd64.cab" `
-            -ContentFilter @("*mp.microsoft.com*") `
-            -FirstLink
-        $iexplorerLP = Invoke-UUPWebRequestLink `
-            -Url "getfile.php?id=$uupid&file=Microsoft-Windows-WirelessDisplay-FOD-Package-amd64-zh-CN.cab" `
-            -ContentFilter @("*mp.microsoft.com*") `
-            -FirstLink
+        $iexplorer = Get-UUPFileLink -Id $uupid -FileName "Microsoft-Windows-InternetExplorer-Optional-Package-amd64.cab"
+        $iexplorerLP = Get-UUPFileLink -Id $uupid -FileName "Microsoft-Windows-InternetExplorer-Optional-Package-amd64-zh-CN.cab"
     }
     "w1123h2a64" {
         # make 11 23h2 arm64
@@ -170,30 +122,12 @@ switch ($MakeVersion) {
                 -ContentFilter @("*Windows 11*arm64*") `
                 -FirstLink
         ).Replace("selectlang.php?id=", "")
-        $Miracast = Invoke-UUPWebRequestLink `
-            -Url "getfile.php?id=$uupid&file=Microsoft-Windows-WirelessDisplay-FOD-Package-arm64.cab" `
-            -ContentFilter @("*mp.microsoft.com*") `
-            -FirstLink
-        $MiracastLP = Invoke-UUPWebRequestLink `
-            -Url "getfile.php?id=$uupid&file=Microsoft-Windows-WirelessDisplay-FOD-Package-arm64-zh-cn.cab" `
-            -ContentFilter @("*mp.microsoft.com*") `
-            -FirstLink
-        $iexplorer = Invoke-UUPWebRequestLink `
-            -Url "getfile.php?id=$uupid&file=Microsoft-Windows-InternetExplorer-Optional-Package-arm64.cab" `
-            -ContentFilter @("*mp.microsoft.com*") `
-            -FirstLink
-        $iexplorerLP = Invoke-UUPWebRequestLink `
-            -Url "getfile.php?id=$uupid&file=Microsoft-Windows-InternetExplorer-Optional-Package-arm64-zh-cn.cab" `
-            -ContentFilter @("*mp.microsoft.com*") `
-            -FirstLink
-        $entgpack = Invoke-UUPWebRequestLink `
-            -Url "getfile.php?id=$uupid&file=Microsoft-Windows-EditionSpecific-EnterpriseG-Package.ESD" `
-            -ContentFilter @("*mp.microsoft.com*") `
-            -FirstLink
-        $entgLP = Invoke-UUPWebRequestLink `
-            -Url "getfile.php?id=$uupid&file=Microsoft-Windows-Client-LanguagePack-Package_zh-cn-arm64-zh-cn.esd" `
-            -ContentFilter @("*mp.microsoft.com*") `
-            -FirstLink
+        $Miracast = Get-UUPFileLink -Id $uupid -FileName "Microsoft-Windows-WirelessDisplay-FOD-Package-arm64.cab"
+        $MiracastLP = Get-UUPFileLink -Id $uupid -FileName "Microsoft-Windows-WirelessDisplay-FOD-Package-arm64-zh-CN.cab"
+        $iexplorer = Get-UUPFileLink -Id $uupid -FileName "Microsoft-Windows-InternetExplorer-Optional-Package-arm64.cab"
+        $iexplorerLP = Get-UUPFileLink -Id $uupid -FileName "Microsoft-Windows-InternetExplorer-Optional-Package-arm64-zh-CN.cab"
+        $entgpack = Get-UUPFileLink -Id $uupid -FileName "Microsoft-Windows-EditionSpecific-EnterpriseG-Package.ESD"
+        $entgLP = Get-UUPFileLink -Id $uupid -FileName "Microsoft-Windows-Client-LanguagePack-Package_zh-cn-arm64-zh-cn.esd"
         $msstore = $true
     }
     "w1123h264" {
@@ -214,30 +148,12 @@ switch ($MakeVersion) {
                     -ContentFilter @("*Windows 11*amd64*") `
                     -FirstLink
             ).Replace("selectlang.php?id=", "")
-            $Miracast = Invoke-UUPWebRequestLink `
-                -Url "getfile.php?id=$uupid&file=Microsoft-Windows-WirelessDisplay-FOD-Package-amd64.cab" `
-                -ContentFilter @("*mp.microsoft.com*") `
-                -FirstLink
-            $MiracastLP = Invoke-UUPWebRequestLink `
-                -Url "getfile.php?id=$uupid&file=Microsoft-Windows-WirelessDisplay-FOD-Package-amd64-zh-cn.cab" `
-                -ContentFilter @("*mp.microsoft.com*") `
-                -FirstLink
-            $iexplorer = Invoke-UUPWebRequestLink `
-                -Url "getfile.php?id=$uupid&file=Microsoft-Windows-InternetExplorer-Optional-Package-amd64.cab" `
-                -ContentFilter @("*mp.microsoft.com*") `
-                -FirstLink
-            $iexplorerLP = Invoke-UUPWebRequestLink `
-                -Url "getfile.php?id=$uupid&file=Microsoft-Windows-InternetExplorer-Optional-Package-amd64-zh-cn.cab" `
-                -ContentFilter @("*mp.microsoft.com*") `
-                -FirstLink
-            $entgpack = Invoke-UUPWebRequestLink `
-                -Url "getfile.php?id=$uupid&file=Microsoft-Windows-EditionSpecific-EnterpriseG-Package.ESD" `
-                -ContentFilter @("*mp.microsoft.com*") `
-                -FirstLink
-            $entgLP = Invoke-UUPWebRequestLink `
-                -Url "getfile.php?id=$uupid&file=Microsoft-Windows-Client-LanguagePack-Package_zh-cn-amd64-zh-cn.esd" `
-                -ContentFilter @("*mp.microsoft.com*") `
-                -FirstLink
+            $Miracast = Get-UUPFileLink -Id $uupid -FileName "Microsoft-Windows-WirelessDisplay-FOD-Package-amd64.cab"
+            $MiracastLP = Get-UUPFileLink -Id $uupid -FileName "Microsoft-Windows-WirelessDisplay-FOD-Package-amd64-zh-CN.cab"
+            $iexplorer = Get-UUPFileLink -Id $uupid -FileName "Microsoft-Windows-InternetExplorer-Optional-Package-amd64.cab"
+            $iexplorerLP = Get-UUPFileLink -Id $uupid -FileName "Microsoft-Windows-InternetExplorer-Optional-Package-amd64-zh-CN.cab"
+            $entgpack = Get-UUPFileLink -Id $uupid -FileName "Microsoft-Windows-EditionSpecific-EnterpriseG-Package.ESD"
+            $entgLP = Get-UUPFileLink -Id $uupid -FileName "Microsoft-Windows-Client-LanguagePack-Package_zh-cn-amd64-zh-cn.esd"
         } else {
             $WUScript = "https://raw.githubusercontent.com/adavak/Win_ISO_Patching_Scripts/master/Scripts/script_22621_x64.meta4"
             $Miracast = "https://alist.xrgzs.top/d/pxy/System/Windows/Win10/Res/22621/amd64/Microsoft-Windows-WirelessDisplay-FOD-Package~31bf3856ad364e35~amd64~~.cab"
@@ -267,23 +183,10 @@ switch ($MakeVersion) {
                 -ContentFilter @("*Windows 10,*arm64*") `
                 -FirstLink
         ).Replace("selectlang.php?id=", "")
-        $Miracast = Invoke-UUPWebRequestLink `
-            -Url "getfile.php?id=$uupid&file=Microsoft-Windows-WirelessDisplay-FOD-Package-arm64.cab" `
-            -ContentFilter @("*mp.microsoft.com*") `
-            -FirstLink
-        $MiracastLP = Invoke-UUPWebRequestLink `
-            -Url "getfile.php?id=$uupid&file=Microsoft-Windows-WirelessDisplay-FOD-Package-arm64-zh-cn.cab" `
-            -ContentFilter @("*mp.microsoft.com*") `
-            -FirstLink
-    
-        $entgpack = Invoke-UUPWebRequestLink `
-            -Url "getfile.php?id=$uupid&file=Microsoft-Windows-EditionSpecific-EnterpriseG-Package.ESD" `
-            -ContentFilter @("*mp.microsoft.com*") `
-            -FirstLink
-        $entgLP = Invoke-UUPWebRequestLink `
-            -Url "getfile.php?id=$uupid&file=Microsoft-Windows-Client-LanguagePack-Package_zh-cn-arm64-zh-cn.esd" `
-            -ContentFilter @("*mp.microsoft.com*") `
-            -FirstLink
+        $Miracast = Get-UUPFileLink -Id $uupid -FileName "Microsoft-Windows-WirelessDisplay-FOD-Package-arm64.cab"
+        $MiracastLP = Get-UUPFileLink -Id $uupid -FileName "Microsoft-Windows-WirelessDisplay-FOD-Package-arm64-zh-cn.cab"
+        $entgpack = Get-UUPFileLink -Id $uupid -FileName "Microsoft-Windows-EditionSpecific-EnterpriseG-Package.ESD"
+        $entgLP = Get-UUPFileLink -Id $uupid -FileName "Microsoft-Windows-Client-LanguagePack-Package_zh-cn-arm64-zh-cn.esd"
         $NETScript = "https://raw.githubusercontent.com/adavak/Win_ISO_Patching_Scripts/master/Scripts/netfx4.8/script_netfx4.8_19041_arm64.meta4"
         $msstore = $true
     }
@@ -305,22 +208,10 @@ switch ($MakeVersion) {
                     -ContentFilter @("*Windows 10,*amd64*") `
                     -FirstLink
             ).Replace("selectlang.php?id=", "")
-            $Miracast = Invoke-UUPWebRequestLink `
-                -Url "getfile.php?id=$uupid&file=Microsoft-Windows-WirelessDisplay-FOD-Package-amd64.cab" `
-                -ContentFilter @("*mp.microsoft.com*") `
-                -FirstLink
-            $MiracastLP = Invoke-UUPWebRequestLink `
-                -Url "getfile.php?id=$uupid&file=Microsoft-Windows-WirelessDisplay-FOD-Package-amd64-zh-cn.cab" `
-                -ContentFilter @("*mp.microsoft.com*") `
-                -FirstLink
-            $entgpack = Invoke-UUPWebRequestLink `
-                -Url "getfile.php?id=$uupid&file=Microsoft-Windows-EditionSpecific-EnterpriseG-Package.ESD" `
-                -ContentFilter @("*mp.microsoft.com*") `
-                -FirstLink
-            $entgLP = Invoke-UUPWebRequestLink `
-                -Url "getfile.php?id=$uupid&file=Microsoft-Windows-Client-LanguagePack-Package_zh-cn-amd64-zh-cn.esd" `
-                -ContentFilter @("*mp.microsoft.com*") `
-                -FirstLink
+            $Miracast = Get-UUPFileLink -Id $uupid -FileName "Microsoft-Windows-WirelessDisplay-FOD-Package-amd64.cab"
+            $MiracastLP = Get-UUPFileLink -Id $uupid -FileName "Microsoft-Windows-WirelessDisplay-FOD-Package-amd64-zh-cn.cab"
+            $entgpack = Get-UUPFileLink -Id $uupid -FileName "Microsoft-Windows-EditionSpecific-EnterpriseG-Package.ESD"
+            $entgLP = Get-UUPFileLink -Id $uupid -FileName "Microsoft-Windows-Client-LanguagePack-Package_zh-cn-amd64-zh-cn.esd"
         } else {
             $WUScript = "https://raw.githubusercontent.com/adavak/Win_ISO_Patching_Scripts/master/Scripts/script_19041_x64.meta4"
             $Miracast = "https://alist.xrgzs.top/d/pxy/System/Windows/Win10/Res/19041/amd64/Microsoft-Windows-WirelessDisplay-FOD-Package~31bf3856ad364e35~amd64~~.cab"
@@ -349,22 +240,10 @@ switch ($MakeVersion) {
                     -ContentFilter @("*Windows 10,*x86*") `
                     -FirstLink
             ).Replace("selectlang.php?id=", "")
-            $Miracast = Invoke-UUPWebRequestLink `
-                -Url "getfile.php?id=$uupid&file=Microsoft-Windows-WirelessDisplay-FOD-Package-x86.cab" `
-                -ContentFilter @("*mp.microsoft.com*") `
-                -FirstLink
-            $MiracastLP = Invoke-UUPWebRequestLink `
-                -Url "getfile.php?id=$uupid&file=Microsoft-Windows-WirelessDisplay-FOD-Package-x86-zh-cn.cab" `
-                -ContentFilter @("*mp.microsoft.com*") `
-                -FirstLink
-            $entgpack = Invoke-UUPWebRequestLink `
-                -Url "getfile.php?id=$uupid&file=Microsoft-Windows-EditionSpecific-EnterpriseG-Package.ESD" `
-                -ContentFilter @("*mp.microsoft.com*") `
-                -FirstLink
-            $entgLP = Invoke-UUPWebRequestLink `
-                -Url "getfile.php?id=$uupid&file=Microsoft-Windows-Client-LanguagePack-Package_zh-cn-x86-zh-cn.esd" `
-                -ContentFilter @("*mp.microsoft.com*") `
-                -FirstLink
+            $Miracast = Get-UUPFileLink -Id $uupid -FileName "Microsoft-Windows-WirelessDisplay-FOD-Package-x86.cab"
+            $MiracastLP = Get-UUPFileLink -Id $uupid -FileName "Microsoft-Windows-WirelessDisplay-FOD-Package-x86-zh-cn.cab"
+            $entgpack = Get-UUPFileLink -Id $uupid -FileName "Microsoft-Windows-EditionSpecific-EnterpriseG-Package.ESD"
+            $entgLP = Get-UUPFileLink -Id $uupid -FileName "Microsoft-Windows-Client-LanguagePack-Package_zh-cn-x86-zh-cn.esd"
         } else {
             $WUScript = "https://raw.githubusercontent.com/adavak/Win_ISO_Patching_Scripts/master/Scripts/script_19041_x86.meta4"
             $Miracast = "https://alist.xrgzs.top/d/pxy/System/Windows/Win10/Res/19041/x86/Microsoft-Windows-WirelessDisplay-FOD-Package~31bf3856ad364e35~x86~~.cab"
