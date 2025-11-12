@@ -142,7 +142,7 @@ function Get-UUPFiles {
     if ($edition) { $query["edition"] = $Edition }
     if ($NoLink) { $query["nolink"] = "1" }
 
-    $response = Invoke-UUPApiRequest -Url "get.php?$($query.ToString())" | ConvertFrom-Json
+    $response = Invoke-UUPApiRequest -Url "get.php?$($query.ToString())" | ConvertFrom-Json -AsHashtable
 
     if ($null -eq $response) {
         throw "Null response received from UUP API."
@@ -177,7 +177,7 @@ function Get-UUPFiles {
 
     # convert to hashtable for easier access
     $filesHashtable = @{}
-    foreach ($fileName in $response.response.files.PSObject.Properties.Name) {
+    foreach ($fileName in $response.response.files.Keys) {
         $filesHashtable[$fileName] = $response.response.files.$fileName
         # $file = $response.response.files.$fileName
         # Write-Host -ForegroundColor Cyan "File: $fileName, Size: $($file.size), SHA1: $($file.sha1), URL: $($file.url)"
