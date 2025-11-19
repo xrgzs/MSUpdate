@@ -175,7 +175,7 @@ $SkipCheck     = [bool]   $True
 
 - [aria2c](https://github.com/aria2/aria2)：多线程高速下载
 - [rclone](https://github.com/rclone/rclone)：网盘自动发布
-- [abbodi1406/BatUtil/W10UI](https://github.com/abbodi1406/BatUtil/tree/master/W10UI)：集成系统更新
+- [abbodi1406/BatUtil/W10UI](https://gitlab.com/saiwp/BatUtil/-/tree/master/W10UI)：集成系统更新
 - [wimlib-imagex](https://wimlib.net/)：镜像信息编辑、ESD 格式转换
 - [M2TeamArchived/NSudo](https://github.com/M2TeamArchived/NSudo)：管理员权限提升
 - [Secant1006/PSFExtractor](https://github.com/Secant1006/PSFExtractor)：系统补丁格式转换

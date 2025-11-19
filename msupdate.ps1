@@ -537,7 +537,7 @@ if ($null -eq $Cleanup) { $Cleanup = $true }
 
 # abbodi1406/W10UI, auto inject hook
 $W10UI = "@chcp 65001`n"
-$W10UI += (Invoke-WebRequest -Uri "https://raw.githubusercontent.com/abbodi1406/BatUtil/master/W10UI/W10UI.cmd").Content
+$W10UI += (Invoke-WebRequest -Uri "https://gitlab.com/saiwp/BatUtil/-/raw/master/W10UI/W10UI.cmd").Content
 $W10UI = $W10UI.Replace("if %AddDrivers%==1 call :doDrv", "call %~dp0hook_beforewim.cmd`nif %AddDrivers%==1 call :doDrv")
 if ($Cleanup) {
     $W10UI = $W10UI.Replace("set Cleanup=0", "set Cleanup=1")
