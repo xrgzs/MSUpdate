@@ -558,7 +558,7 @@ if exist "!mountdir!\Windows\WinSxS\*microsoft-edge-webview*" (
     echo ============================================================
     echo Removing Edge WebView2 FOD...
     echo ============================================================
-    %_dism2%:"!_cabdir!" %dismtarget% /Remove-Package /PackageName:"Edge.WebView2.Platform~~~~"   
+    %_dism2%:"!_cabdir!" %dismtarget% /Remove-Capability /CapabilityName:"Edge.WebView2.Platform~~~~"   
 )
 "@ | Out-File -FilePath ".\hook_beforenet35.cmd"
 
