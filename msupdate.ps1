@@ -539,15 +539,36 @@ if ($null -eq $Cleanup) { $Cleanup = $true }
 $W10UI = "@chcp 65001`n"
 $W10UI += (Invoke-WebRequest -Uri "https://gitlab.com/saiwp/BatUtil/-/raw/master/W10UI/W10UI.cmd").Content
 $W10UI = $W10UI.Replace("if %AddDrivers%==1 call :doDrv", "call %~dp0hook_beforewim.cmd`nif %AddDrivers%==1 call :doDrv")
+$W10UI = $W10UI.Replace("cd /d `"!net35source!`"", "call %~dp0hook_beforenet35.cmd`ncd /d `"!net35source!`"")
 if ($Cleanup) {
     $W10UI = $W10UI.Replace("set Cleanup=0", "set Cleanup=1")
 }
-# write hook script
+
+# write beforenet35 hook script
+@"
+echo.
+echo ============================================================
+echo Hook W10UI beforenet35 Successfully!
+echo Current Dir: %cd%
+echo Mount Dir: !mountdir!
+echo ============================================================
+
+if exist "!mountdir!\Windows\WinSxS\*microsoft-edge-webview*" (
+    echo.
+    echo ============================================================
+    echo Removing Edge WebView2 FOD...
+    echo ============================================================
+    %_dism2%:"!_cabdir!" %dismtarget% /Remove-Package /PackageName:"Edge.WebView2.Platform~~~~"   
+)
+"@ | Out-File -FilePath ".\hook_beforenet35.cmd"
+
+# write beforewim hook script
 @"
 echo.
 echo ============================================================
 echo Hook W10UI beforewim Successfully!
 echo Current Dir: %cd%
+echo Mount Dir: !mountdir!
 echo ============================================================
 
 if /i "$SkipCheck"=="true" (
