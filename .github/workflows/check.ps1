@@ -1,3 +1,4 @@
+#Requires -Version 7
 param (
     [switch]$DatabaseOnly
 )

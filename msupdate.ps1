@@ -1,3 +1,4 @@
+#Requires -Version 7
 $ErrorActionPreference = 'Stop'
 
 Import-Module "$PSScriptRoot\Modules\request.psm1"
