@@ -75,7 +75,7 @@ MSUpdate 能帮助你轻松获取最新集成更新版本的 Windows 系统镜�
 
 网盘备用：
 
-- OneDrive 分享：[Share](https://oofutech-my.sharepoint.com/:f:/g/personal/xrgzs_oofutech_onmicrosoft_com/El4WpU-mYnBEik9K-IbMXdABfoiNqjUHHWNCwwfcwXPv2Q?e=lfMZ5a)
+<https://url.xrgzs.top/msupdate>
 
 ## 持续集成
 
