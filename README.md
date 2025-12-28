@@ -31,6 +31,8 @@ MSUpdate 能帮助你轻松获取最新集成更新版本的 Windows 系统镜�
 
 集成.NET3.5 - 4.8.1 运行库
 
+- 26h1+不包含.NET3.5，已独立成类似 VC 的组件，[点此下载](https://go.microsoft.com/fwlink/?linkid=2337635)
+
 更新内置 UWP：Microsoft Store、 WinGet 及 运行库 到最新版本
 
 集成 无线显示器（Miracast 投屏）、.NET 3.5、IE 11 及中文语言包等 Features On Demand 组件
@@ -84,6 +86,11 @@ MSUpdate 现在使用 GitHub Actions 的 Windows Runner 进行自动构建，能
 Github Cli 一键执行所有构建：
 
 ```shell
+gh workflow run make.yml -f makeversion=w1126h1a64 -f UpdateFromUUP=true -f MultiEdition=true -f SkipCheck=false
+# gh workflow run make.yml -f makeversion=w1126h1a64 -f UpdateFromUUP=true -f MultiEdition=true -f SkipCheck=true
+gh workflow run make.yml -f makeversion=w1126h164 -f UpdateFromUUP=true -f MultiEdition=true -f SkipCheck=false
+gh workflow run make.yml -f makeversion=w1126h164 -f UpdateFromUUP=true -f MultiEdition=true -f SkipCheck=true
+
 gh workflow run make.yml -f makeversion=w1125h2a64 -f UpdateFromUUP=true -f MultiEdition=true -f SkipCheck=false
 # gh workflow run make.yml -f makeversion=w1125h2a64 -f UpdateFromUUP=true -f MultiEdition=true -f SkipCheck=true
 gh workflow run make.yml -f makeversion=w1125h264 -f UpdateFromUUP=true -f MultiEdition=true -f SkipCheck=false

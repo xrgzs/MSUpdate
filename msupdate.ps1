@@ -9,6 +9,58 @@ Import-Module "$PSScriptRoot\Modules\msstore.psm1"
 
 # set system info
 switch ($MakeVersion) {
+    "w1126h1a64" {
+        # make 11 26h1 arm64
+        $os_ver = "11"
+        $os_rsversion = "26H1"
+        $os_build = "28000"
+        $os_edition = "CoreCountrySpecific"
+        $os_display = "Windows $os_ver $os_rsversion"
+        $os_arch = "arm64"
+        $os_lang = "zh-cn"
+        $os_path = "/系统/Windows/Win10/Res/28000/arm64/28000.1.251103-1709.BR_RELEASE_CLIENTCHINA_OEM_A64FRE_ZH-CN.ISO"
+        $os_md5 = "E8E187CAC22085FED8420BE8B97DE54A"
+        $UpdateFromUUP = $true
+        $uupid = (Invoke-UUPWebRequestLink `
+                -Url "known.php?q=category:w11-26h1" `
+                -LinkFilter @("*selectlang.php?id=*") `
+                -ContentFilter @("*Windows 11,*arm64*") `
+                -FirstLink
+        ).Replace("selectlang.php?id=", "")
+        $Miracast = Get-UUPFileLink -Id $uupid -FileName "Microsoft-Windows-WirelessDisplay-FOD-Package-arm64.cab"
+        $MiracastLP = Get-UUPFileLink -Id $uupid -FileName "Microsoft-Windows-WirelessDisplay-FOD-Package-arm64-zh-CN.cab"
+        $iexplorer = Get-UUPFileLink -Id $uupid -FileName "Microsoft-Windows-InternetExplorer-Optional-Package-arm64.cab"
+        $iexplorerLP = Get-UUPFileLink -Id $uupid -FileName "Microsoft-Windows-InternetExplorer-Optional-Package-arm64-zh-CN.cab"
+        $entgpack = Get-UUPFileLink -Id $uupid -FileName "Microsoft-Windows-EditionSpecific-EnterpriseG-Package.ESD"
+        $entgLP = Get-UUPFileLink -Id $uupid -FileName "Microsoft-Windows-Client-LanguagePack-Package-arm64-zh-CN.esd"
+        $msstore = $true
+    }
+    "w1126h164" {
+        # make 11 26h1 x64
+        $os_ver = "11"
+        $os_rsversion = "26H1"
+        $os_build = "28000"
+        $os_edition = "CoreCountrySpecific"
+        $os_display = "Windows $os_ver $os_rsversion"
+        $os_arch = "x64"
+        $os_lang = "zh-cn"
+        $os_path = "/系统/Windows/Win10/Res/28000/amd64/28000.1.251103-1709.BR_RELEASE_CLIENTCHINA_OEM_X64FRE_ZH-CN.ISO"
+        $os_md5 = "521276FBA781C5B151E89596EE32FC3D"
+        $UpdateFromUUP = $true
+        $uupid = (Invoke-UUPWebRequestLink `
+                -Url "known.php?q=category:w11-26h1" `
+                -LinkFilter @("*selectlang.php?id=*") `
+                -ContentFilter @("*Windows 11,*amd64*") `
+                -FirstLink
+        ).Replace("selectlang.php?id=", "")
+        $Miracast = Get-UUPFileLink -Id $uupid -FileName "Microsoft-Windows-WirelessDisplay-FOD-Package-amd64.cab"
+        $MiracastLP = Get-UUPFileLink -Id $uupid -FileName "Microsoft-Windows-WirelessDisplay-FOD-Package-amd64-zh-CN.cab"
+        $iexplorer = Get-UUPFileLink -Id $uupid -FileName "Microsoft-Windows-InternetExplorer-Optional-Package-amd64.cab"
+        $iexplorerLP = Get-UUPFileLink -Id $uupid -FileName "Microsoft-Windows-InternetExplorer-Optional-Package-amd64-zh-CN.cab"
+        $entgpack = Get-UUPFileLink -Id $uupid -FileName "Microsoft-Windows-EditionSpecific-EnterpriseG-Package.ESD"
+        $entgLP = Get-UUPFileLink -Id $uupid -FileName "Microsoft-Windows-Client-LanguagePack-Package-amd64-zh-CN.esd"
+        $msstore = $true
+    }
     "w1125h2a64" {
         # make 11 25h2 arm64
         $os_ver = "11"
