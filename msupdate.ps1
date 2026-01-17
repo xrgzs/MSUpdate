@@ -486,11 +486,11 @@ if (-not (Test-Path -Path ".\bin\PSFExtractor.exe")) {
     Invoke-WebRequest -Uri 'https://github.com/Secant1006/PSFExtractor/releases/download/v3.07/PSFExtractor-v3.07-x64.zip' -outfile .\temp\PSFExtractor.zip
     Expand-Archive -Path .\temp\PSFExtractor.zip -DestinationPath .\bin -Force
 }
-if (-not (Test-Path -Path ".\bin\NSudoLC.exe")) {
-    Write-Host "NSudo not found, downloading..."
-    Invoke-WebRequest -Uri 'https://github.com/M2TeamArchived/NSudo/releases/download/8.2/NSudo_8.2_All_Components.zip' -outfile .\temp\NSudo.zip
-    Expand-Archive -Path .\temp\NSudo.zip -DestinationPath .\temp\NSudo -Force
-    Copy-Item -Path '.\temp\NSudo\NSudo Launcher\x64\NSudoLC.exe' -Destination .\bin\NSudoLC.exe
+if (-not (Test-Path -Path ".\bin\MinSudo.exe")) {
+    Write-Host "NanaRun\MinSudo not found, downloading..."
+    Invoke-WebRequest -Uri 'https://github.com/user-attachments/files/24684243/x64.zip' -outfile .\temp\NanaRun.zip
+    Expand-Archive -Path .\temp\NanaRun.zip -DestinationPath .\temp\NanaRun -Force
+    Copy-Item -Path '.\temp\NanaRun\MinSudo.exe' -Destination .\bin\MinSudo.exe
 }
 
 # get wupatch
@@ -1030,7 +1030,8 @@ if (Test-Path "C:\Program Files\Cloudflare\Cloudflare WARP\warp-cli.exe") {
 }
 
 # execute W10UI script
-.\bin\NSudoLC.exe -Wait -U:T -P:E -CurrentDirectory:. -UseCurrentConsole .\W10UI.cmd
+.\bin\MinSudo.exe --TrustedInstaller --Privileged --WorkDir=. whoami /all
+.\bin\MinSudo.exe --TrustedInstaller --Privileged --WorkDir=. .\W10UI.cmd
 
 # ensure iso exists
 $isoFiles = Get-ChildItem -Path ".\*.iso" -File

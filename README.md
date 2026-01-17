@@ -164,7 +164,7 @@ $SkipCheck     = [bool]   $True
 
 - [PowerShell 7](https://github.com/PowerShell/powershell)：执行脚本
 
-  - Windows PowerShell 5.1（Windows 10 以上已具备）
+  - 不支持 Windows PowerShell 5.1
 
 - [7-Zip](https://www.7-zip.org)：解压 ISO 等文件
 - [Windows ADK](https://learn.microsoft.com/zh-cn/windows-hardware/get-started/adk-install)：可选安装，建议安装
@@ -175,6 +175,7 @@ $SkipCheck     = [bool]   $True
 
 - [Watt Toolkit](https://github.com/BeyondDimension/SteamTools)：使用 Hosts 加速模式，配置好「加速 GitHub」（免费）
 - 不推荐使用系统代理，程序可能无法正常调用
+- 亦可使用其它工具的 Tun 模式，仅需加速 GitHub 即可
 
 上述依赖必须提前手动安装到默认路径，其它依赖会自动下载到 bin 文件夹内。因此，请确保有稳定的互联网连接，毕竟如果没有网络无法下载所需的更新包。
 
@@ -184,7 +185,7 @@ $SkipCheck     = [bool]   $True
 - [rclone](https://github.com/rclone/rclone)：网盘自动发布
 - [abbodi1406/BatUtil/W10UI](https://gitlab.com/saiwp/BatUtil/-/tree/master/W10UI)：集成系统更新
 - [wimlib-imagex](https://wimlib.net/)：镜像信息编辑、ESD 格式转换
-- [M2TeamArchived/NSudo](https://github.com/M2TeamArchived/NSudo)：管理员权限提升
+- [M2Team/NanaRun](https://github.com/M2Team/NanaRun)：管理员权限提升
 - [Secant1006/PSFExtractor](https://github.com/Secant1006/PSFExtractor)：系统补丁格式转换
 
 系统更新列表来自：
