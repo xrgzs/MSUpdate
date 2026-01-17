@@ -464,33 +464,68 @@ New-Item -Path ".\temp\" -ItemType "directory" -ErrorAction Ignore
 New-Item -Path ".\bin\" -ItemType "directory" -ErrorAction Ignore
 
 # Installing dependencies
+function Test-Hashes {
+    param (
+        [hashtable]$Hashes,
+        [string]$Algorithm
+    )
+    return $Hashes.GetEnumerator() | ForEach-Object {
+        $file = $_.Key
+        $expectedHash = $_.Value
+        Write-Host -ForegroundColor Blue "Verifying $file $Algorithm hash ..."
+        Write-Host -ForegroundColor Gray "Expected: $expectedHash"
+        $actualHash = (Get-FileHash -Path $file -Algorithm $Algorithm).Hash
+        Write-Host -ForegroundColor Gray "Actual  : $actualHash"
+        if ($actualHash -ne $expectedHash) {
+            # return $false
+            Write-Error "$file hash not match."
+        } else {
+            Write-Host -ForegroundColor Green "$file hash match."
+        }
+    }
+}
+function Test-SHA256 ([hashtable]$Hashes) { return Test-Hashes -Hashes $Hashes -Algorithm "SHA256" }
+function Test-MD5 ([hashtable]$Hashes) { return Test-Hashes -Hashes $Hashes -Algorithm "MD5" }
 
 if (-not (Test-Path -Path "C:\Program Files\7-Zip\7z.exe")) {
     Write-Error "7-zip not found, please install it manually!"
 }
 if (-not (Test-Path -Path ".\bin\aria2c.exe")) {
     Write-Host "aria2c not found, downloading..."
-    Invoke-WebRequest -Uri 'https://github.com/aria2/aria2/releases/download/release-1.37.0/aria2-1.37.0-win-64bit-build1.zip' -outfile .\temp\aria2.zip
-    Expand-Archive -Path .\temp\aria2.zip -DestinationPath .\temp -Force
-    Move-Item -Path .\temp\aria2-1.37.0-win-64bit-build1\aria2c.exe -Destination .\bin\aria2c.exe -Force
+    Invoke-WebRequest -Uri 'https://github.com/aria2/aria2/releases/download/release-1.37.0/aria2-1.37.0-win-64bit-build1.zip' -OutFile ".\temp\aria2.zip"
+    Expand-Archive -Path ".\temp\aria2.zip" -DestinationPath ".\temp" -Force
+    Move-Item -Path ".\temp\aria2-1.37.0-win-64bit-build1\aria2c.exe" -Destination ".\bin\aria2c.exe" -Force
+}
+Test-SHA256 @{ 
+    ".\bin\aria2c.exe" = "BE2099C214F63A3CB4954B09A0BECD6E2E34660B886D4C898D260FEBFE9D70C2" 
 }
 if (-not (Test-Path -Path ".\bin\wimlib-imagex.exe")) {
     Write-Host "wimlib-imagex not found, downloading..."
-    Invoke-WebRequest -Uri 'https://github.com/user-attachments/files/24684304/wimlib-1.14.4-windows-x86_64-bin.zip' -outfile .\temp\wimlib.zip
-    Expand-Archive -Path .\temp\wimlib.zip -DestinationPath .\temp\wimlib -Force
-    Copy-Item -Path .\temp\wimlib\wimlib-imagex.exe -Destination .\bin\wimlib-imagex.exe
-    Copy-Item -Path .\temp\wimlib\libwim-15.dll -Destination .\bin\libwim-15.dll
+    Invoke-WebRequest -Uri 'https://github.com/user-attachments/files/24684304/wimlib-1.14.4-windows-x86_64-bin.zip' -OutFile ".\temp\wimlib.zip"
+    Expand-Archive -Path ".\temp\wimlib.zip" -DestinationPath ".\temp\wimlib" -Force
+    Copy-Item -Path ".\temp\wimlib\wimlib-imagex.exe" -Destination ".\bin\wimlib-imagex.exe"
+    Copy-Item -Path ".\temp\wimlib\libwim-15.dll" -Destination ".\bin\libwim-15.dll"
+}
+Test-SHA256 @{ 
+    ".\bin\wimlib-imagex.exe" = "401BF99D6DEC2B749B464183F71D146327AE0856A968C309955F71A0C398A348"
+    ".\bin\libwim-15.dll"     = "6480B53D4ECD4423AF9E100FE15E3D2C3D114EFF33FBA07977E46C1AB124342E"
 }
 if (-not (Test-Path -Path ".\bin\PSFExtractor.exe")) {
     Write-Host "PSFExtractor not found, downloading..."
-    Invoke-WebRequest -Uri 'https://github.com/Secant1006/PSFExtractor/releases/download/v3.07/PSFExtractor-v3.07-x64.zip' -outfile .\temp\PSFExtractor.zip
-    Expand-Archive -Path .\temp\PSFExtractor.zip -DestinationPath .\bin -Force
+    Invoke-WebRequest -Uri 'https://github.com/Secant1006/PSFExtractor/releases/download/v3.07/PSFExtractor-v3.07-x64.zip' -OutFile ".\temp\PSFExtractor.zip"
+    Expand-Archive -Path ".\temp\PSFExtractor.zip" -DestinationPath ".\bin" -Force
+}
+Test-SHA256 @{ 
+    ".\bin\PSFExtractor.exe" = "B8A08DD9592E64843056CF5FE518E782FD7ED517D1EE32B70A99B7D7E5767F6C"
 }
 if (-not (Test-Path -Path ".\bin\MinSudo.exe")) {
     Write-Host "NanaRun\MinSudo not found, downloading..."
-    Invoke-WebRequest -Uri 'https://github.com/user-attachments/files/24684243/x64.zip' -outfile .\temp\NanaRun.zip
-    Expand-Archive -Path .\temp\NanaRun.zip -DestinationPath .\temp\NanaRun -Force
-    Copy-Item -Path '.\temp\NanaRun\MinSudo.exe' -Destination .\bin\MinSudo.exe
+    Invoke-WebRequest -Uri 'https://github.com/user-attachments/files/24684243/x64.zip' -OutFile ".\temp\NanaRun.zip"
+    Expand-Archive -Path ".\temp\NanaRun.zip" -DestinationPath ".\temp\NanaRun" -Force
+    Copy-Item -Path '.\temp\NanaRun\MinSudo.exe' -Destination ".\bin\MinSudo.exe"
+}
+Test-SHA256 @{ 
+    ".\bin\MinSudo.exe" = "8CC452FA6CF761382AA032BCE5596B727FBD33FA730FF08F0381FD629F885C97"
 }
 
 # get wupatch
@@ -519,7 +554,7 @@ if ($null -ne $NETScript) {
 # if (Test-Path ".\patch\Windows*.wim") {
 #     $patchPath = Resolve-Path ".\patch"
 #     Write-Host "Making MSU ($patchPath)..."
-#     Invoke-WebRequest -Uri 'https://github.com/abbodi1406/WHD/raw/refs/heads/master/scripts/PSFX_MSU_5.zip' -outfile .\temp\PSFX_MSU.zip
+#     Invoke-WebRequest -Uri 'https://github.com/abbodi1406/WHD/raw/refs/heads/master/scripts/PSFX_MSU_5.zip' -OutFile .\temp\PSFX_MSU.zip
 #     Expand-Archive -Path .\temp\PSFX_MSU.zip -DestinationPath .\temp\PSFX_MSU -Force
 #     . ".\temp\PSFX_MSU\PSFX2MSU.cmd" "$patchPath"
 # }
@@ -954,14 +989,7 @@ Invoke-Aria2Download -Uri $os_url -Destination ".\temp\" -Name $os_file -Big
 Write-Host "Verifying hash of original system image..."
 
 if ($os_md5) {
-    $downloadedMd5 = Get-FileHash -Path ".\temp\$os_file" -Algorithm MD5 | Select-Object -ExpandProperty Hash
-    Write-Host "Expected MD5: $os_md5"
-    Write-Host "Actual   MD5: $downloadedMd5"
-    if ($downloadedMd5 -ne $os_md5) {
-        Write-Error "MD5 check failed, the file may be corrupted."
-    } else {
-        Write-Host "MD5 check passed."
-    }
+    Test-MD5 @{".\temp\$os_file" = $os_md5 }
 }
 
 # $isopath = Resolve-Path -Path ".\temp\$os_file"
@@ -1019,15 +1047,6 @@ AutoStart     =1
 AddDrivers    =0
 Drv_Source    =\Drivers
 "@ | Out-File -FilePath ".\W10UI.ini"
-
-# stop cloudflare wrap to avoid long time disconnection of github
-if (Test-Path "C:\Program Files\Cloudflare\Cloudflare WARP\warp-cli.exe") {
-    try {
-        . "C:\Program Files\Cloudflare\Cloudflare WARP\warp-cli.exe" disconnect
-    } catch {
-        Write-Warning "Failed to disconnect Cloudflare WARP"
-    }
-}
 
 # execute W10UI script
 .\bin\MinSudo.exe --TrustedInstaller --Privileged --WorkDir=. whoami /all
