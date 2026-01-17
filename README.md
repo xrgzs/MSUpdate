@@ -163,7 +163,6 @@ $SkipCheck     = [bool]   $True
 本项目需要使用到大量工具进行构建，包括但不限于：
 
 - [PowerShell 7](https://github.com/PowerShell/powershell)：执行脚本
-
   - 不支持 Windows PowerShell 5.1
 
 - [7-Zip](https://www.7-zip.org)：解压 ISO 等文件
@@ -183,7 +182,7 @@ $SkipCheck     = [bool]   $True
 
 - [aria2c](https://github.com/aria2/aria2)：多线程高速下载
 - [rclone](https://github.com/rclone/rclone)：网盘自动发布
-- [abbodi1406/BatUtil/W10UI](https://gitlab.com/saiwp/BatUtil/-/tree/master/W10UI)：集成系统更新
+- [abbodi1406/BatUtil/W10UI](https://github.com/abbodi1406/BatUtil)：集成系统更新
 - [wimlib-imagex](https://wimlib.net/)：镜像信息编辑、ESD 格式转换
 - [M2Team/NanaRun](https://github.com/M2Team/NanaRun)：管理员权限提升
 - [Secant1006/PSFExtractor](https://github.com/Secant1006/PSFExtractor)：系统补丁格式转换
