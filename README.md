@@ -31,7 +31,7 @@ MSUpdate 能帮助你轻松获取最新集成更新版本的 Windows 系统镜�
 
 集成.NET3.5 - 4.8.1 运行库
 
-- 26h1+不包含.NET3.5，已独立成类似 VC 的组件，[点此下载](https://go.microsoft.com/fwlink/?linkid=2337635)
+- 26h1+不包含.NET3.5，已独立成类似 VC 的组件，[点此下载](https://dotnet.microsoft.com/zh-cn/download/dotnet-framework/net35-sp1)
 
 更新内置 UWP：Microsoft Store、 WinGet 及 运行库 到最新版本
 

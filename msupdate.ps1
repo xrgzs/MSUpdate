@@ -627,7 +627,7 @@ if ($null -eq $Cleanup) { $Cleanup = $true }
 $W10UI = "@chcp 65001`n"
 $W10UI += (Invoke-WebRequest -Uri "https://github.com/abbodi1406/BatUtil/raw/refs/heads/master/W10UI/W10UI.cmd").Content
 $W10UI = $W10UI.Replace("if %AddDrivers%==1 call :doDrv", "call %~dp0hook_beforewim.cmd`nif %AddDrivers%==1 call :doDrv")
-$W10UI = $W10UI.Replace("cd /d `"!net35source!`"", "call %~dp0hook_beforenet35.cmd`ncd /d `"!net35source!`"")
+$W10UI = $W10UI.Replace("if %net35%==1 call :enablenet35", "call %~dp0hook_beforenet35.cmd`nif %net35%==1 call :enablenet35")
 if ($Cleanup) {
     $W10UI = $W10UI.Replace("set Cleanup=0", "set Cleanup=1")
 }
@@ -639,7 +639,18 @@ echo ============================================================
 echo Hook W10UI beforenet35 Successfully!
 echo Current Dir: %cd%
 echo Mount Dir: !mountdir!
+echo DISM Target: %dismtarget%
+echo Cab Dir: !_cabdir!
+echo MumTarget: !mumtarget!
 echo ============================================================
+
+if exist "!mumtarget!\Windows\Servicing\Packages\*WinPE-LanguagePack*.mum" (
+    echo.
+    echo ============================================================
+    echo Skipping for WinPE image...
+    echo ============================================================
+    goto :eof
+)
 
 if exist "!mountdir!\Windows\WinSxS\*microsoft-edge-webview*" (
     echo.
@@ -657,6 +668,9 @@ echo ============================================================
 echo Hook W10UI beforewim Successfully!
 echo Current Dir: %cd%
 echo Mount Dir: !mountdir!
+echo DISM Target: %dismtarget%
+echo Cab Dir: !_cabdir!
+echo MumTarget: !mumtarget!
 echo ============================================================
 
 if /i "$SkipCheck"=="true" (
