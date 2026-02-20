@@ -501,14 +501,14 @@ Test-SHA256 @{
 }
 if (-not (Test-Path -Path ".\bin\wimlib-imagex.exe")) {
     Write-Host "wimlib-imagex not found, downloading..."
-    Invoke-WebRequest -Uri 'https://github.com/user-attachments/files/24684304/wimlib-1.14.4-windows-x86_64-bin.zip' -OutFile ".\temp\wimlib.zip"
+    Invoke-WebRequest -Uri 'https://github.com/user-attachments/files/25449494/wimlib-1.14.5-windows-x86_64-bin.zip' -OutFile ".\temp\wimlib.zip"
     Expand-Archive -Path ".\temp\wimlib.zip" -DestinationPath ".\temp\wimlib" -Force
     Copy-Item -Path ".\temp\wimlib\wimlib-imagex.exe" -Destination ".\bin\wimlib-imagex.exe"
     Copy-Item -Path ".\temp\wimlib\libwim-15.dll" -Destination ".\bin\libwim-15.dll"
 }
 Test-SHA256 @{ 
-    ".\bin\wimlib-imagex.exe" = "401BF99D6DEC2B749B464183F71D146327AE0856A968C309955F71A0C398A348"
-    ".\bin\libwim-15.dll"     = "6480B53D4ECD4423AF9E100FE15E3D2C3D114EFF33FBA07977E46C1AB124342E"
+    ".\bin\wimlib-imagex.exe" = "34C0C4165591AD1F592837ED99D08273C58D6ED3FE0ED6360CF34E7B0739B353"
+    ".\bin\libwim-15.dll"     = "BA853EE1E3FC5F5798581F02E8E066BA07A0A2375F0BF444FE981431FD508495"
 }
 if (-not (Test-Path -Path ".\bin\PSFExtractor.exe")) {
     Write-Host "PSFExtractor not found, downloading..."
