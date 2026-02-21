@@ -518,15 +518,6 @@ if (-not (Test-Path -Path ".\bin\PSFExtractor.exe")) {
 Test-SHA256 @{ 
     ".\bin\PSFExtractor.exe" = "B8A08DD9592E64843056CF5FE518E782FD7ED517D1EE32B70A99B7D7E5767F6C"
 }
-if (-not (Test-Path -Path ".\bin\MinSudo.exe")) {
-    Write-Host "NanaRun\MinSudo not found, downloading..."
-    Invoke-WebRequest -Uri 'https://github.com/user-attachments/files/24684243/x64.zip' -OutFile ".\temp\NanaRun.zip"
-    Expand-Archive -Path ".\temp\NanaRun.zip" -DestinationPath ".\temp\NanaRun" -Force
-    Copy-Item -Path '.\temp\NanaRun\MinSudo.exe' -Destination ".\bin\MinSudo.exe"
-}
-Test-SHA256 @{ 
-    ".\bin\MinSudo.exe" = "8CC452FA6CF761382AA032BCE5596B727FBD33FA730FF08F0381FD629F885C97"
-}
 
 # get wupatch
 if ($UpdateFromUUP) {
@@ -1063,8 +1054,7 @@ Drv_Source    =\Drivers
 "@ | Out-File -FilePath ".\W10UI.ini"
 
 # execute W10UI script
-.\bin\MinSudo.exe --TrustedInstaller --Privileged --WorkDir=. whoami /all
-.\bin\MinSudo.exe --TrustedInstaller --Privileged --WorkDir=. .\W10UI.cmd
+.\W10UI.cmd
 
 # ensure iso exists
 $isoFiles = Get-ChildItem -Path ".\*.iso" -File
