@@ -46,7 +46,7 @@ jobs:
     runs-on: windows-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       # - name: Change DNS Server
       #   shell: pwsh
@@ -107,7 +107,7 @@ jobs:
       #     }
 
       - name: Get rclone Config
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           repository: ${{ vars.RCLONE_REPO }}
           token: ${{ secrets.RCLONE_TOKEN }}
