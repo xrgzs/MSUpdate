@@ -619,9 +619,6 @@ $W10UI = "@chcp 65001`n"
 $W10UI += (Invoke-WebRequest -Uri "https://github.com/abbodi1406/BatUtil/raw/refs/heads/master/W10UI/W10UI.cmd").Content
 $W10UI = $W10UI.Replace("if %AddDrivers%==1 call :doDrv", "call %~dp0hook_beforewim.cmd`nif %AddDrivers%==1 call :doDrv")
 $W10UI = $W10UI.Replace("if %net35%==1 call :enablenet35", "call %~dp0hook_beforenet35.cmd`nif %net35%==1 call :enablenet35")
-if ($Cleanup) {
-    $W10UI = $W10UI.Replace("set Cleanup=0", "set Cleanup=1")
-}
 
 # write beforenet35 hook script
 @"
@@ -650,18 +647,6 @@ if exist "!mountdir!\Windows\WinSxS\*microsoft-edge-webview*" (
     echo Removing Edge WebView2 FOD...
     echo ============================================================
     %_dism2%:"!_cabdir!" %dismtarget% /Remove-Capability /CapabilityName:"Edge.WebView2.Platform~~~~"   
-)
-
-set _target_arch=%arch%
-if "%arch%"=="x64" (
-    set _target_arch=amd64
-)
-if "$($os_build -eq "26200")"=="True" if exist "!mountdir!\Windows\servicing\Packages\Package_for_RollupFix~31bf3856ad364e35~%_target_arch%~~26100.1742.1.10.cat" (
-    echo.
-    echo ============================================================
-    echo Removing 26100.1742...
-    echo ============================================================
-    %_dism2%:"!_cabdir!" %dismtarget% /Remove-Package /PackageName:"Package_for_RollupFix~31bf3856ad364e35~%_target_arch%~~26100.1742.1.10"   
 )
 "@ | Out-File -FilePath ".\hook_beforenet35.cmd"
 
