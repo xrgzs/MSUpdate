@@ -110,15 +110,8 @@ function Request-Update {
     }
     Write-Host "Retrieved all known links of $Name : $($AllLinks | ConvertTo-Json)"
 
-    $Link = $AllLinks | Where-Object { $_.outerHTML -match '\((\d+\.\d+)\)' } | Select-Object -First 1
-    if ($Link -and $Link.outerHTML -match '\((\d+\.\d+)\)') {
-        $LatestVersion = $Matches[1]
-        Write-Host -ForegroundColor Green "The latest version of $Name is $LatestVersion"
-        return $LatestVersion
-    }
-
-    $Link = $AllLinks | Where-Object { $_.outerHTML -match '10\.0\.(\d+\.\d+)' } | Select-Object -First 1
-    if ($Link -and $Link.outerHTML -match '10\.0\.(\d+\.\d+)') {
+    $Link = $AllLinks | Where-Object { $_.outerHTML -notmatch '\.NET' -and $_.outerHTML -match 'Windows.*\((\d{5}\.\d{4})\)' } | Select-Object -First 1
+    if ($Link -and $Link.outerHTML -match 'Windows.*\((\d{5}\.\d{4})\)') {
         $LatestVersion = $Matches[1]
         Write-Host -ForegroundColor Green "The latest version of $Name is $LatestVersion"
         return $LatestVersion
