@@ -105,15 +105,30 @@ function Invoke-Aria2Download {
     # build aria2 command
     $aria2 = "& .\bin\aria2c.exe $($Options -join ' ')"
 
-    # handle aria2 console output
-    Write-Host 'Starting download with aria2 ...' -ForegroundColor Green
-    Write-Host "  Command: $aria2" -ForegroundColor Cyan
-    Invoke-Command ([scriptblock]::Create($aria2))
+    # handle aria2 console output with retry
+    $maxRetries = 2
+    $retryCount = 0
+    $success = $false
+    while (-not $success -and $retryCount -le $maxRetries) {
+        Write-Host 'Starting download with aria2 ...' -ForegroundColor Green
+        Write-Host "  Command: $aria2" -ForegroundColor Cyan
+        Invoke-Command ([scriptblock]::Create($aria2))
 
-    # handle aria2 error
-    Write-Host ''
-    if ($LASTEXITCODE -gt 0) {
-        Write-Error "Download failed! (Error $LASTEXITCODE) $(Get-Aria2Error $lastexitcode)"
+        Write-Host ''
+        if ($LASTEXITCODE -eq 0) {
+            $success = $true
+        } else {
+            $retryCount++
+            if ($retryCount -le $maxRetries) {
+                Write-Host -ForegroundColor Yellow "Download failed (Error ${LASTEXITCODE}: $(Get-Aria2Error $LASTEXITCODE)), retrying in 10 seconds... (Attempt $retryCount/$maxRetries)"
+                Start-Sleep -Seconds 10
+            }
+        }
+    }
+
+    # handle aria2 error after all retries
+    if (-not $success) {
+        Write-Error "Download failed! (Error ${LASTEXITCODE}) $(Get-Aria2Error $LASTEXITCODE)"
     }
 }
 
