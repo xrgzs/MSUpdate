@@ -590,9 +590,59 @@ if ($true -eq $msstore) {
         # Get-Appx 'Microsoft.VCLibs.140.00'
         Invoke-Aria2Download -Uri "https://aka.ms/Microsoft.VCLibs.$os_arch.14.00.Desktop.appx" -Destination "$PSScriptRoot\msstore\Microsoft.VCLibs.140.00.msix"
     } else {
-        Get-Appx '9NBLGGH4NNS1' # 'Microsoft.DesktopAppInstaller'
+        # Store APPs (/SkipLicense, may not work without one-time Store activation online)
         Get-Appx '9WZDNCRFJBMP' # 'Microsoft.WindowsStore'
-        Get-Appx '9N0DX20HK701' # 'Microsoft.WindowsTerminal'
+
+        # WinGet (DesktopAppInstaller) DeploymentKit
+        $WingetLicense = 'e53e159d00e04f729cc2180cffd1c02e_License1.xml'
+        $WingetDepZip = "DesktopAppInstaller_Dependencies.zip"
+        $WingetBundle = "Microsoft.DesktopAppInstaller_8wekyb3d8bbwe.msixbundle"
+        Invoke-Aria2Download -Uri "https://github.com/microsoft/winget-cli/releases/latest/download/$WingetDepZip" -Destination "$PSScriptRoot\msstore" -Name $WingetDepZip
+        Invoke-Aria2Download -Uri "https://github.com/microsoft/winget-cli/releases/latest/download/$WingetBundle" -Destination "$PSScriptRoot\msstore" -Name $WingetBundle
+        Invoke-Aria2Download -Uri "https://github.com/microsoft/winget-cli/releases/latest/download/$WingetLicense" -Destination "$PSScriptRoot\msstore" -Name $WingetLicense
+        $WingetDepDir = "$PSScriptRoot\msstore\wingetdeps"
+        Expand-Archive -Path "$PSScriptRoot\msstore\$WingetDepZip" -DestinationPath $WingetDepDir -Force
+        $WingetArch = switch ($os_arch) { "arm64" { "arm64" } "x86" { "x86" } default { "x64" } }
+        $WingetArchDir = Join-Path $WingetDepDir $WingetArch
+        if (-not (Test-Path $WingetArchDir)) {
+            $WingetArchDir = (Get-ChildItem -Path $WingetDepDir -Directory -Recurse -Filter $WingetArch | Select-Object -First 1).FullName
+            if (-not $WingetArchDir) { $WingetArchDir = $WingetDepDir }
+        }
+        $WingetDepFiles = @(Get-ChildItem -Path $WingetArchDir -Recurse -File | Where-Object { $_.Extension -match '^\.(appx|msix)$' })
+        $WingetDepFiles | ForEach-Object {
+            Copy-Item -Path $_.FullName -Destination "$PSScriptRoot\msstore" -Force
+        }
+        $WingetDepArgs = ($WingetDepFiles | ForEach-Object { "/DependencyPackagePath:`"%~dp0msstore\$($_.Name)`"" }) -join ' '
+
+        # Windows Terminal DeploymentKit（PreinstallKit）
+        function Resolve-WindowsTerminalVersion {
+            try {
+                $rel = Invoke-RestMethod -Uri 'https://api.github.com/repos/microsoft/terminal/releases/latest' -Headers @{ 'User-Agent' = 'msupdate' } -TimeoutSec 10
+                if ($rel -and $rel.tag_name) { return $rel.tag_name.TrimStart('v') }
+            } catch { Write-Warning "GitHub API failed, fallback to Scoop manifest: $($_.Exception.Message)" }
+            try {
+                $json = Invoke-RestMethod -Uri 'https://raw.githubusercontent.com/ScoopInstaller/Extras/refs/heads/master/bucket/windows-terminal.json' -TimeoutSec 20
+                if ($json -and $json.version) { return $json.version }
+            } catch { Write-Warning "Scoop manifest failed: $($_.Exception.Message)" }
+            Write-Error "Unable to resolve Windows Terminal latest version!"
+        }
+        $WtVersion = Resolve-WindowsTerminalVersion
+        $WtAsset = "Microsoft.WindowsTerminal_${WtVersion}_8wekyb3d8bbwe.msixbundle_Windows10_PreinstallKit.zip"
+        Invoke-Aria2Download -Uri "https://github.com/microsoft/terminal/releases/download/v$WtVersion/$WtAsset" -Destination "$PSScriptRoot\msstore" -Name $WtAsset
+        Expand-Archive -Path "$PSScriptRoot\msstore\$WtAsset" -DestinationPath "$PSScriptRoot\msstore\Terminal" -Force
+   
+        $WtBundle = Get-ChildItem "$PSScriptRoot\msstore\Terminal" -Filter "*.msixbundle" -File | Select-Object -First 1
+        $WtLicense = Get-ChildItem "$PSScriptRoot\msstore\Terminal" -Filter "*_License1.xml" -File | Select-Object -First 1
+        $WtProvxml = Get-ChildItem "$PSScriptRoot\msstore\Terminal" -Filter "*.provxml" -File | Select-Object -First 1
+        $WtXaml = Get-ChildItem "$PSScriptRoot\msstore\Terminal" -Filter "Microsoft.UI.Xaml*_${os_arch}__8wekyb3d8bbwe.appx" -File | Select-Object -First 1
+        if (-not $WtXaml) { $WtXaml = Get-ChildItem "$PSScriptRoot\msstore\Terminal" -Filter "Microsoft.UI.Xaml*.appx" -File | Select-Object -First 1 }
+        if (-not $WtBundle -or -not $WtLicense -or -not $WtProvxml -or -not $WtXaml) {
+            Write-Error "Windows Terminal PreinstallKit components not complete! Bundle=$WtBundle License=$WtLicense Provxml=$WtProvxml Xaml=$WtXaml"
+        }
+        $WtBundleName = $WtBundle.Name
+        $WtLicenseName = $WtLicense.Name
+        $WtProvxmlName = $WtProvxml.Name
+        $WtXamlName = $WtXaml.Name
     }
     $MSStoreScript = @"
 for %%a in (%~dp0msstore\Microsoft.VCLibs.140.00.UWPDesktop*.Appx) do call :Add-ProvisionedAppxPackage "%%a"
@@ -601,10 +651,28 @@ for %%a in (%~dp0msstore\Microsoft.VCLibs.140.00*.msix) do call :Add-Provisioned
 for %%a in (%~dp0msstore\Microsoft.UI.Xaml*.Appx) do call :Add-ProvisionedAppxPackage "%%a"
 for %%a in (%~dp0msstore\Microsoft.NET.Native.Runtime*.Appx) do call :Add-ProvisionedAppxPackage "%%a"
 for %%a in (%~dp0msstore\Microsoft.NET.Native.Framework*.Appx) do call :Add-ProvisionedAppxPackage "%%a"
+for %%a in (%~dp0msstore\Microsoft.WindowsAppRuntime*.Appx) do call :Add-ProvisionedAppxPackage "%%a"
+for %%a in (%~dp0msstore\Microsoft.WindowsAppRuntime*.msix) do call :Add-ProvisionedAppxPackage "%%a"
 for %%a in (%~dp0msstore\Microsoft.WindowsStore*.Msixbundle) do call :Add-ProvisionedAppxPackage "%%a"
-for %%a in (%~dp0msstore\Microsoft.DesktopAppInstaller*.Msixbundle) do call :Add-ProvisionedAppxPackage "%%a"
-for %%a in (%~dp0msstore\Microsoft.WindowsTerminal*.Msixbundle) do call :Add-ProvisionedAppxPackage "%%a"
 "@
+    if ($null -ne $WingetBundle) {
+        $MSStoreScript += @"
+`r`necho.
+echo ============================================================
+echo Installing WinGet with license...
+echo ============================================================
+%_dism2%:"!_cabdir!" %dismtarget% /Add-ProvisionedAppxPackage /PackagePath:"%~dp0msstore\$WingetBundle" /LicensePath:"%~dp0msstore\$WingetLicense" $WingetDepArgs /Region:all
+"@
+    }
+    if ($null -ne $WtBundleName) {
+        $MSStoreScript += @"
+`r`necho.
+echo ============================================================
+echo Installing Windows Terminal with license (PreinstallKit)...
+echo ============================================================
+%_dism2%:"!_cabdir!" %dismtarget% /Add-ProvisionedAppxPackage /PackagePath:"%~dp0msstore\Terminal\$WtBundleName" /LicensePath:"%~dp0msstore\Terminal\$WtLicenseName" /CustomDataPath:"%~dp0msstore\Terminal\$WtProvxmlName" /DependencyPackagePath:"%~dp0msstore\Terminal\$WtXamlName" /Region:all
+"@
+    }
 }
 
 if ($true -eq $SkipCheck) { 
