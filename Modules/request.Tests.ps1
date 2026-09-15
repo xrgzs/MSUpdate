@@ -18,10 +18,10 @@ Describe "Request-Update" {
         }
     }
 
-    Context "When Category is w11-24h2" {
+    Context "When Category is w11-26h2" {
         It "Should return version in format number.number" {
-            $result = Request-Update -Category "w11-24h2"
-            $result | Should -Match '^26100\.\d+$'
+            $result = Request-Update -Category "w11-26h2"
+            $result | Should -Match '^26300\.\d+$'
         }
     }
 

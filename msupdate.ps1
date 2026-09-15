@@ -61,10 +61,10 @@ switch ($MakeVersion) {
         $entgLP = Get-UUPFileLink -Id $uupid -FileName "Microsoft-Windows-Client-LanguagePack-Package-amd64-zh-CN.esd"
         $msstore = $true
     }
-    "w1125h2a64" {
-        # make 11 25h2 arm64
+    "w1126h2a64" {
+        # make 11 26h2 arm64
         $os_ver = "11"
-        $os_rsversion = "25H2"
+        $os_rsversion = "26H2"
         $os_build = "26200"
         $os_edition = "CoreCountrySpecific"
         $os_display = "Windows $os_ver $os_rsversion"
@@ -75,7 +75,7 @@ switch ($MakeVersion) {
         $os_md5 = "8cc8080e1c4b08ccd0ad4435ac0f2e5c"
         $UpdateFromUUP = $true
         $uupid = (Invoke-UUPWebRequestLink `
-                -Url "known.php?q=category:w11-25h2" `
+                -Url "known.php?q=category:w11-26h2" `
                 -LinkFilter @("*selectlang.php?id=*") `
                 -ContentFilter @("*Windows 11,*arm64*") `
                 -FirstLink
@@ -88,10 +88,10 @@ switch ($MakeVersion) {
         $entgLP = Get-UUPFileLink -Id $uupid -FileName "Microsoft-Windows-Client-LanguagePack-Package-arm64-zh-CN.esd"
         $msstore = $true
     }
-    "w1125h264" {
-        # make 11 25h2 x64
+    "w1126h264" {
+        # make 11 26h2 x64
         $os_ver = "11"
-        $os_rsversion = "25H2"
+        $os_rsversion = "26H2"
         $os_build = "26200"
         $os_edition = "CoreCountrySpecific"
         $os_display = "Windows $os_ver $os_rsversion"
@@ -102,7 +102,7 @@ switch ($MakeVersion) {
         $os_md5 = "e5c05b0215d3e4af2f2fd4ea16252f91"
         $UpdateFromUUP = $true
         $uupid = (Invoke-UUPWebRequestLink `
-                -Url "known.php?q=category:w11-25h2" `
+                -Url "known.php?q=category:w11-26h2" `
                 -LinkFilter @("*selectlang.php?id=*") `
                 -ContentFilter @("*Windows 11,*amd64*") `
                 -FirstLink
