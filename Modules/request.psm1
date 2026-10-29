@@ -98,7 +98,22 @@ function Request-Update {
         [string] $Category,
         [string] $QueryString
     )
-    if ($Category) {
+    if ($Category -eq "w10-1607") {
+        $ReleaseInfoUrl = "https://learn.microsoft.com/en-us/windows/release-health/release-information"
+        $ReleaseInfoContent = (Invoke-WebRequest -Uri $ReleaseInfoUrl -ErrorAction Stop).Content
+        $VersionRows = [regex]::Matches($ReleaseInfoContent, '(?is)<tr\b[^>]*>(.*?)</tr>')
+        foreach ($VersionRow in $VersionRows) {
+            $RowText = [System.Net.WebUtility]::HtmlDecode($VersionRow.Groups[1].Value)
+            $RowText = [regex]::Replace($RowText, '<[^>]+>', ' ')
+            if ($RowText -match '(?<![A-Za-z0-9])2016 \(1607\)(?![A-Za-z0-9])' -and $RowText -match '\b(?<version>\d{5}\.\d{4})\b') {
+                $LatestVersion = $Matches.version
+                Write-Host -ForegroundColor Green "The latest version of $Category is $LatestVersion"
+                return $LatestVersion
+            }
+        }
+        Write-Host -ForegroundColor Red "Failed to get the latest version of $Category from Microsoft release information"
+        return $null
+    } elseif ($Category) {
         $Name = $Category
         $AllLinks = Invoke-UUPWebRequestLink -Url "known.php?q=category:$Category" -LinkFilter @("*selectlang.php?id=*") -ContentFilter @("*amd64*")
     } elseif ($QueryString) {

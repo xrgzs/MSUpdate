@@ -83,6 +83,8 @@ MSUpdate 能帮助你轻松获取最新集成更新版本的 Windows 系统镜�
 
 MSUpdate 现在使用 GitHub Actions 的 Windows Runner 进行自动构建，能持续获取到最新的 Windows 系统映像。
 
+Windows 10 LTSB 2016（x64/x86）通过微软版本信息页自动检查系统 Build 号，并使用 `UpdateFromUUP=false` 构建。
+
 Github Cli 一键执行所有构建：
 
 ```shell

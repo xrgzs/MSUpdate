@@ -32,6 +32,26 @@ Describe "Request-Update" {
         }
     }
 
+    Context "When Category is w10-1607" {
+        It "Should return the exact Windows OS build for that category" {
+            Mock Invoke-WebRequest -ModuleName request {
+                [pscustomobject]@{
+                    Content = @'
+<table>
+  <tr><td>2019 (1809)</td><td>17763.9378</td></tr>
+  <tr><td>2016 (1607)</td><td>14393.9615</td></tr>
+</table>
+'@
+                }
+            }
+
+            $result = Request-Update -Category "w10-1607"
+
+            $result | Should -Be "14393.9615"
+            { [version]$result } | Should -Not -Throw
+        }
+    }
+
     Context "When Category is w11-19h2" {
         It "Should throw an error" {
             { Request-Update -Category "w11-19h2" } | Should -Throw
